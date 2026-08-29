@@ -34,7 +34,13 @@ button{font-family:inherit}
 .topo-in{display:flex;align-items:center;justify-content:space-between;padding:13px 18px 11px}
 .topo h1{font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
 .relogio{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:700;color:var(--pine);background:var(--pine-bg);border:1px solid var(--pine-line);border-radius:8px;padding:5px 10px;display:none}
-.relogio.on{display:block}
+.relogio.on{display:flex;align-items:center;gap:6px;cursor:pointer}
+.relogio::before{content:"";width:0;height:0;border-left:8px solid currentColor;border-top:5px solid transparent;border-bottom:5px solid transparent;display:none}
+.relogio.pausado{color:var(--rust);background:var(--rust-bg);border-color:var(--rust-line)}
+.relogio.pausado::before{display:block}
+.estimativa{margin:11px 18px 0;display:flex;gap:7px;flex-wrap:wrap}
+.estimativa span{font-family:"JetBrains Mono",monospace;font-size:11px;background:var(--card2);border-radius:6px;padding:5px 9px;color:var(--muted)}
+.estimativa span b{color:var(--ink);font-weight:700}
 .abas{display:flex;gap:3px;padding:0 14px 9px}
 .aba{flex:1;background:none;border:0;border-radius:9px;padding:8px 6px;color:var(--muted);font-size:14px;font-weight:600;cursor:pointer}
 .aba[aria-pressed="true"]{background:var(--ink);color:#fff}
@@ -185,7 +191,7 @@ button{font-family:inherit}
 <body>
 <div class="app">
   <div class="topo">
-    <div class="topo-in"><h1 id="titulo">Treino do Glau</h1><div class="relogio" id="relogio">00:00</div></div>
+    <div class="topo-in"><h1 id="titulo">Treino do Glau</h1><button class="relogio" id="relogio" aria-label="Pausar ou retomar o cronômetro">00:00</button></div>
     <div class="abas">
       <button class="aba" id="ab0" aria-pressed="true">Início</button>
       <button class="aba" id="ab1" aria-pressed="false">Treino</button>
@@ -220,104 +226,106 @@ DB.ok = DB._t();
 
 const AQ = {
   AB: [
-    ['Esteira ou bike leve','5 min','Ritmo crescente até respirar um pouco mais rápido. Aquecer, não cansar.'],
-    ['Gato-vaca','6–8 ciclos lentos','Alterne arredondar e arquear a coluna, contínuo e suave. Não segure a posição final nem force o limite — é movimento, não alongamento.'],
-    ['Rotação torácica','2 × 8 por lado','Mãos cruzadas nos ombros, quadril fixo apontando para frente. Gire só o tórax.'],
-    ['Abertura com elástico','2 × 15','Elástico à frente do peito, braços quase estendidos, abrir até encostar no esterno.'],
-    ['Séries de aproximação','8 reps a 50% · 4 reps a 75%','Só no primeiro exercício do treino. Não contam como volume e não vão para o registro.']
+    ['Esteira ou bike leve','5 min','Comece num ritmo confortável e aumente aos poucos. Ao fim dos 5 minutos você deve estar com o corpo aquecido e a respiração um pouco mais rápida — não cansado. Se estiver suando muito, foi rápido demais.'],
+    ['Gato-vaca','6–8 ciclos lentos','Quatro apoios: mãos sob os ombros, joelhos sob o quadril. Expirando, empurre o chão e arredonde as costas levando o queixo ao peito. Inspirando, deixe a barriga descer e olhe um pouco à frente. Um ciclo é ir e voltar, em uns 4 segundos. <b>Não segure nenhuma das pontas e não force a amplitude máxima</b> — é movimento, não alongamento.'],
+    ['Rotação torácica','2 × 8 por lado','Sentado no banco, pés no chão, braços cruzados no peito com as mãos nos ombros. Quadril imóvel: gire só o tronco para um lado até o limite confortável, segure 1 segundo e volte. Se o quadril girar junto, aperte os joelhos um contra o outro para travá-lo.'],
+    ['Abertura com elástico','2 × 15','Em pé, elástico esticado à frente do peito na largura dos ombros, braços quase estendidos e cotovelos levemente soltos. Abra até o elástico encostar no esterno, juntando as escápulas. Volte devagar. Ombros longe das orelhas o tempo todo.'],
+    ['Séries de aproximação','8 reps a 50% · 4 reps a 75%','Antes da primeira série valendo do <b>primeiro exercício do dia</b>: uma série de 8 repetições com metade da carga, descanso curto, e outra de 4 repetições com três quartos. Servem para ajustar o movimento, não para cansar. Não registre no app.']
   ],
   C: [
-    ['Esteira ou bike leve','5 min','Ritmo crescente até respirar um pouco mais rápido.'],
-    ['Gato-vaca','6–8 ciclos lentos','Alterne arredondar e arquear a coluna, contínuo e suave. Não force o limite.'],
-    ['Ativação de glúteo','2 × 15 por lado','Mini band acima dos joelhos, meio agachamento, passos laterais mantendo a tensão.'],
-    ['Séries de aproximação','8 reps a 50% · 4 reps a 75%','Só no agachamento. Não contam como volume.']
+    ['Esteira ou bike leve','5 min','Comece num ritmo confortável e aumente aos poucos. Ao fim dos 5 minutos você deve estar com o corpo aquecido e a respiração um pouco mais rápida — não cansado.'],
+    ['Gato-vaca','6–8 ciclos lentos','Quatro apoios: mãos sob os ombros, joelhos sob o quadril. Expirando, arredonde as costas levando o queixo ao peito. Inspirando, deixe a barriga descer e olhe um pouco à frente. Ir e voltar em uns 4 segundos. <b>Não segure as pontas nem force o limite.</b>'],
+    ['Ativação de glúteo','2 × 15 por lado','Mini band acima dos joelhos, pés na largura do quadril, meio agachamento com o tronco levemente à frente. Dê passos laterais mantendo tensão no elástico, <b>sem deixar os joelhos caírem para dentro</b>. Quinze passos para um lado, quinze de volta.'],
+    ['Séries de aproximação','8 reps a 50% · 4 reps a 75%','Antes da primeira série valendo do agachamento: uma série de 8 repetições com metade da carga e outra de 4 com três quartos. Não registre no app.']
   ]
 };
 
 const BLOCOS = {
   A: [
     [{n:'Supino inclinado',c:'12 kg por mão',sp:4,rp:'6–10',sv:3,rv:'12–15',d:120,r:'RIR 2',
-      dica:'Barras de 40 cm no banco a 30°. Escápulas presas, cotovelos a ~45° do tronco. Desça até sentir alongamento no peito.'}],
+      dica:'<b>Posição:</b> banco a 30°. Sente com um halter apoiado em cada coxa e deite empurrando-os com as coxas até a altura do peito. Escápulas juntas e presas no banco, pés firmes no chão.<br><b>Execução:</b> cotovelos a cerca de 45° do tronco, não abertos a 90°. Desça até os halteres ficarem na linha do peito e você sentir alongamento. Suba sem bater um halter no outro no topo.<br><b>A série acaba</b> quando você não controla mais a descida.'}],
     [{n:'Supino sentado na estação',c:'24,4 kg',sp:3,rp:'8–12',sv:3,rv:'12–15',d:90,r:'RIR 1–2',
-      dica:'3 placas + a menor. Costas apoiadas, peito aberto. Não deixe a placa bater na pilha na volta.'}],
+      dica:'<b>Posição:</b> ajuste o assento para as manoplas ficarem na altura do meio do peito. Costas apoiadas, peito aberto, pés no chão.<br><b>Execução:</b> empurre até quase estender o cotovelo, sem travar, e volte em 2 a 3 segundos.<br><b>Erro comum:</b> deixar a placa bater na pilha no fim — se bateu, você perdeu a tensão antes da hora.'}],
     [{n:'Desenvolvimento sentado',c:'12 kg por mão',sp:4,rp:'8–12',sv:3,rv:'12–15',d:90,r:'RIR 2',
-      dica:'Barras de 40 cm, banco a 80°. Costelas para baixo, sem arquear a lombar.'}],
+      dica:'<b>Posição:</b> banco a 80°, quase vertical. Halteres na altura das orelhas, palmas para frente, cotovelos um pouco à frente do corpo.<br><b>Execução:</b> empurre para cima até quase estender, sem bater os halteres no topo. Desça até as mãos voltarem à altura das orelhas.<br><b>Erro comum:</b> arquear a lombar para ajudar. Costelas para baixo e abdômen firme — se a lombar arqueia, a carga está alta.'}],
     [{n:'Voador na estação',c:'17,6 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
-      dica:'2 placas + a menor. Cotovelo levemente flexionado e fixo. Quem trabalha é o ombro fechando.'},
+      dica:'<b>Posição:</b> assento ajustado para as manoplas ficarem na altura do peito. Costas apoiadas.<br><b>Execução:</b> cotovelo levemente flexionado e <b>travado nesse ângulo do início ao fim</b>. Feche os braços à frente como se abraçasse alguém, segure meio segundo, e abra devagar até sentir o peito alongar.<br><b>Erro comum:</b> deixar o cotovelo abrir e fechar. Se isso acontecer, virou supino.'},
      {n:'Elevação lateral',c:'3 kg por mão',sp:3,rp:'12–20',sv:3,rv:'15–25',d:75,r:'RIR 0–1',
-      dica:'Suba até a altura do ombro, não além. Repetição limpa vale mais que carga — não jogue o corpo.'}],
+      dica:'<b>Posição:</b> em pé, halteres ao lado do corpo, cotovelo levemente dobrado e fixo.<br><b>Execução:</b> suba os braços para os lados até a altura dos ombros, com o mindinho um pouco mais alto que o polegar. Desça em 2 segundos.<br><b>Erro comum:</b> impulso do tronco e subir acima da linha do ombro — dali para cima o trabalho passa para o trapézio.'}],
     [{n:'Tríceps na polia',c:'17,6 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
-      dica:'Corda. Cotovelo colado ao tronco e imóvel. Abra a corda no fim para fechar mais a extensão.'},
+      dica:'<b>Posição:</b> em pé de frente para a polia alta, corda na altura do peito, cotovelos colados ao tronco, tronco levemente à frente.<br><b>Execução:</b> estenda os cotovelos até os braços ficarem retos, afastando as duas pontas da corda no fim. Volte só até o cotovelo formar 90°.<br><b>Erro comum:</b> o cotovelo sair do lugar ou o tronco balançar para ajudar.'},
      {n:'Tríceps testa',c:'10 kg · barra W',sp:3,rp:'10–12',sv:3,rv:'12–15',d:75,r:'RIR 1',
-      dica:'Barra W com 3 kg de cada lado, banco reto. Braço parado apontando para cima; só o antebraço se move.'}],
+      dica:'<b>Posição:</b> deitado no banco reto, barra W acima do peito, braços apontados para cima e inclinados um pouco para trás.<br><b>Execução:</b> dobre só o cotovelo, levando a barra até a testa ou pouco atrás dela. Volte estendendo.<br><b>Erro comum:</b> mover o braço junto. Se o braço se move, virou supino fechado.'}],
     [{n:'Flexão com pés elevados',c:'Peso corporal',sp:2,rp:'falha',sv:2,rv:'falha',d:60,r:'RIR 0',
-      dica:'Pés no banco. Corpo em prancha rígida do calcanhar à cabeça — se o quadril cair, a série acabou.'}]
+      dica:'<b>Posição:</b> pés no banco, mãos no chão pouco mais abertas que os ombros, corpo em linha reta do calcanhar à cabeça.<br><b>Execução:</b> glúteo e abdômen contraídos. Desça até o peito quase encostar no chão e suba.<br><b>A série acaba</b> quando o quadril começa a cair ou a subir — não quando o braço cansa.'}]
   ],
   B: [
     [{n:'Barra fixa',c:'Peso corporal',sp:4,rp:'4–8',sv:3,rv:'8–12',d:120,r:'RIR 2',
-      dica:'Espaldar, pegada pronada aberta. Progressão: excêntrica de 4–5 s → assistida com elástico → livre → com carga.'}],
+      dica:'<b>Posição:</b> pegada pronada (palmas para frente), mãos pouco mais abertas que os ombros. Comece pendurado com braços estendidos e ombros afastados das orelhas.<br><b>Execução:</b> puxe levando o peito na direção da barra até o queixo passar dela. Desça controlado até estender de novo. Sem balançar as pernas.<br><b>Se não sair nenhuma repetição:</b> faça só a descida — suba no banco, comece com o queixo acima da barra e desça em 4 a 5 segundos.'}],
     [{n:'Remada curvada',c:'26 kg',sp:4,rp:'8–10',sv:3,rv:'12–15',d:120,r:'RIR 2–3',
-      dica:'Barra reta com 10 kg de cada lado. Quadril para trás, coluna neutra, olhar 1,5 m à frente. Puxe em direção ao umbigo.',
-      alerta:'Maior risco lombar do programa. <b>Nunca leve à falha.</b> Se a lombar arredondar, a série acabou.'}],
+      dica:'<b>Posição:</b> pés na largura do quadril, joelhos levemente dobrados. Empurre o quadril para trás até o tronco ficar a uns 45° do chão. Coluna neutra, olhar num ponto do chão a 1,5 m à frente.<br><b>Execução:</b> puxe a barra em direção ao umbigo com os cotovelos rentes ao corpo. Desça controlado sem deixar a coluna arredondar.',
+      alerta:'Maior risco lombar do programa. <b>Nunca leve à falha.</b> Se a lombar arredondar em qualquer repetição, a série acabou.'}],
     [{n:'Remada baixa na polia',c:'31,2 kg',sp:3,rp:'10–12',sv:3,rv:'15–20',d:90,r:'RIR 1–2',
-      dica:'4 placas + a menor, triângulo. Tronco quase parado. Deixe as escápulas irem à frente no alongamento.'}],
+      dica:'<b>Posição:</b> sentado de frente para a polia baixa, triângulo nas mãos, pés apoiados, joelhos levemente dobrados, coluna ereta.<br><b>Execução:</b> puxe o triângulo até a barriga, juntando as escápulas no fim. Volte deixando as escápulas irem à frente e sentindo o dorsal alongar, sem arredondar a lombar.<br><b>Erro comum:</b> jogar o tronco para trás e para frente. O tronco fica quase parado.'}],
     [{n:'Puxada alta supinada',c:'24,4 kg',sp:3,rp:'10–12',sv:3,rv:'12–15',d:90,r:'RIR 1–2',
-      dica:'3 placas + a menor, pegada fechada e supinada. Mais bíceps e mais amplitude na parte baixa.'}],
+      dica:'<b>Posição:</b> sentado, coxas travadas sob o apoio. Pegada supinada (palmas para você), mãos na largura dos ombros.<br><b>Execução:</b> incline o tronco uns 15° para trás e puxe a barra até a parte alta do peito, cotovelos descendo rentes ao corpo. Volte até estender por completo.<br><b>Erro comum:</b> puxar com o tronco em vez dos braços e das costas.'}],
     [{n:'Face pull',c:'10,8 kg',sp:3,rp:'15–20',sv:3,rv:'20–25',d:0,r:'RIR 1',
-      dica:'1 placa + a menor. Puxe na direção do rosto separando as mãos, cotovelos altos. <b>Não é opcional</b> — trapézio inferior fraco é causa direta da rigidez cervical.'},
+      dica:'<b>Posição:</b> polia na altura do rosto ou pouco acima, corda com pegada neutra, um passo para trás para tensionar o cabo.<br><b>Execução:</b> puxe a corda na direção do rosto <b>separando as mãos</b>, terminando com os cotovelos altos e as mãos ao lado das orelhas. Segure 1 segundo e volte devagar.<br><b>Não é opcional</b> — trapézio inferior e rotadores fracos são causa direta da sua rigidez cervical.'},
      {n:'Encolhimento',c:'12 kg por mão',sp:3,rp:'12–15',sv:3,rv:'15–20',d:75,r:'RIR 1',
-      dica:'Barras de 40 cm. Suba os ombros na direção das orelhas e segure 1 s no topo. Não role os ombros para trás.'}],
+      dica:'<b>Posição:</b> em pé, halteres ao lado do corpo, braços estendidos e relaxados.<br><b>Execução:</b> suba os ombros na direção das orelhas o máximo que conseguir, segure 1 segundo no topo e desça devagar.<br><b>Erro comum:</b> rolar os ombros para trás. O movimento é só para cima e para baixo.'}],
     [{n:'Rosca inclinada unilateral',c:'5 kg',sp:3,rp:'8–12 / braço',sv:3,rv:'12–15 / braço',d:0,r:'RIR 1',
-      dica:'Banco a 45–60°, braço pendurado <b>atrás</b> da linha do tronco. Essa posição alonga a cabeça longa do bíceps, e músculo alongado hipertrofia mais.'},
+      dica:'<b>Posição:</b> banco a 45–60°, sentado com as costas apoiadas. Deixe o braço pendurado solto, <b>atrás da linha do tronco</b> — é essa posição que alonga a cabeça longa do bíceps.<br><b>Execução:</b> sem mover o ombro, flexione o cotovelo até em cima e desça até estender por completo. Um braço de cada vez.<br><b>Erro comum:</b> trazer o cotovelo à frente na subida, o que anula a vantagem da inclinação.'},
      {n:'Rosca martelo',c:'5 kg por mão',sp:3,rp:'10–15',sv:3,rv:'15–20',d:75,r:'RIR 0–1',
-      dica:'Pegada neutra, polegar para cima. Trabalha braquial e braquiorradial, que dão espessura ao braço.'}],
+      dica:'<b>Posição:</b> em pé, halteres ao lado do corpo em pegada neutra (polegar para cima), cotovelos junto ao tronco.<br><b>Execução:</b> flexione o cotovelo mantendo o punho neutro o tempo todo e desça controlado até estender.<br><b>Atenção ao cotovelo:</b> se sentir dor na lateral do cotovelo, pare a série e volte ao protocolo de retorno progressivo.'}],
     [{n:'Suspensão passiva',c:'Peso corporal',sp:2,rp:'30–45 s',sv:2,rv:'30–45 s',d:45,r:'—',fim:1,semLog:1,
-      dica:'Pendure-se solto no espaldar, ombros relaxados, respirando fundo. Descompressão de coluna. Fica sempre por último, mesmo na ordem invertida.'}]
+      dica:'<b>Execução:</b> pendure-se na barra do espaldar com os braços estendidos e <b>deixe o corpo solto</b> — ombros relaxados subindo em direção às orelhas, respirando fundo e devagar.<br>Não é exercício de força: é descompressão de coluna e alongamento de dorsal. Se o punho falhar antes das costas, use straps ou reduza para 20 segundos.'}]
   ],
   C: [
     [{n:'Agachamento',c:'12 kg por mão',sp:4,rp:'6–10',sv:3,rv:'12–15',d:150,r:'RIR 2–3',
-      dica:'Barras de 40 cm ao lado do corpo, <b>em pé sobre um degrau ou duas anilhas de 10 kg</b> — a elevação libera a amplitude completa.'}],
+      dica:'<b>Posição:</b> em pé no chão, uma barra de 40 cm carregada em cada mão, ao lado do corpo. Pés na largura dos ombros, pontas levemente para fora.<br><b>Execução:</b> empurre o quadril para trás e desça até a coxa passar da paralela, mantendo o tronco o mais vertical possível e o peso no meio do pé. Suba empurrando o chão.<br><b>Sobre elevação:</b> só use se as anilhas encostarem no chão antes de você chegar embaixo — teste no plano primeiro. Com anilhas de 5 kg isso normalmente não acontece. Se precisar, use um degrau ou o step. <b>Nunca fique em pé sobre anilhas</b>: elas são redondas e rolam.'}],
     [{n:'Terra romeno',c:'36 kg',sp:4,rp:'8–10',sv:3,rv:'12–15',d:120,r:'RIR 2',
-      dica:'Barra reta com 10+5 kg de cada lado. Comece em pé, empurre o quadril para trás com o joelho quase estendido, barra raspando a coxa.',
+      dica:'<b>Posição:</b> em pé segurando a barra à frente das coxas, pés na largura do quadril, joelhos levemente dobrados e travados nesse ângulo.<br><b>Execução:</b> empurre o quadril para trás deixando a barra raspar a coxa, até sentir alongamento atrás das coxas — normalmente pouco abaixo do joelho. Volte empurrando o quadril à frente.<br><b>Não é agachamento:</b> o joelho quase não dobra, quem se move é o quadril.',
       alerta:'<b>Nunca puxe do chão.</b> Suas anilhas têm diâmetro pequeno e a barra fica abaixo da altura padrão — puxar dali vira terra em déficit e sobrecarrega a lombar.'}],
     [{n:'Elevação pélvica',c:'36 kg',sp:3,rp:'10–15',sv:3,rv:'15–20',d:90,r:'RIR 1',
-      dica:'Mesma montagem do terra, só reposicionar a barra sobre o quadril. Ombros na borda do banco, queixo no peito, 1 s de contração no topo.'}],
+      dica:'<b>Posição:</b> sentado no chão com as escápulas apoiadas na borda do banco, barra sobre o quadril com uma toalha dobrada por baixo. Pés na largura do quadril, calcanhares logo abaixo dos joelhos.<br><b>Execução:</b> queixo no peito, empurre pelos calcanhares até tronco e coxa formarem uma linha reta. Segure 1 segundo contraindo o glúteo e desça controlado.<br><b>Erro comum:</b> subir arqueando a lombar em vez de estender o quadril.'}],
     [{n:'Afundo para trás',c:'5 kg por mão',sp:3,rp:'10 / perna',sv:3,rv:'12 / perna',d:90,r:'RIR 1–2',
-      dica:'Passo para trás, joelho quase encostando no chão, empurre com a perna da frente. Substitui o búlgaro com muito menos exigência de equilíbrio.'}],
+      dica:'<b>Execução completa:</b> comece em pé, pés juntos. Dê um passo para trás, desça até o joelho de trás quase encostar no chão, empurre com a <b>perna da frente</b> para subir e <b>traga o pé de volta</b>. Cada repetição recomeça em pé. Faça as 10 de uma perna e depois troque.<br><b>Detalhes:</b> tronco vertical, o pé de trás só equilibra, o joelho da frente alinhado com o pé.<br><b>Depois de 2 ou 3 sessões</b>, se preferir, fique na posição sem trazer o pé a cada repetição — exige menos equilíbrio e permite mais carga.'}],
     [{n:'Cadeira extensora',c:'24,4 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
-      dica:'Estenda por completo, segure meio segundo no topo, desça em 2–3 s.'},
+      dica:'<b>Posição:</b> sentado, costas apoiadas, rolo logo acima do peito do pé. O eixo do joelho alinhado com o eixo do aparelho.<br><b>Execução:</b> estenda até a perna ficar reta, segure meio segundo no topo, desça em 2 a 3 segundos.<br><b>Erro comum:</b> jogar o quadril para frente para ajudar no fim da série.'},
      {n:'Flexora em pé',c:'10,8 kg',sp:3,rp:'12–15 / perna',sv:3,rv:'15–20 / perna',d:90,r:'RIR 1',
-      dica:'De frente para a estação, perna encaixada no suporte. Puxe o calcanhar ao glúteo <b>sem jogar o quadril à frente</b> para ajudar.'}],
+      dica:'<b>Posição:</b> em pé de frente para a estação, apoiando as mãos na estrutura. Encaixe a perna no suporte, com o rolo logo acima do calcanhar.<br><b>Execução:</b> puxe o calcanhar em direção ao glúteo e volte devagar até quase estender. Uma perna de cada vez.<br><b>Erro comum:</b> jogar o quadril à frente para ganhar amplitude. O quadril fica parado; quem se move é só o joelho.'}],
     [{n:'Panturrilha em pé',c:'12 kg por mão',sp:4,rp:'12–20',sv:4,rv:'15–25',d:60,r:'RIR 0–1',
-      dica:'Antepé no degrau. <b>Pausa de 2 s embaixo</b>, com o calcanhar abaixo do degrau. Ela responde a alongamento sob carga, não a repetição rápida.'}]
+      dica:'<b>Posição:</b> antepé no degrau, calcanhares livres no ar, halteres ao lado do corpo, joelhos quase estendidos.<br><b>Execução:</b> desça o calcanhar abaixo do nível do degrau e <b>pause 2 segundos embaixo</b>. Suba até a ponta do pé, segure meio segundo e desça devagar.<br><b>Por que a pausa:</b> a panturrilha responde a alongamento sob carga, não a repetição rápida.'}]
   ]
 };
 
 const CORE_BASE = [
-  ['Curl-up de McGill','6 · 4 · 2 reps de 10 s','Uma perna dobrada, mãos sob a lombar. Eleve só cabeça e ombros alguns centímetros. <b>A lombar nunca achata contra o chão.</b>'],
-  ['Prancha lateral','6 · 4 · 2 de 10 s por lado','Cotovelo sob o ombro, quadril alto, corpo em linha reta.'],
-  ['Bird dog','6 · 4 · 2 de 10 s por lado','Braço e perna opostos até a linha do tronco. Imagine um copo d\'água na lombar: nada pode entornar.'],
-  ['Pallof press','2 × 10 por lado','De lado para a polia, cabo o mais horizontal possível — afaste-se até o cabo ficar paralelo ao chão. Empurre e <b>resista à rotação</b>. Se o tronco inclinar, está longe demais para essa carga.']
+  ['Curl-up de McGill','6 · 4 · 2 reps de 10 s','<b>Posição:</b> deitado de costas, uma perna dobrada com o pé no chão e a outra estendida. Mãos sob a lombar, palmas para baixo, para preservar a curvatura natural.<br><b>Execução:</b> eleve cabeça e ombros poucos centímetros do chão, como se a cabeça e o tronco fossem um bloco só, e segure 10 segundos respirando normal. Uma repetição é um bloco de 10 segundos.<br><b>Regra:</b> a lombar nunca achata contra o chão e o pescoço não se dobra à frente.'],
+  ['Prancha lateral','6 · 4 · 2 de 10 s por lado','<b>Posição:</b> deitado de lado, cotovelo diretamente sob o ombro, antebraço no chão. Comece com os joelhos dobrados; quando ficar fácil, estenda as pernas e apoie nos pés.<br><b>Execução:</b> suba o quadril até o corpo formar uma linha reta vista de lado e segure 10 segundos. Ombro, quadril e joelho alinhados.<br><b>Progrida de joelhos para pés</b>, não aumentando o tempo.'],
+  ['Bird dog','6 · 4 · 2 de 10 s por lado','<b>Posição:</b> quatro apoios, mãos sob os ombros, joelhos sob o quadril, coluna neutra.<br><b>Execução:</b> estenda o braço direito à frente e a perna esquerda atrás, até ambos ficarem na linha do tronco — não mais alto que isso. Segure 10 segundos e troque.<br><b>Regra:</b> imagine um copo d\'água apoiado na lombar. Se o quadril rodar, nada disso vale.'],
+  ['Pallof press','2 × 10 por lado','<b>Posição:</b> em pé <b>de lado</b> para a polia, pés na largura dos ombros, mãos juntas na manopla junto ao esterno. Afaste-se da máquina até o cabo ficar praticamente paralelo ao chão.<br><b>Execução:</b> estenda os braços à frente do peito, segure 2 segundos <b>resistindo à rotação</b> e volte. O objetivo é não girar.<br><b>Regra:</b> o tronco fica vertical. Se você precisa inclinar para o lado oposto, está longe demais para essa carga.']
 ];
 const CORE_ROT = {
   A:{n:'Prancha frontal com peso',c:'5 kg',sp:3,rp:'30–45 s',sv:3,rv:'45 s',d:45,r:'—',
-     dica:'Anilha sobre a lombar, corpo em linha reta, glúteo contraído. Progrida por alavanca (cotovelos mais à frente) antes de aumentar carga. Nunca passe de 45 s.'},
+     dica:'<b>Posição:</b> antebraços no chão, cotovelos sob os ombros, pés na largura do quadril. Anilha apoiada sobre a lombar por outra pessoa ou posicionada antes de subir.<br><b>Execução:</b> corpo em linha reta, glúteo contraído, costelas para baixo. Respire normalmente.<br><b>Progressão:</b> primeiro por alavanca — cotovelos mais à frente da linha dos ombros — e só depois por carga. <b>Nunca passe de 45 segundos.</b>'},
   B:{n:'Elevação de pernas suspenso',c:'Peso corporal',sp:3,rp:'8–12',sv:3,rv:'10–15',d:60,r:'RIR 1',
-     dica:'Joelhos dobrados → joelhos ao peito → pernas a 90° → pernas até a barra. Suba de nível só quando o balanço sumir.'},
+     dica:'<b>Posição:</b> pendurado na barra do espaldar, braços estendidos, corpo parado.<br><b>Execução:</b> eleve os joelhos em direção ao peito enrolando a pelve no fim — não é só levantar a coxa. Desça devagar sem deixar o corpo balançar.<br><b>Progressão:</b> joelhos dobrados → joelhos ao peito → pernas estendidas a 90° → pernas até a barra. Suba de nível só quando o balanço sumir.'},
   C:{n:'Roda abdominal',c:'Peso corporal',sp:3,rp:'6–10',sv:3,rv:'8–12',d:60,r:'RIR 1–2',
-     dica:'De joelhos, amplitude parcial. <b>A série termina quando a lombar arqueia</b>, não quando o abdômen cansa.'}
+     dica:'<b>Posição:</b> de joelhos sobre o colchonete, roda no chão sob os ombros, quadril levemente enrolado para trás.<br><b>Execução:</b> role à frente só até onde consegue manter o quadril travado e a lombar sem arquear. Volte puxando com o abdômen, não com os braços.<br><b>A série termina quando a lombar arqueia</b>, não quando o abdômen cansa. Progrida amplitude antes de progredir posição.'}
 };
 const MOB = [
-  ['Extensão torácica no rolo','2 × 10 respirações','Rolo na altura das escápulas, mãos atrás da cabeça. Rigidez cervical quase sempre é tórax travado — solte o tórax antes do pescoço.'],
-  ['Flexão craniocervical','10 × 10 s','Movimento de "fazer papada": queixo para trás sem levantar a cabeça do colchonete.'],
-  ['Isometrias cervicais','3 × 10 s em 4 direções','Mão contra a cabeça, força submáxima. Sem movimento.'],
-  ['Alongamento cervical','2 × 30 s por lado','Elevador da escápula e escaleno.']
+  ['Extensão torácica no rolo','2 × 10 respirações','<b>Posição:</b> deitado de costas com o foam roller atravessado sob as escápulas, joelhos dobrados e pés no chão. Mãos atrás da cabeça sustentando o pescoço.<br><b>Execução:</b> deixe a parte de cima das costas estender sobre o rolo e respire fundo 10 vezes. Depois desloque o rolo 2 dedos e repita.<br><b>Regra:</b> o movimento é na parte de cima das costas. Se você sentir na lombar, o rolo está baixo demais.'],
+  ['Flexão craniocervical','10 × 10 s','<b>Posição:</b> deitado de costas no colchonete, joelhos dobrados, cabeça apoiada no chão.<br><b>Execução:</b> faça o movimento de "papada" — leve o queixo para trás e para baixo, como quem faz um aceno mínimo de sim, <b>sem levantar a cabeça do chão</b>. Segure 10 segundos respirando normal e solte.<br><b>Regra:</b> é um movimento pequeno e sem força. Se os músculos da frente do pescoço saltarem, você está fazendo com os superficiais em vez dos profundos.'],
+  ['Isometrias cervicais','3 × 10 s em 4 direções','<b>Posição:</b> sentado, coluna ereta, olhar à frente.<br><b>Execução:</b> apoie a mão na testa e empurre a cabeça contra a mão <b>sem que ela se mova</b>, com força leve — algo como 30% do seu máximo. Segure 10 segundos. Repita com a mão na nuca, depois em cada lado da cabeça.<br><b>Regra:</b> nenhum movimento acontece. É força contra força.'],
+  ['Alongamento do elevador da escápula','2 × 30 s por lado','<b>Posição:</b> sentado. Com a mão do lado a alongar, segure a borda do assento — isso trava o ombro para baixo.<br><b>Execução:</b> gire a cabeça uns 45° para o lado oposto, como se olhasse para a axila contrária, e deixe o queixo descer nessa direção. A outra mão pode repousar atrás da cabeça, só com o próprio peso. Segure 30 segundos respirando.<br><b>Regra:</b> não puxe com força. Desconforto de alongamento é normal, dor não.'],
+  ['Alongamento do escaleno','2 × 30 s por lado','<b>Posição:</b> sentado, coluna alta. Puxe para baixo o ombro do lado a alongar, ou segure a borda do assento.<br><b>Execução:</b> incline a orelha oposta na direção do ombro oposto e, no fim, gire levemente o queixo para cima, olhando para o teto do lado que está alongando. Segure 30 segundos.<br><b>Pare imediatamente</b> se sentir formigamento, dormência ou choque descendo pelo braço — isso é tensão neural, não alongamento, e insistir piora.']
 ];
 const CARDIO = {
-  z2:['Zona 2','25 min · 108–127 bpm','Esteira ou bike. O ritmo em que você <b>fala frases inteiras sem ofegar</b>. Se precisa respirar no meio da frase, está rápido demais.'],
-  int:['Intervalado na bike','20 min · 8–10 tiros','5 min de aquecimento, depois 8 a 10 tiros de 30 s forte (145–175 bpm) com 90 s leves, e 3 min de volta à calma. <b>Na bike, não na esteira.</b>'],
-  sol:['Solto','10 min · abaixo de 110 bpm','Bike com carga mínima. Recuperação ativa, não treino.']
+  z2:['Zona 2','25 min · 108–127 bpm','<b>Como acertar o ritmo:</b> é a intensidade em que você <b>fala frases inteiras sem ofegar</b>. Se precisa respirar no meio da frase, está rápido demais; se consegue cantar, está lento.<br>Esteira ou bike, contínuo, sem variação. É aqui que se constrói densidade mitocondrial e base aeróbia — a parte chata que sustenta todo o resto.'],
+  int:['Intervalado na bike','20 min · 8–10 tiros','<b>Estrutura:</b> 5 minutos de aquecimento em ritmo leve, depois 8 a 10 tiros de 30 segundos em carga alta (145–175 bpm) com 90 segundos de pedalada leve entre eles, e 3 minutos de volta à calma.<br><b>Nos tiros</b> a respiração é ofegante e falar fica impossível. Se você consegue conversar, aumente a carga da bike.<br><b>Na bike, não na esteira</b> — a corrida interfere mais na hipertrofia de pernas.'],
+  sol:['Solto','10 min · abaixo de 110 bpm','Bike com carga mínima, cadência confortável, depois do treino de perna. Não é treino: é recuperação ativa, para circular sangue e chegar em casa menos travado.']
 };
+
 const MONTAGEM = {
   A:['2 barras de 40 cm · 5 + 5 kg cada = 12 kg por mão','Barra W · 3 + 3 kg = 10 kg','Halteres fixos · 3 kg'],
   B:['Barra reta · 10 + 10 kg = 26 kg','2 barras de 40 cm · 5 + 5 kg cada = 12 kg por mão','Halteres fixos · 5 kg'],
@@ -338,6 +346,22 @@ const mmss = s => String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padS
 const durTexto = m => { const h=Math.floor(m/60), r=m%60; return h ? h+'h'+String(r).padStart(2,'0') : m+' min'; };
 function inicioSemana(d){ const x=new Date(d); const g=(x.getDay()+6)%7; x.setHours(0,0,0,0); x.setDate(x.getDate()-g); return x; }
 const chaveEx = (l,n) => l+'|'+n;
+const T_SERIE = 45, T_AQ = 10, T_CORE = 8, T_MOB = 12;
+const T_CARDIO = { z2:25, int:20, sol:10 };
+function estimaMusc(letra, volume){
+  let seg = 0;
+  BLOCOS[letra].forEach(b => {
+    const rodadas = Math.max.apply(null, b.map(e => volume ? e.sv : e.sp));
+    const desc = b[b.length-1].d || 30;
+    seg += rodadas * (b.length * T_SERIE + desc);
+  });
+  const cr = CORE_ROT[letra];
+  seg += (volume ? cr.sv : cr.sp) * (T_SERIE + (cr.d || 45));
+  return Math.round(seg / 60);
+}
+function estimaTotal(letra, volume, tipo){
+  return T_AQ + estimaMusc(letra, volume) + T_CORE + T_MOB + T_CARDIO[CARDIO_POR[letra][tipo]];
+}
 function ultimoRegistro(l,n){ for(let i=hist.length-1;i>=0;i--){ const s=hist[i].series && hist[i].series[chaveEx(l,n)]; if(s&&s.length) return s; } return null; }
 
 const YTICON='<svg viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#C4302B"/><path d="M11 6l7 4-7 4z" fill="#fff"/></svg>';
@@ -397,7 +421,7 @@ function telaInicio(){
   }).join('');
   return `<div class="hero"><p class="lab">${em?'Sessão em andamento':'Próximo na fila'}</p>
       <h3>${em?ativa.letra:prox[0]} · ${NOMES[em?ativa.letra:prox[0]]}</h3>
-      <p>${(em?ativa.tipo:prox[1])==='pesado'?'Pesado — repetições baixas, cargas maiores':'Volume — repetições altas, ordem invertida'}</p>
+      <p>${(em?ativa.tipo:prox[1])==='pesado'?'Pesado — repetições baixas, cargas maiores':'Volume — repetições altas, ordem invertida'}<br>Duração estimada: ${durTexto(estimaTotal(em?ativa.letra:prox[0],(em?ativa.tipo:prox[1])==='volume',em?ativa.tipo:prox[1]))}</p>
       <button class="btn" id="irTreino">${em?'Continuar treino':'Abrir treino'}</button></div>
     <div class="stats">
       <div class="stat"><b>${semana.length}</b><span>sessões</span></div>
@@ -421,10 +445,15 @@ function telaTreino(){
       <button class="p" data-tipo="pesado" aria-pressed="${!volume}"><b>Pesado</b><span>reps baixas</span></button>
       <button class="v" data-tipo="volume" aria-pressed="${volume}"><b>Volume</b><span>ordem invertida</span></button>
     </div><p class="expl">${volume?'A lista já está na ordem invertida, com as repetições altas. Siga de cima para baixo.':'Primeira passagem da semana: cargas maiores, repetições baixas.'}</p></div>
-  <details class="montagem"><summary>Montagem das anilhas</summary><p>${MONTAGEM[letra].join('<br>')}</p></details>`;
+  <details class="montagem"><summary>Montagem das anilhas</summary><p>${MONTAGEM[letra].join('<br>')}</p></details>
+  <div class="estimativa">
+    <span>Total <b>${durTexto(estimaTotal(letra,volume,sel.tipo))}</b></span>
+    <span>Musculação <b>${estimaMusc(letra,volume)} min</b></span>
+    <span>Cardio <b>${T_CARDIO[CARDIO_POR[letra][sel.tipo]]} min</b></span>
+  </div>`;
   h+=`<section class="sec"><h2>Aquecimento <span class="dur">10 min</span></h2>`;
   AQ[letra==='C'?'C':'AB'].forEach(a=>h+=item(a[0],[[a[1],'k']],a[2],null,null,a[0]));
-  h+=`</section><section class="sec"><h2>Treino <span class="dur">~50 min</span></h2>`;
+  h+=`</section><section class="sec"><h2>Treino <span class="dur">${estimaMusc(letra,volume)-Math.round((volume?CORE_ROT[letra].sv:CORE_ROT[letra].sp)*(T_SERIE+(CORE_ROT[letra].d||45))/60)} min</span></h2>`;
   blocos.forEach(b=>{
     const c=b.map(e=>item(e.n,[[(volume?e.sv:e.sp)+' × '+(volume?e.rv:e.rp)],[e.c,'k'],[e.d?e.d+' s':'—','s'],[e.r,'s']],e.dica,e.alerta,seriesHTML(letra,e,volume),e.n)).join('');
     h+=b.length===2?`<div class="bis"><p class="rot-bis">Bisérie · sem descanso entre os dois</p>${c}</div>`:c;
@@ -433,10 +462,10 @@ function telaTreino(){
   CORE_BASE.forEach(c=>h+=item(c[0],[[c[1],'k']],c[2],null,null,c[0]));
   const cr=CORE_ROT[letra];
   h+=item(cr.n,[[(volume?cr.sv:cr.sp)+' × '+(volume?cr.rv:cr.rp)],[cr.c,'k']],cr.dica,null,seriesHTML(letra,cr,volume),cr.n);
-  h+=`</section><section class="sec"><h2>Mobilidade <span class="dur">10 min</span></h2>`;
+  h+=`</section><section class="sec"><h2>Mobilidade <span class="dur">12 min</span></h2>`;
   MOB.forEach(m=>h+=item(m[0],[[m[1],'k']],m[2],null,null,m[0]));
   const cd=CARDIO[CARDIO_POR[letra][sel.tipo]];
-  h+=`</section><section class="sec"><h2>Cardio <span class="dur">depois da musculação</span></h2>`;
+  h+=`</section><section class="sec"><h2>Cardio <span class="dur">${T_CARDIO[CARDIO_POR[letra][sel.tipo]]} min · depois da musculação</span></h2>`;
   h+=item(cd[0],[[cd[1],'k']],cd[2],null,null,cd[0]+' treino');
   return h+`</section>`;
 }
@@ -542,34 +571,47 @@ function atualizarBarra(){
 }
 acao.onclick=()=>{
   if(!ativa){ iniciar(); return; }
-  const min=Math.max(1,Math.round((Date.now()-ativa.inicio)/60000));
+  const min=Math.max(1,Math.round(decorridoSeg()/60));
   confirmar('Encerrar treino?','A sessão será salva no histórico com '+durTexto(min)+' de duração e a fila avança para o próximo treino.','Encerrar',encerrar);
 };
 document.getElementById('descartar').onclick=()=>{
   confirmar('Descartar este treino?','Tudo que você registrou nesta sessão será perdido. <b>Seu histórico anterior não é afetado.</b>','Descartar',()=>{
-    ativa=null; salvar(); clearInterval(tRel); relogio.classList.remove('on'); irPara(1);
+    ativa=null; salvar(); clearInterval(tRel); relogio.classList.remove('on','pausado'); irPara(1);
   });
 };
 
 function iniciar(){
-  ativa={letra:sel.letra,tipo:sel.tipo,inicio:Date.now(),series:{},feitos:[]};
+  ativa={letra:sel.letra,tipo:sel.tipo,inicio:Date.now(),acumulado:0,pausado:null,series:{},feitos:[]};
   salvar(); tickRelogio(); atualizarBarra();
+}
+function decorridoSeg(){
+  if(!ativa) return 0;
+  const fim = ativa.pausado || Date.now();
+  return Math.max(0, Math.floor((fim - ativa.inicio - (ativa.acumulado||0)) / 1000));
 }
 function tickRelogio(){
   clearInterval(tRel);
-  if(!ativa){ relogio.classList.remove('on'); return; }
+  if(!ativa){ relogio.classList.remove('on','pausado'); return; }
   relogio.classList.add('on');
-  const upd=()=>{ relogio.textContent=mmss(Math.floor((Date.now()-ativa.inicio)/1000)); };
-  upd(); tRel=setInterval(upd,1000);
+  relogio.classList.toggle('pausado', !!ativa.pausado);
+  const upd=()=>{ relogio.textContent = mmss(decorridoSeg()); };
+  upd();
+  if(!ativa.pausado) tRel=setInterval(upd,1000);
 }
+relogio.onclick=()=>{
+  if(!ativa) return;
+  if(ativa.pausado){ ativa.acumulado=(ativa.acumulado||0)+(Date.now()-ativa.pausado); ativa.pausado=null; }
+  else { ativa.pausado=Date.now(); }
+  salvar(); tickRelogio();
+};
 function encerrar(){
-  const min=Math.max(1,Math.round((Date.now()-ativa.inicio)/60000));
+  const min=Math.max(1,Math.round(decorridoSeg()/60));
   let vol=0;
   Object.keys(ativa.series).forEach(k=>ativa.series[k].forEach(s=>{ if(s&&s.ok) vol+=(+s.kg||0)*(+s.reps||0); }));
   hist.push({data:Date.now(),letra:ativa.letra,tipo:ativa.tipo,min,series:ativa.series,volumeTotal:vol});
   const i=FILA.findIndex(f=>f[0]===ativa.letra&&f[1]===ativa.tipo);
   if(i>=0) filaIdx=(i+1)%6;
-  ativa=null; salvar(); clearInterval(tRel); relogio.classList.remove('on');
+  ativa=null; salvar(); clearInterval(tRel); relogio.classList.remove('on','pausado');
   sel={letra:FILA[filaIdx][0],tipo:FILA[filaIdx][1]};
   irPara(0);
 }
