@@ -22,6 +22,10 @@ icons/apple-touch-icon.png
 
 Todos os caminhos são relativos, então funciona em subpasta sem ajuste.
 
+## Importante: teste com o app instalado
+
+Abrir o `index.html` num navegador ou numa pré-visualização não é o mesmo que usar o app instalado. Instalado na tela de início, ele roda em modo `standalone`, sem barra de navegador e sem os gestos do navegador. Bugs de layout e de zoom precisam ser avaliados nesse modo.
+
 ## Instalar no celular
 
 - **iPhone (Safari):** abra o endereço, toque em Compartilhar e depois em "Adicionar à Tela de Início".
@@ -39,6 +43,10 @@ Sem isso o celular pode continuar mostrando a versão antiga.
 ## Cronômetro
 
 O relógio no topo começa ao tocar em "Iniciar treino". **Toque nele para pausar e toque de novo para retomar** — útil para fazer a mobilidade em casa depois de sair da academia. Pausado, ele fica vermelho com um ícone de play. O tempo salvo no histórico desconta as pausas.
+
+## Cardio
+
+No cartão de cardio, escolha **Esteira** ou **Bike** e preencha minutos e distância. O resumo da semana aparece na tela de Início, com a quilometragem separada por modalidade.
 
 ## Onde ficam os dados
 
