@@ -25,14 +25,14 @@
   --gold:#8C6318; --gold-bg:#F7EEDA;
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;padding:0;background:var(--paper);overflow-x:hidden;max-width:100%}
+html,body{margin:0;padding:0;background:var(--paper);max-width:100%}
 body{touch-action:manipulation;-webkit-text-size-adjust:100%;text-size-adjust:100%}
 button,.aba,.tick,.ok,.m,.dia,.stat b,.stat span{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 body{color:var(--ink);font-family:Archivo,system-ui,sans-serif;font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased}
-.app{max-width:660px;margin:0 auto;padding:0 0 100px;min-height:100vh}
+.app{max-width:660px;margin:0 auto;padding:0 0 100px;min-height:100vh;overflow-x:clip}
 button{font-family:inherit}
 
-.topo{position:sticky;top:0;z-index:30;background:rgba(246,244,240,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.topo{position:fixed;top:0;left:0;right:0;max-width:660px;margin:0 auto;z-index:30;background:rgba(246,244,240,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .topo-in{display:flex;align-items:center;justify-content:space-between;padding:13px 18px 11px}
 .topo h1{font-size:19px;font-weight:700;margin:0;letter-spacing:-.01em}
 .relogio{font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:700;color:var(--pine);background:var(--pine-bg);border:1px solid var(--pine-line);border-radius:8px;padding:5px 10px;display:none}
@@ -134,6 +134,10 @@ button{font-family:inherit}
 .sh{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:0 2px 5px}
 .sr{margin-bottom:6px}
 .sr .i{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--dim);text-align:center}
+.campoCarga{position:relative;min-width:0}
+.conv{position:absolute;right:7px;top:50%;transform:translateY(-50%);font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--pine);pointer-events:none}
+.refPlacas{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--muted);background:var(--pine-bg);border-radius:7px;padding:7px 9px;margin:0 0 9px;line-height:1.6}
+.refPlacas b{color:var(--ink)}
 .sr input{width:100%;min-width:0;border:1px solid var(--line2);background:var(--card);border-radius:8px;padding:9px 4px;font-family:"JetBrains Mono",monospace;font-size:16px;text-align:center;color:var(--ink)}
 .sr input::placeholder{color:#C6C0B6}
 .sr input:focus{outline:0;border-color:var(--pine);background:var(--pine-bg)}
@@ -165,6 +169,12 @@ button{font-family:inherit}
 .modal-in button{flex:1;border:0;border-radius:11px;padding:14px;font-size:15.5px;font-weight:600;cursor:pointer}
 .modal-in .no{background:var(--card2);color:var(--ink)}
 .modal-in .si{background:var(--rust);color:#fff}
+.campos2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.campos2 label{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
+.campos2 input{width:100%;border:1px solid var(--line2);background:var(--card);border-radius:9px;padding:11px 8px;font-family:"JetBrains Mono",monospace;font-size:16px;color:var(--ink);text-align:center}
+.campos2 input:focus{outline:0;border-color:var(--pine);background:var(--pine-bg)}
+.excluirSessao{width:100%;margin-top:11px;background:none;border:0;color:var(--rust);font-size:14px;font-weight:600;padding:11px;cursor:pointer}
+.hist{cursor:pointer}
 .doc{padding:4px 18px 0}
 .doc h3{font-size:18px;font-weight:700;margin:24px 0 8px}
 .doc h3:first-child{margin-top:10px}
@@ -227,6 +237,19 @@ button{font-family:inherit}
   <h4 id="mTit">Confirmar</h4><p id="mMsg"></p>
   <div class="bts"><button class="no" id="mNao">Cancelar</button><button class="si" id="mSim">Confirmar</button></div>
 </div></div>
+<div class="modal" id="editar"><div class="modal-in">
+  <h4>Editar sessão</h4>
+  <p id="eSub"></p>
+  <div class="campos2">
+    <div><label>Início</label><input type="datetime-local" id="eData"></div>
+    <div><label>Duração (min)</label><input type="number" inputmode="numeric" id="eMin"></div>
+  </div>
+  <div class="bts" style="margin-top:16px">
+    <button class="no" id="eCancelar">Cancelar</button>
+    <button class="si" style="background:var(--pine)" id="eSalvar">Salvar</button>
+  </div>
+  <button class="excluirSessao" id="eExcluir">Excluir esta sessão</button>
+</div></div>
 <div class="desc" id="descanso"><b id="descN">00:00</b><span>Descanso</span><button id="descSkip">Pular</button></div>
 
 <script>
@@ -260,15 +283,15 @@ const BLOCOS = {
   A: [
     [{n:'Supino inclinado',c:'12 kg por mão',sp:4,rp:'6–10',sv:3,rv:'12–15',d:120,r:'RIR 2',
       dica:'<b>Posição:</b> banco a 30°. Sente com um halter apoiado em cada coxa e deite empurrando-os com as coxas até a altura do peito. Escápulas juntas e presas no banco, pés firmes no chão.<br><b>Execução:</b> cotovelos a cerca de 45° do tronco, não abertos a 90°. Desça até os halteres ficarem na linha do peito e você sentir alongamento. Suba sem bater um halter no outro no topo.<br><b>A série acaba</b> quando você não controla mais a descida.'}],
-    [{n:'Supino sentado na estação',c:'24,4 kg',sp:3,rp:'8–12',sv:3,rv:'12–15',d:90,r:'RIR 1–2',
+    [{n:'Supino sentado na estação',maq:1,c:'24,4 kg',sp:3,rp:'8–12',sv:3,rv:'12–15',d:90,r:'RIR 1–2',
       dica:'<b>Posição:</b> ajuste o assento para as manoplas ficarem na altura do meio do peito. Costas apoiadas, peito aberto, pés no chão.<br><b>Execução:</b> empurre até quase estender o cotovelo, sem travar, e volte em 2 a 3 segundos.<br><b>Erro comum:</b> deixar a placa bater na pilha no fim — se bateu, você perdeu a tensão antes da hora.'}],
     [{n:'Desenvolvimento sentado',c:'12 kg por mão',sp:4,rp:'8–12',sv:3,rv:'12–15',d:90,r:'RIR 2',
       dica:'<b>Posição:</b> banco a 80°, quase vertical. Halteres na altura das orelhas, palmas para frente, cotovelos um pouco à frente do corpo.<br><b>Execução:</b> empurre para cima até quase estender, sem bater os halteres no topo. Desça até as mãos voltarem à altura das orelhas.<br><b>Erro comum:</b> arquear a lombar para ajudar. Costelas para baixo e abdômen firme — se a lombar arqueia, a carga está alta.'}],
-    [{n:'Voador na estação',c:'17,6 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
+    [{n:'Voador na estação',maq:1,c:'17,6 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
       dica:'<b>Posição:</b> assento ajustado para as manoplas ficarem na altura do peito. Costas apoiadas.<br><b>Execução:</b> cotovelo levemente flexionado e <b>travado nesse ângulo do início ao fim</b>. Feche os braços à frente como se abraçasse alguém, segure meio segundo, e abra devagar até sentir o peito alongar.<br><b>Erro comum:</b> deixar o cotovelo abrir e fechar. Se isso acontecer, virou supino.'},
      {n:'Elevação lateral',c:'3 kg por mão',sp:3,rp:'12–20',sv:3,rv:'15–25',d:75,r:'RIR 0–1',
       dica:'<b>Posição:</b> em pé, halteres ao lado do corpo, cotovelo levemente dobrado e fixo.<br><b>Execução:</b> suba os braços para os lados até a altura dos ombros, com o mindinho um pouco mais alto que o polegar. Desça em 2 segundos.<br><b>Erro comum:</b> impulso do tronco e subir acima da linha do ombro — dali para cima o trabalho passa para o trapézio.'}],
-    [{n:'Tríceps na polia',c:'17,6 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
+    [{n:'Tríceps na polia',maq:1,c:'17,6 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
       dica:'<b>Posição:</b> em pé de frente para a polia alta, corda na altura do peito, cotovelos colados ao tronco, tronco levemente à frente.<br><b>Execução:</b> estenda os cotovelos até os braços ficarem retos, afastando as duas pontas da corda no fim. Volte só até o cotovelo formar 90°.<br><b>Erro comum:</b> o cotovelo sair do lugar ou o tronco balançar para ajudar.'},
      {n:'Tríceps testa',c:'10 kg · barra W',sp:3,rp:'10–12',sv:3,rv:'12–15',d:75,r:'RIR 1',
       dica:'<b>Posição:</b> deitado no banco reto, barra W acima do peito, braços apontados para cima e inclinados um pouco para trás.<br><b>Execução:</b> dobre só o cotovelo, levando a barra até a testa ou pouco atrás dela. Volte estendendo.<br><b>Erro comum:</b> mover o braço junto. Se o braço se move, virou supino fechado.'}],
@@ -281,11 +304,11 @@ const BLOCOS = {
     [{n:'Remada curvada',c:'26 kg',sp:4,rp:'8–10',sv:3,rv:'12–15',d:120,r:'RIR 2–3',
       dica:'<b>Posição:</b> pés na largura do quadril, joelhos levemente dobrados. Empurre o quadril para trás até o tronco ficar a uns 45° do chão. Coluna neutra, olhar num ponto do chão a 1,5 m à frente.<br><b>Execução:</b> puxe a barra em direção ao umbigo com os cotovelos rentes ao corpo. Desça controlado sem deixar a coluna arredondar.',
       alerta:'Maior risco lombar do programa. <b>Nunca leve à falha.</b> Se a lombar arredondar em qualquer repetição, a série acabou.'}],
-    [{n:'Remada baixa na polia',c:'31,2 kg',sp:3,rp:'10–12',sv:3,rv:'15–20',d:90,r:'RIR 1–2',
+    [{n:'Remada baixa na polia',maq:1,c:'31,2 kg',sp:3,rp:'10–12',sv:3,rv:'15–20',d:90,r:'RIR 1–2',
       dica:'<b>Posição:</b> sentado de frente para a polia baixa, triângulo nas mãos, pés apoiados, joelhos levemente dobrados, coluna ereta.<br><b>Execução:</b> puxe o triângulo até a barriga, juntando as escápulas no fim. Volte deixando as escápulas irem à frente e sentindo o dorsal alongar, sem arredondar a lombar.<br><b>Erro comum:</b> jogar o tronco para trás e para frente. O tronco fica quase parado.'}],
-    [{n:'Puxada alta supinada',c:'24,4 kg',sp:3,rp:'10–12',sv:3,rv:'12–15',d:90,r:'RIR 1–2',
+    [{n:'Puxada alta supinada',maq:1,c:'24,4 kg',sp:3,rp:'10–12',sv:3,rv:'12–15',d:90,r:'RIR 1–2',
       dica:'<b>Posição:</b> sentado, coxas travadas sob o apoio. Pegada supinada (palmas para você), mãos na largura dos ombros.<br><b>Execução:</b> incline o tronco uns 15° para trás e puxe a barra até a parte alta do peito, cotovelos descendo rentes ao corpo. Volte até estender por completo.<br><b>Erro comum:</b> puxar com o tronco em vez dos braços e das costas.'}],
-    [{n:'Face pull',c:'10,8 kg',sp:3,rp:'15–20',sv:3,rv:'20–25',d:0,r:'RIR 1',
+    [{n:'Face pull',maq:1,c:'10,8 kg',sp:3,rp:'15–20',sv:3,rv:'20–25',d:0,r:'RIR 1',
       dica:'<b>Posição:</b> polia na altura do rosto ou pouco acima, corda com pegada neutra, um passo para trás para tensionar o cabo.<br><b>Execução:</b> puxe a corda na direção do rosto <b>separando as mãos</b>, terminando com os cotovelos altos e as mãos ao lado das orelhas. Segure 1 segundo e volte devagar.<br><b>Não é opcional</b> — trapézio inferior e rotadores fracos são causa direta da sua rigidez cervical.'},
      {n:'Encolhimento',c:'12 kg por mão',sp:3,rp:'12–15',sv:3,rv:'15–20',d:75,r:'RIR 1',
       dica:'<b>Posição:</b> em pé, halteres ao lado do corpo, braços estendidos e relaxados.<br><b>Execução:</b> suba os ombros na direção das orelhas o máximo que conseguir, segure 1 segundo no topo e desça devagar.<br><b>Erro comum:</b> rolar os ombros para trás. O movimento é só para cima e para baixo.'}],
@@ -306,9 +329,9 @@ const BLOCOS = {
       dica:'<b>Posição:</b> sentado no chão com as escápulas apoiadas na borda do banco, barra sobre o quadril com uma toalha dobrada por baixo. Pés na largura do quadril, calcanhares logo abaixo dos joelhos.<br><b>Execução:</b> queixo no peito, empurre pelos calcanhares até tronco e coxa formarem uma linha reta. Segure 1 segundo contraindo o glúteo e desça controlado.<br><b>Erro comum:</b> subir arqueando a lombar em vez de estender o quadril.'}],
     [{n:'Afundo para trás',c:'5 kg por mão',sp:3,rp:'10 / perna',sv:3,rv:'12 / perna',d:90,r:'RIR 1–2',
       dica:'<b>Execução completa:</b> comece em pé, pés juntos. Dê um passo para trás, desça até o joelho de trás quase encostar no chão, empurre com a <b>perna da frente</b> para subir e <b>traga o pé de volta</b>. Cada repetição recomeça em pé. Faça as 10 de uma perna e depois troque.<br><b>Detalhes:</b> tronco vertical, o pé de trás só equilibra, o joelho da frente alinhado com o pé.<br><b>Depois de 2 ou 3 sessões</b>, se preferir, fique na posição sem trazer o pé a cada repetição — exige menos equilíbrio e permite mais carga.'}],
-    [{n:'Cadeira extensora',c:'24,4 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
+    [{n:'Cadeira extensora',maq:1,c:'24,4 kg',sp:3,rp:'12–15',sv:3,rv:'15–20',d:0,r:'RIR 1',
       dica:'<b>Posição:</b> sentado, costas apoiadas, rolo logo acima do peito do pé. O eixo do joelho alinhado com o eixo do aparelho.<br><b>Execução:</b> estenda até a perna ficar reta, segure meio segundo no topo, desça em 2 a 3 segundos.<br><b>Erro comum:</b> jogar o quadril para frente para ajudar no fim da série.'},
-     {n:'Flexora em pé',c:'10,8 kg',sp:3,rp:'12–15 / perna',sv:3,rv:'15–20 / perna',d:90,r:'RIR 1',
+     {n:'Flexora em pé',maq:1,c:'10,8 kg',sp:3,rp:'12–15 / perna',sv:3,rv:'15–20 / perna',d:90,r:'RIR 1',
       dica:'<b>Posição:</b> em pé de frente para a estação, apoiando as mãos na estrutura. Encaixe a perna no suporte, com o rolo logo acima do calcanhar.<br><b>Execução:</b> puxe o calcanhar em direção ao glúteo e volte devagar até quase estender. Uma perna de cada vez.<br><b>Erro comum:</b> jogar o quadril à frente para ganhar amplitude. O quadril fica parado; quem se move é só o joelho.'}],
     [{n:'Panturrilha em pé',c:'12 kg por mão',sp:4,rp:'12–20',sv:4,rv:'15–25',d:60,r:'RIR 0–1',
       dica:'<b>Posição:</b> antepé no degrau, calcanhares livres no ar, halteres ao lado do corpo, joelhos quase estendidos.<br><b>Execução:</b> desça o calcanhar abaixo do nível do degrau e <b>pause 2 segundos embaixo</b>. Suba até a ponta do pé, segure meio segundo e desça devagar.<br><b>Por que a pausa:</b> a panturrilha responde a alongamento sob carga, não a repetição rápida.'}]
@@ -362,6 +385,9 @@ const mmss = s => String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padS
 const durTexto = m => { const h=Math.floor(m/60), r=m%60; return h ? h+'h'+String(r).padStart(2,'0') : m+' min'; };
 function inicioSemana(d){ const x=new Date(d); const g=(x.getDay()+6)%7; x.setHours(0,0,0,0); x.setDate(x.getDate()-g); return x; }
 const chaveEx = (l,n) => l+'|'+n;
+const PLACA_MENOR = 4, PLACA_UN = 6.8;
+const kgPlacas = n => (n>0 ? PLACA_MENOR + n*PLACA_UN : 0);
+const fmtKg = v => v.toFixed(1).replace('.',',') + ' kg';
 const T_SERIE = 45, T_AQ = 10, T_CORE = 15, T_MOB = 12;
 const T_CARDIO = { z2:25, int:20, sol:10 };
 function estimaMusc(letra, volume){
@@ -400,19 +426,27 @@ function item(nome, metricas, dica, alerta, extra, busca){
 function seriesHTML(letra, e, volume){
   if(e.semLog) return '';
   const n = volume ? e.sv : e.sp, reps = volume ? e.rv : e.rp, k = chaveEx(letra, e.n);
+  const maq = !!e.maq;
   const feito = (ativa && ativa.series && ativa.series[k]) || [];
   const ant = ultimoRegistro(letra, e.n);
-  const antTxt = ant ? 'Última vez: ' + ant.map(s => `${s&&s.kg||'—'}×${s&&s.reps||'—'}`).join('  ·  ') : 'Primeira vez neste exercício';
+  const rot = s => maq ? ((s&&s.pl) ? s.pl+' pl' : '—') : ((s&&s.kg) ? s.kg : '—');
+  const antTxt = ant ? 'Última vez: ' + ant.map(s => `${rot(s)}×${(s&&s.reps)||'—'}`).join('  ·  ') : 'Primeira vez neste exercício';
   let linhas='';
   for(let i=0;i<n;i++){
     const f=feito[i]||{}, ph=(ant&&ant[i])||{};
-    linhas+=`<div class="sr ${f.ok?'feita':''}" data-ex="${k}" data-i="${i}">
+    const val = maq ? (f.pl??'') : (f.kg??'');
+    const dica = maq ? (val!=='' ? fmtKg(kgPlacas(+val)) : '') : '';
+    linhas+=`<div class="sr ${f.ok?'feita':''}" data-ex="${k}" data-i="${i}" data-maq="${maq?1:0}">
       <span class="i">${i+1}</span>
-      <input type="number" inputmode="decimal" step="0.5" placeholder="${ph.kg??'kg'}" value="${f.kg??''}" data-c="kg" aria-label="Carga série ${i+1}">
+      <div class="campoCarga">
+        <input type="number" inputmode="${maq?'numeric':'decimal'}" step="${maq?'1':'0.5'}" placeholder="${maq?((ph.pl??'placas')):(ph.kg??'kg')}" value="${val}" data-c="${maq?'pl':'kg'}" aria-label="Carga série ${i+1}">
+        ${maq?`<span class="conv">${dica}</span>`:''}
+      </div>
       <input type="number" inputmode="numeric" placeholder="${ph.reps??reps}" value="${f.reps??''}" data-c="reps" aria-label="Repetições série ${i+1}">
       <button class="ok" data-rest="${e.d}" aria-label="Concluir série ${i+1}"></button></div>`;
   }
-  return `<div class="series"><p class="ant">${antTxt}</p><div class="sh"><span></span><span>Carga</span><span>Reps</span><span></span></div>${linhas}</div>`;
+  const ref = maq ? '<p class="refPlacas">Digite o <b>número de placas grandes</b> abaixo da menor. O app converte: 1 pl = 10,8 · 2 = 17,6 · 3 = 24,4 · 4 = 31,2 · 5 = 38,0 kg</p>' : '';
+  return `<div class="series"><p class="ant">${antTxt}</p>${ref}<div class="sh"><span></span><span>${maq?'Placas':'Carga'}</span><span>Reps</span><span></span></div>${linhas}</div>`;
 }
 
 function telaInicio(){
@@ -433,7 +467,7 @@ function telaInicio(){
       <div class="t"><b>${NOMES[h.letra]} · ${h.tipo==='pesado'?'Pesado':'Volume'}</b>
       <span>${d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})} · ${durTexto(h.min||0)}</span></div>
       <div class="n">${h.volumeTotal?Math.round(h.volumeTotal).toLocaleString('pt-BR')+' kg':''}</div>
-      <button class="lixo" data-del="${h.data}" aria-label="Excluir sessão">&times;</button></div>`;
+      <button class="lixo" data-edit="${h.data}" aria-label="Editar sessão">&#8942;</button></div>`;
   }).join('');
   return `<div class="hero"><p class="lab">${em?'Sessão em andamento':'Próximo na fila'}</p>
       <h3>${em?ativa.letra:prox[0]} · ${NOMES[em?ativa.letra:prox[0]]}</h3>
@@ -654,7 +688,7 @@ function encerrar(){
   const min=Math.max(1,Math.round(decorridoSeg()/60));
   let vol=0;
   Object.keys(ativa.series).forEach(k=>ativa.series[k].forEach(s=>{ if(s&&s.ok) vol+=(+s.kg||0)*(+s.reps||0); }));
-  hist.push({data:Date.now(),letra:ativa.letra,tipo:ativa.tipo,min,series:ativa.series,volumeTotal:vol,cardio:ativa.cardio||null});
+  hist.push({data:ativa.inicio,letra:ativa.letra,tipo:ativa.tipo,min,series:ativa.series,volumeTotal:vol,cardio:ativa.cardio||null});
   const i=FILA.findIndex(f=>f[0]===ativa.letra&&f[1]===ativa.tipo);
   if(i>=0) filaIdx=(i+1)%6;
   ativa=null; salvar(); clearInterval(tRel); relogio.classList.remove('on','pausado');
@@ -662,12 +696,39 @@ function encerrar(){
   irPara(0);
 }
 
+const modalEd=document.getElementById('editar');
+let edTs=null;
+function paraInput(ts){ const d=new Date(ts-d0(ts)); return d.toISOString().slice(0,16); }
+function d0(ts){ return new Date(ts).getTimezoneOffset()*60000; }
+function abrirEdicao(ts){
+  const s=hist.find(x=>x.data===ts); if(!s) return;
+  edTs=ts;
+  document.getElementById('eSub').textContent=NOMES[s.letra]+' · '+(s.tipo==='pesado'?'Pesado':'Volume');
+  document.getElementById('eData').value=paraInput(ts);
+  document.getElementById('eMin').value=s.min||0;
+  modalEd.classList.add('on');
+}
+document.getElementById('eCancelar').onclick=()=>{ modalEd.classList.remove('on'); edTs=null; };
+modalEd.onclick=e=>{ if(e.target===modalEd){ modalEd.classList.remove('on'); edTs=null; } };
+document.getElementById('eSalvar').onclick=()=>{
+  const s=hist.find(x=>x.data===edTs); if(!s) return;
+  const v=document.getElementById('eData').value;
+  if(v) s.data=new Date(v).getTime();
+  const m=+document.getElementById('eMin').value;
+  if(m>0) s.min=Math.round(m);
+  hist.sort((a,b)=>a.data-b.data);
+  salvar(); modalEd.classList.remove('on'); edTs=null; irPara(0);
+};
+document.getElementById('eExcluir').onclick=()=>{
+  const s=hist.find(x=>x.data===edTs); if(!s) return;
+  const ts=edTs; modalEd.classList.remove('on'); edTs=null;
+  confirmar('Excluir esta sessão?','<b>'+NOMES[s.letra]+' · '+(s.tipo==='pesado'?'Pesado':'Volume')+'</b> de '+new Date(ts).toLocaleDateString('pt-BR')+' sairá do histórico. Isso não pode ser desfeito.','Excluir',()=>{
+    hist=hist.filter(x=>x.data!==ts); salvar(); irPara(0); });
+};
+
 main.addEventListener('click',ev=>{
-  const del=ev.target.closest('[data-del]');
-  if(del){ const ts=+del.dataset.del; const s=hist.find(x=>x.data===ts);
-    confirmar('Excluir esta sessão?','<b>'+NOMES[s.letra]+' · '+(s.tipo==='pesado'?'Pesado':'Volume')+'</b> de '+new Date(ts).toLocaleDateString('pt-BR')+' sairá do histórico. Isso não pode ser desfeito.','Excluir',()=>{
-      hist=hist.filter(x=>x.data!==ts); salvar(); irPara(0); });
-    return; }
+  const ed=ev.target.closest('.hist');
+  if(ed){ const b=ed.querySelector('[data-edit]'); if(b) abrirEdicao(+b.dataset.edit); return; }
   const rot=ev.target.closest('[data-rot]');
   if(rot){ sel.letra=rot.dataset.rot; irPara(1); return; }
   const tp=ev.target.closest('[data-tipo]');
@@ -691,6 +752,7 @@ main.addEventListener('click',ev=>{
     const feita=sr.classList.toggle('feita'); gravarSerie(sr);
     if(feita && +ok.dataset.rest>0) comecarDescanso(+ok.dataset.rest); }
 });
+main.addEventListener('input',ev=>{ if(ev.target.matches('.sr input')&&ativa) gravarSerie(ev.target.closest('.sr')); });
 main.addEventListener('change',ev=>{
   if(ev.target.matches('.sr input')&&ativa) gravarSerie(ev.target.closest('.sr'));
   if((ev.target.id==='cMin'||ev.target.id==='cKm')&&ativa){
@@ -704,9 +766,18 @@ main.addEventListener('change',ev=>{
 
 function gravarSerie(sr){
   if(!ativa) return;
-  const k=sr.dataset.ex, i=+sr.dataset.i;
+  const k=sr.dataset.ex, i=+sr.dataset.i, maq=sr.dataset.maq==='1';
+  const campo=sr.querySelector(maq?'[data-c="pl"]':'[data-c="kg"]');
+  const reps=sr.querySelector('[data-c="reps"]').value;
   ativa.series[k]=ativa.series[k]||[];
-  ativa.series[k][i]={ kg:sr.querySelector('[data-c="kg"]').value, reps:sr.querySelector('[data-c="reps"]').value, ok:sr.classList.contains('feita') };
+  if(maq){
+    const pl=campo.value;
+    const conv=sr.querySelector('.conv');
+    if(conv) conv.textContent = pl!=='' ? fmtKg(kgPlacas(+pl)) : '';
+    ativa.series[k][i]={ pl, kg: pl!=='' ? +kgPlacas(+pl).toFixed(1) : '', reps, ok:sr.classList.contains('feita') };
+  } else {
+    ativa.series[k][i]={ kg:campo.value, reps, ok:sr.classList.contains('feita') };
+  }
   salvar();
 }
 let descFim=0;
@@ -727,6 +798,14 @@ document.addEventListener('visibilitychange',()=>{
 document.getElementById('descSkip').onclick=()=>{ clearInterval(tDesc); descFim=0; descEl.classList.remove('on'); };
 
 if(ativa){ sel={letra:ativa.letra,tipo:ativa.tipo}; tickRelogio(); }
+function ajustaTopo(){
+  const t=document.querySelector('.topo'), a=document.querySelector('.app');
+  if(t&&a) a.style.paddingTop=t.offsetHeight+'px';
+}
+ajustaTopo();
+window.addEventListener('resize',ajustaTopo);
+window.addEventListener('orientationchange',()=>setTimeout(ajustaTopo,150));
+
 irPara(0);
 
 /* iOS ignora user-scalable=no, então a pinça é bloqueada por evento */

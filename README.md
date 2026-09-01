@@ -48,6 +48,16 @@ O relógio no topo começa ao tocar em "Iniciar treino". **Toque nele para pausa
 
 No cartão de cardio, escolha **Esteira** ou **Bike** e preencha minutos e distância. O resumo da semana aparece na tela de Início, com a quilometragem separada por modalidade.
 
+## Exercícios na estação W2
+
+Nesses exercícios o campo de carga pede o **número de placas grandes** selecionadas abaixo da placa menor, e o app mostra o peso convertido ao lado. A conversão usa placa menor de 4 kg e placas grandes de 6,8 kg — número que veio da ficha técnica do fabricante e ainda não foi conferido na balança.
+
+## Editar o histórico
+
+Toque em qualquer sessão do histórico para abrir a edição. Dá para corrigir a data e hora de início, ajustar a duração ou excluir a sessão.
+
+A data gravada é a de **início** do treino, não a de fim. Um treino que começa às 22h de segunda e termina 00h03 de terça fica registrado na segunda.
+
 ## Onde ficam os dados
 
 Séries, cargas e histórico ficam no `localStorage` do próprio navegador, no seu aparelho. Não vão para servidor nenhum.
