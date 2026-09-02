@@ -1,6 +1,6 @@
 {
   "name": "Treino do Glau",
-  "short_name": "Treino",
+  "short_name": "Treino do Glau",
   "description": "Registro de treino do Ciclo 1 — rotinas A, B e C, séries, cargas e histórico.",
   "start_url": "./index.html",
   "scope": "./",

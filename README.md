@@ -52,6 +52,23 @@ No cartão de cardio, escolha **Esteira** ou **Bike** e preencha minutos e dist�
 
 Nesses exercícios o campo de carga pede o **número de placas grandes** selecionadas abaixo da placa menor, e o app mostra o peso convertido ao lado. A conversão usa placa menor de 4 kg e placas grandes de 6,8 kg — número que veio da ficha técnica do fabricante e ainda não foi conferido na balança.
 
+## Qual carga registrar
+
+O cabeçalho da coluna diz sempre qual número o app espera:
+
+| Rótulo | O que digitar |
+|---|---|
+| **kg por mão** | O peso de **um** halter, não a soma dos dois |
+| **kg por lado** | O peso usado no lado que está trabalhando (exercícios unilaterais) |
+| **kg total** | O peso total na barra, incluindo a barra |
+| **Placas** | O número de placas grandes selecionadas na estação W2 |
+
+No cálculo de volume da sessão, exercícios "por mão" e "por lado" são contados duas vezes, já que os dois lados trabalham.
+
+## Meta de cardio
+
+A meta semanal é de **115 minutos**, que é a soma do programa: 3 sessões de zona 2 (25 min), 1 intervalada (20 min) e 2 soltas (10 min). A barra de progresso na tela de Início acompanha o total registrado na semana.
+
 ## Editar o histórico
 
 Toque em qualquer sessão do histórico para abrir a edição. Dá para corrigir a data e hora de início, ajustar a duração ou excluir a sessão.
