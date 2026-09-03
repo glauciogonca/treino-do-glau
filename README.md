@@ -75,6 +75,10 @@ Toque em qualquer sessão do histórico para abrir a edição. Dá para corrigir
 
 A data gravada é a de **início** do treino, não a de fim. Um treino que começa às 22h de segunda e termina 00h03 de terça fica registrado na segunda.
 
+## Resumo semanal
+
+Na tela de Início, o botão **Gerar resumo da semana** monta um relatório em texto com sessões, tempo, volume, cardio contra a meta, comparação de cargas com a semana anterior, exercícios prontos para subir carga e observações automáticas. Dá para escolher entre a semana atual e a anterior, copiar para a área de transferência ou baixar como `.txt`.
+
 ## Onde ficam os dados
 
 Séries, cargas e histórico ficam no `localStorage` do próprio navegador, no seu aparelho. Não vão para servidor nenhum.

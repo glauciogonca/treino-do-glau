@@ -174,6 +174,11 @@ button{font-family:inherit}
 .campos2 label{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:5px}
 .campos2 input{width:100%;border:1px solid var(--line2);background:var(--card);border-radius:9px;padding:11px 8px;font-family:"JetBrains Mono",monospace;font-size:16px;color:var(--ink);text-align:center}
 .campos2 input:focus{outline:0;border-color:var(--pine);background:var(--pine-bg)}
+.modal-in.alto{max-height:88vh;overflow-y:auto}
+.semanaSel{margin-bottom:12px}
+.semanaSel button b{font-size:14px}
+#rTexto{width:100%;height:44vh;border:1px solid var(--line2);border-radius:11px;padding:12px;font-family:"JetBrains Mono",monospace;font-size:11.5px;line-height:1.65;color:var(--ink);background:var(--card2);resize:none;margin-bottom:14px}
+.btResumo{width:100%;margin-top:12px;background:var(--ink);color:#fff;border:0;border-radius:11px;padding:14px;font-size:15px;font-weight:600;cursor:pointer}
 .excluirSessao{width:100%;margin-top:11px;background:none;border:0;color:var(--rust);font-size:14px;font-weight:600;padding:11px;cursor:pointer}
 .hist{cursor:pointer}
 .doc{padding:4px 18px 0}
@@ -257,6 +262,19 @@ button{font-family:inherit}
     <button class="si" style="background:var(--pine)" id="eSalvar">Salvar</button>
   </div>
   <button class="excluirSessao" id="eExcluir">Excluir esta sessão</button>
+</div></div>
+<div class="modal" id="mResumo"><div class="modal-in alto">
+  <h4>Resumo da semana</h4>
+  <div class="seg semanaSel">
+    <button data-sem="0" aria-pressed="true"><b>Esta semana</b></button>
+    <button data-sem="1" aria-pressed="false"><b>Semana passada</b></button>
+  </div>
+  <textarea id="rTexto" readonly></textarea>
+  <div class="bts">
+    <button class="no" id="rFechar">Fechar</button>
+    <button class="si" style="background:var(--pine)" id="rCopiar">Copiar</button>
+  </div>
+  <button class="excluirSessao" style="color:var(--pine)" id="rBaixar">Baixar como arquivo .txt</button>
 </div></div>
 <div class="desc" id="descanso"><b id="descN">00:00</b><span>Descanso</span><button id="descSkip">Pular</button></div>
 
@@ -383,12 +401,19 @@ const NOMES = { A:'Empurrar', B:'Puxar', C:'Pernas' };
 const FILA = [['A','pesado'],['B','pesado'],['C','pesado'],['A','volume'],['B','volume'],['C','volume']];
 
 let hist = DB.get('hist') || [];
-let filaIdx = DB.get('filaIdx') ?? 0;
+function histOrdenado(){ return hist.slice().sort((a,b)=>a.data-b.data); }
+function proximoDaFila(){
+  const h=histOrdenado();
+  if(!h.length) return FILA[0];
+  const u=h[h.length-1];
+  const i=FILA.findIndex(f=>f[0]===u.letra&&f[1]===u.tipo);
+  return i>=0 ? FILA[(i+1)%FILA.length] : FILA[0];
+}
 let ativa = DB.get('ativa') || null;
-let sel = { letra: FILA[filaIdx][0], tipo: FILA[filaIdx][1] };
+let sel = { letra: proximoDaFila()[0], tipo: proximoDaFila()[1] };
 let telaAtual = 0, tDesc = null, restaDesc = 0, tRel = null, nid = 0;
 
-const salvar = () => { DB.set('hist', hist); DB.set('filaIdx', filaIdx); DB.set('ativa', ativa); };
+const salvar = () => { DB.set('hist', hist); DB.set('ativa', ativa); };
 const mmss = s => String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
 const durTexto = m => { const h=Math.floor(m/60), r=m%60; return h ? h+'h'+String(r).padStart(2,'0') : m+' min'; };
 function inicioSemana(d){ const x=new Date(d); const g=(x.getDay()+6)%7; x.setHours(0,0,0,0); x.setDate(x.getDate()-g); return x; }
@@ -461,7 +486,7 @@ function seriesHTML(letra, e, volume){
 }
 
 function telaInicio(){
-  const prox=FILA[filaIdx], em=!!ativa;
+  const prox=proximoDaFila(), em=!!ativa;
   const ini=inicioSemana(new Date());
   const semana=hist.filter(h=>new Date(h.data)>=ini);
   const tot=semana.reduce((a,h)=>a+(h.min||0),0);
@@ -503,7 +528,8 @@ function telaInicio(){
         ${km?`<p class="metaKm">${km}</p>`:''}
       </div>`;
     })()}</section>
-    <section class="sec"><h2>Histórico</h2><div class="cartao">${lista||'<p class="vazio">Nenhuma sessão registrada ainda.</p>'}</div></section>`;
+    <section class="sec"><h2>Histórico</h2><div class="cartao">${lista||'<p class="vazio">Nenhuma sessão registrada ainda.</p>'}</div>
+      <button class="btResumo" id="btResumo">Gerar resumo da semana</button></section>`;
 }
 
 function telaTreino(){
@@ -611,6 +637,153 @@ const GUIA=`<div class="doc">
 <tr><td>Estação W2 — placas maiores</td><td>6,8 kg cada</td></tr></table>
 <p>1 placa + a menor = 10,8 · 2 + menor = 17,6 · 3 + menor = 24,4 · 4 + menor = 31,2 · 5 + menor = 38</p></div>`;
 
+/* ===================== RESUMO SEMANAL ===================== */
+const META_EX = (()=>{
+  const m = {};
+  Object.keys(BLOCOS).forEach(L => BLOCOS[L].forEach(b => b.forEach(e => {
+    m[chaveEx(L, e.n)] = { nome:e.n, letra:L, un:(e.maq?'placas':(e.un||'total')), maq:!!e.maq, sp:e.sp, sv:e.sv, rp:e.rp, rv:e.rv };
+  })));
+  Object.keys(CORE_ROT).forEach(L => { const e = CORE_ROT[L];
+    m[chaveEx(L, e.n)] = { nome:e.n, letra:L, un:(e.un||'total'), maq:false, sp:e.sp, sv:e.sv, rp:e.rp, rv:e.rv };
+  });
+  return m;
+})();
+const topoFaixa = txt => { const n = String(txt||'').match(/\d+/g); return n ? +n[n.length-1] : null; };
+const unLabel = u => ({ placas:'placas', mao:'kg/mão', lado:'kg/lado', total:'kg' })[u] || 'kg';
+
+function melhorDaSerie(arr, maq){
+  if(!arr) return null;
+  let melhor = null;
+  arr.forEach(s => {
+    if(!s || !s.ok) return;
+    const v = maq ? +s.pl : +s.kg;
+    if(!isFinite(v)) return;
+    if(!melhor || v > melhor.v) melhor = { v, reps:+s.reps || 0 };
+  });
+  return melhor;
+}
+
+function semanaDe(offset){
+  const ini = inicioSemana(new Date());
+  ini.setDate(ini.getDate() - 7*offset);
+  const fim = new Date(ini); fim.setDate(fim.getDate() + 7);
+  return { ini, fim, sessoes: hist.filter(h => new Date(h.data) >= ini && new Date(h.data) < fim).sort((a,b)=>a.data-b.data) };
+}
+
+function mapaCargas(sessoes){
+  const m = {};
+  sessoes.forEach(h => Object.keys(h.series || {}).forEach(k => {
+    const meta = META_EX[k]; if(!meta) return;
+    const best = melhorDaSerie(h.series[k], meta.maq);
+    if(!best) return;
+    if(!m[k] || best.v > m[k].v) m[k] = best;
+  }));
+  return m;
+}
+
+function prontosParaSubir(sessoes){
+  const out = [];
+  sessoes.forEach(h => Object.keys(h.series || {}).forEach(k => {
+    const meta = META_EX[k]; if(!meta) return;
+    const topo = topoFaixa(h.tipo === 'volume' ? meta.rv : meta.rp);
+    const alvo = h.tipo === 'volume' ? meta.sv : meta.sp;
+    if(!topo || !alvo) return;
+    const feitas = (h.series[k] || []).filter(s => s && s.ok && +s.reps > 0);
+    if(feitas.length >= alvo && feitas.every(s => +s.reps >= topo)){
+      const v = meta.maq ? feitas[0].pl : feitas[0].kg;
+      if(!out.some(o => o.k === k)) out.push({ k, nome:meta.nome, v, un:unLabel(meta.un), topo });
+    }
+  }));
+  return out;
+}
+
+function dtBR(ts, comHora){
+  const d = new Date(ts);
+  const s = d.toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' });
+  return comHora ? s + ' ' + d.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }) : s;
+}
+const DIA3 = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+function gerarResumo(offset){
+  const a = semanaDe(offset), b = semanaDe(offset + 1);
+  const S = a.sessoes;
+  const fimReal = new Date(a.fim); fimReal.setDate(fimReal.getDate() - 1);
+  const L = [];
+  L.push('RESUMO DA SEMANA — ' + dtBR(a.ini) + ' a ' + dtBR(fimReal));
+  L.push('Treino do Glau · Ciclo 1 · 59 kg · 1,64 m');
+  L.push('');
+
+  L.push('SESSÕES (' + S.length + ' de 6 previstas)');
+  if(!S.length) L.push('  Nenhuma sessão registrada.');
+  S.forEach(h => {
+    L.push('  ' + DIA3[new Date(h.data).getDay()] + ' ' + dtBR(h.data) + ' · ' + h.letra + ' ' + NOMES[h.letra] +
+      ' (' + (h.tipo === 'pesado' ? 'Pesado' : 'Volume') + ') · ' + durTexto(h.min || 0) +
+      (h.volumeTotal ? ' · volume ' + Math.round(h.volumeTotal).toLocaleString('pt-BR') + ' kg' : ''));
+  });
+  const tot = S.reduce((x,h)=>x+(h.min||0), 0);
+  const volA = S.reduce((x,h)=>x+(h.volumeTotal||0), 0);
+  const volB = b.sessoes.reduce((x,h)=>x+(h.volumeTotal||0), 0);
+  if(S.length){
+    L.push('  Tempo total: ' + durTexto(tot) + ' · média ' + durTexto(Math.round(tot/S.length)));
+    L.push('  Volume total: ' + Math.round(volA).toLocaleString('pt-BR') + ' kg' +
+      (volB ? ' (semana anterior: ' + Math.round(volB).toLocaleString('pt-BR') + ' kg · ' +
+        (volA>=volB?'+':'') + Math.round((volA/volB-1)*100) + '%)' : ''));
+  }
+  L.push('');
+
+  const c = S.map(h=>h.cardio).filter(Boolean);
+  const mn = c.reduce((x,y)=>x+(+y.min||0), 0);
+  const est = c.filter(x=>x.mod==='esteira').reduce((x,y)=>x+(+y.km||0), 0);
+  const bk = c.filter(x=>x.mod==='bike').reduce((x,y)=>x+(+y.km||0), 0);
+  L.push('CARDIO');
+  L.push('  ' + mn + ' de ' + META_CARDIO + ' min (' + Math.round(mn/META_CARDIO*100) + '% da meta)');
+  if(est) L.push('  Esteira: ' + est.toFixed(1).replace('.',',') + ' km');
+  if(bk) L.push('  Bike: ' + bk.toFixed(1).replace('.',',') + ' km');
+  L.push('');
+
+  const mA = mapaCargas(S), mB = mapaCargas(b.sessoes);
+  const sub = [], man = [], cai = [], nov = [];
+  Object.keys(mA).forEach(k => {
+    const meta = META_EX[k]; if(!meta) return;
+    const u = unLabel(meta.un);
+    const txt = meta.nome + ': ';
+    if(!mB[k]) nov.push('  ' + txt + mA[k].v + ' ' + u);
+    else if(mA[k].v > mB[k].v) sub.push('  ' + txt + mB[k].v + ' → ' + mA[k].v + ' ' + u);
+    else if(mA[k].v < mB[k].v) cai.push('  ' + txt + mB[k].v + ' → ' + mA[k].v + ' ' + u);
+    else man.push('  ' + txt + mA[k].v + ' ' + u + ' (' + mA[k].reps + ' reps)');
+  });
+  L.push('CARGAS vs SEMANA ANTERIOR');
+  if(sub.length){ L.push(' Subiram (' + sub.length + '):'); sub.forEach(x=>L.push(x)); }
+  if(man.length){ L.push(' Mantiveram (' + man.length + '):'); man.forEach(x=>L.push(x)); }
+  if(cai.length){ L.push(' Caíram (' + cai.length + '):'); cai.forEach(x=>L.push(x)); }
+  if(nov.length){ L.push(' Sem comparação (' + nov.length + '):'); nov.forEach(x=>L.push(x)); }
+  if(!sub.length && !man.length && !cai.length && !nov.length) L.push('  Nenhuma carga registrada.');
+  L.push('');
+
+  const prontos = prontosParaSubir(S);
+  L.push('PRONTOS PARA SUBIR CARGA');
+  if(prontos.length) prontos.forEach(p => L.push('  ' + p.nome + ' — topo da faixa (' + p.topo + ' reps) atingido com ' + p.v + ' ' + p.un));
+  else L.push('  Nenhum exercício bateu o topo da faixa em todas as séries.');
+  L.push('');
+
+  L.push('OBSERVAÇÕES');
+  const obs = [];
+  ['A','B','C'].forEach(l => {
+    const n = S.filter(h=>h.letra===l).length;
+    if(n < 2) obs.push('Treino ' + l + ' (' + NOMES[l] + ') feito ' + n + 'x — o previsto é 2x por semana.');
+  });
+  if(mn < META_CARDIO) obs.push('Cardio ' + (META_CARDIO-mn) + ' min abaixo da meta semanal.');
+  if(volB && volA < volB*0.9) obs.push('Volume caiu mais de 10% em relação à semana anterior.');
+  if(volB && volA > volB*1.3) obs.push('Volume subiu mais de 30% — atenção à recuperação.');
+  if(cai.length) obs.push(cai.length + ' exercício(s) com carga menor que na semana anterior.');
+  if(S.length >= 6 && mn >= META_CARDIO) obs.push('Semana completa: 6 sessões e meta de cardio batida.');
+  if(!obs.length) obs.push('Nada fora do esperado.');
+  obs.forEach(o => L.push('  - ' + o));
+  L.push('');
+  L.push('Gerado em ' + dtBR(Date.now(), true));
+  return L.join('\n');
+}
+
 const main=document.getElementById('main'), barra=document.getElementById('barra'), acao=document.getElementById('acao');
 const progi=document.getElementById('progi'), cont=document.getElementById('cont');
 const relogio=document.getElementById('relogio'), titulo=document.getElementById('titulo');
@@ -635,7 +808,8 @@ function irPara(t){
   titulo.textContent=['Treino do Glau','Treino do dia','Guia'][t];
   nid=0;
   main.innerHTML=[telaInicio,telaTreino,()=>GUIA][t]();
-  if(t===0){ const b=document.getElementById('irTreino'); if(b) b.onclick=()=>{ if(ativa) sel={letra:ativa.letra,tipo:ativa.tipo}; irPara(1); }; }
+  if(t===0){ const b=document.getElementById('irTreino'); if(b) b.onclick=()=>{ if(ativa) sel={letra:ativa.letra,tipo:ativa.tipo}; irPara(1); };
+    const r=document.getElementById('btResumo'); if(r) r.onclick=()=>abrirResumo(0); }
   if(t===1){ restaurarMarcas(); irProximo(); }
   atualizarBarra();
   window.scrollTo({top:0,behavior:'instant'});
@@ -707,16 +881,14 @@ relogio.onclick=()=>{
 function encerrar(){
   const min=Math.max(1,Math.round(decorridoSeg()/60));
   let vol=0;
-  const dobra={};
-  ['A','B','C'].forEach(l=>BLOCOS[l].forEach(b=>b.forEach(e=>{ if(e.x2) dobra[chaveEx(l,e.n)]=1; })));
-  Object.keys(ativa.series).forEach(k=>ativa.series[k].forEach(s=>{
-    if(s&&s.ok) vol+=(+s.kg||0)*(+s.reps||0)*(dobra[k]?2:1);
-  }));
+  Object.keys(ativa.series).forEach(k=>{
+    const meta=META_EX[k];
+    const f=meta ? (FATOR[meta.un]||1) : 1;
+    (ativa.series[k]||[]).forEach(s=>{ if(s&&s.ok) vol+=(+s.kg||0)*(+s.reps||0)*f; });
+  });
   hist.push({data:ativa.inicio,letra:ativa.letra,tipo:ativa.tipo,min,series:ativa.series,volumeTotal:vol,cardio:ativa.cardio||null});
-  const i=FILA.findIndex(f=>f[0]===ativa.letra&&f[1]===ativa.tipo);
-  if(i>=0) filaIdx=(i+1)%6;
   ativa=null; salvar(); clearInterval(tRel); relogio.classList.remove('on','pausado');
-  sel={letra:FILA[filaIdx][0],tipo:FILA[filaIdx][1]};
+  sel={letra:proximoDaFila()[0],tipo:proximoDaFila()[1]};
   irPara(0);
 }
 
@@ -747,7 +919,7 @@ document.getElementById('eExcluir').onclick=()=>{
   const s=hist.find(x=>x.data===edTs); if(!s) return;
   const ts=edTs; modalEd.classList.remove('on'); edTs=null;
   confirmar('Excluir esta sessão?','<b>'+NOMES[s.letra]+' · '+(s.tipo==='pesado'?'Pesado':'Volume')+'</b> de '+new Date(ts).toLocaleDateString('pt-BR')+' sairá do histórico. Isso não pode ser desfeito.','Excluir',()=>{
-    hist=hist.filter(x=>x.data!==ts); salvar(); irPara(0); });
+    hist=hist.filter(x=>x.data!==ts); const p=proximoDaFila(); sel={letra:p[0],tipo:p[1]}; salvar(); irPara(0); });
 };
 
 main.addEventListener('click',ev=>{
@@ -773,7 +945,20 @@ main.addEventListener('click',ev=>{
   const ok=ev.target.closest('.ok');
   if(ok){ const sr=ok.closest('.sr');
     if(!ativa){ alert('Toque em "Iniciar treino" na barra de baixo para registrar as séries.'); return; }
-    const feita=sr.classList.toggle('feita'); gravarSerie(sr);
+    const feita=sr.classList.toggle('feita');
+    if(feita){
+      const maq=sr.dataset.maq==='1';
+      const cCar=sr.querySelector(maq?'[data-c="pl"]':'[data-c="kg"]');
+      const cRep=sr.querySelector('[data-c="reps"]');
+      const nome=sr.dataset.ex.split('|')[1];
+      const ant=ultimoRegistro(sr.dataset.ex.split('|')[0], nome);
+      const ref=ant && ant[+sr.dataset.i];
+      if(ref){
+        if(cCar.value==='') cCar.value = maq ? (ref.pl??'') : (ref.kg??'');
+        if(cRep.value==='') cRep.value = ref.reps??'';
+      }
+    }
+    gravarSerie(sr);
     sincronizarItem(sr.closest('.item'));
     if(feita && +ok.dataset.rest>0) comecarDescanso(+ok.dataset.rest); }
 });
@@ -838,6 +1023,32 @@ document.addEventListener('visibilitychange',()=>{
 document.getElementById('descSkip').onclick=()=>{ clearInterval(tDesc); descFim=0; descEl.classList.remove('on'); };
 
 if(ativa){ sel={letra:ativa.letra,tipo:ativa.tipo}; tickRelogio(); }
+const mResumo=document.getElementById('mResumo'), rTexto=document.getElementById('rTexto');
+function abrirResumo(off){
+  mResumo.querySelectorAll('[data-sem]').forEach(b=>b.setAttribute('aria-pressed', +b.dataset.sem===off?'true':'false'));
+  rTexto.value=gerarResumo(off);
+  mResumo.classList.add('on');
+}
+mResumo.addEventListener('click',e=>{
+  const b=e.target.closest('[data-sem]');
+  if(b){ abrirResumo(+b.dataset.sem); return; }
+  if(e.target===mResumo) mResumo.classList.remove('on');
+});
+document.getElementById('rFechar').onclick=()=>mResumo.classList.remove('on');
+document.getElementById('rCopiar').onclick=()=>{
+  const bt=document.getElementById('rCopiar');
+  const feito=()=>{ bt.textContent='Copiado'; setTimeout(()=>bt.textContent='Copiar',1600); };
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(rTexto.value).then(feito).catch(()=>{ rTexto.select(); document.execCommand('copy'); feito(); });
+  } else { rTexto.select(); rTexto.setSelectionRange(0,999999); document.execCommand('copy'); feito(); }
+};
+document.getElementById('rBaixar').onclick=()=>{
+  const b=new Blob([rTexto.value],{type:'text/plain;charset=utf-8'});
+  const u=URL.createObjectURL(b), a=document.createElement('a');
+  a.href=u; a.download='resumo-treino-'+new Date().toISOString().slice(0,10)+'.txt';
+  document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1000);
+};
+
 function ajustaTopo(){
   const t=document.querySelector('.topo'), a=document.querySelector('.app');
   if(t&&a) a.style.paddingTop=t.offsetHeight+'px';
