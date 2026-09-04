@@ -75,6 +75,14 @@ Toque em qualquer sessão do histórico para abrir a edição. Dá para corrigir
 
 A data gravada é a de **início** do treino, não a de fim. Um treino que começa às 22h de segunda e termina 00h03 de terça fica registrado na segunda.
 
+## Treino livre
+
+O quarto botão do seletor de rotinas (★ Livre) abre uma sessão fora do programa, para os dias em que não dá para fazer A, B ou C. Toque em **Iniciar treino** e depois em **+ Adicionar exercício** para montar a sessão: dá para escolher qualquer exercício do programa ou criar um com nome livre.
+
+Exercícios escolhidos do programa entram no mesmo histórico daquele exercício, então o "Última vez" e a comparação de cargas continuam funcionando.
+
+Um treino livre **não avança a fila** A → B → C e não conta como sessão do programa no resumo semanal — aparece numa seção própria. O cardio dele conta normalmente na meta de 115 minutos.
+
 ## Resumo semanal
 
 Na tela de Início, o botão **Gerar resumo da semana** monta um relatório em texto com sessões, tempo, volume, cardio contra a meta, comparação de cargas com a semana anterior, exercícios prontos para subir carga e observações automáticas. Dá para escolher entre a semana atual e a anterior, copiar para a área de transferência ou baixar como `.txt`.

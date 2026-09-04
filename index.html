@@ -178,6 +178,17 @@ button{font-family:inherit}
 .semanaSel{margin-bottom:12px}
 .semanaSel button b{font-size:14px}
 #rTexto{width:100%;height:44vh;border:1px solid var(--line2);border-radius:11px;padding:12px;font-family:"JetBrains Mono",monospace;font-size:11.5px;line-height:1.65;color:var(--ink);background:var(--card2);resize:none;margin-bottom:14px}
+.seg.quatro button b{font-size:15px}
+.btAdd{width:100%;background:var(--card);border:1.5px dashed var(--line2);border-radius:12px;padding:14px;font-size:15px;font-weight:600;color:var(--pine);cursor:pointer}
+.removerEx{margin-top:10px;background:none;border:0;padding:4px 0;color:var(--rust);font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
+.catLista{max-height:52vh;overflow-y:auto;margin:4px -4px 0;padding:0 4px}
+.grpCat{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin:14px 0 7px}
+.itemCat{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--card2);border:0;border-radius:10px;padding:12px 13px;margin-bottom:6px;font-size:15px;font-weight:500;color:var(--ink);text-align:left;cursor:pointer}
+.itemCat span{font-family:"JetBrains Mono",monospace;font-size:10.5px;color:var(--dim);flex:none}
+.customEx{display:flex;gap:7px}
+.customEx input{flex:1;min-width:0;border:1px solid var(--line2);background:var(--card);border-radius:10px;padding:12px;font-size:16px;color:var(--ink)}
+.customEx button{flex:none;background:var(--pine);color:#fff;border:0;border-radius:10px;padding:12px 16px;font-size:14px;font-weight:600;cursor:pointer}
+.hist .sel.livre{background:var(--gold-bg);color:var(--gold)}
 .btResumo{width:100%;margin-top:12px;background:var(--ink);color:#fff;border:0;border-radius:11px;padding:14px;font-size:15px;font-weight:600;cursor:pointer}
 .excluirSessao{width:100%;margin-top:11px;background:none;border:0;color:var(--rust);font-size:14px;font-weight:600;padding:11px;cursor:pointer}
 .hist{cursor:pointer}
@@ -262,6 +273,12 @@ button{font-family:inherit}
     <button class="si" style="background:var(--pine)" id="eSalvar">Salvar</button>
   </div>
   <button class="excluirSessao" id="eExcluir">Excluir esta sessão</button>
+</div></div>
+<div class="modal" id="mCatalogo"><div class="modal-in alto">
+  <h4>Adicionar exercício</h4>
+  <p>Escolha um do programa ou crie um livre.</p>
+  <div id="catLista" class="catLista"></div>
+  <div class="bts" style="margin-top:14px"><button class="no" id="catFechar">Fechar</button></div>
 </div></div>
 <div class="modal" id="mResumo"><div class="modal-in alto">
   <h4>Resumo da semana</h4>
@@ -397,13 +414,14 @@ const MONTAGEM = {
   C:['Barra reta · 10 + 5 kg de cada lado = 36 kg','2 barras de 40 cm · 5 + 5 kg cada = 12 kg por mão']
 };
 const CARDIO_POR = { A:{pesado:'z2',volume:'int'}, B:{pesado:'z2',volume:'z2'}, C:{pesado:'sol',volume:'sol'} };
-const NOMES = { A:'Empurrar', B:'Puxar', C:'Pernas' };
+const NOMES = { A:'Empurrar', B:'Puxar', C:'Pernas', L:'Livre' };
 const FILA = [['A','pesado'],['B','pesado'],['C','pesado'],['A','volume'],['B','volume'],['C','volume']];
 
 let hist = DB.get('hist') || [];
 function histOrdenado(){ return hist.slice().sort((a,b)=>a.data-b.data); }
+function histPrograma(){ return histOrdenado().filter(h=>h.letra!=='L'); }
 function proximoDaFila(){
-  const h=histOrdenado();
+  const h=histPrograma();
   if(!h.length) return FILA[0];
   const u=h[h.length-1];
   const i=FILA.findIndex(f=>f[0]===u.letra&&f[1]===u.tipo);
@@ -438,6 +456,7 @@ function estimaMusc(letra, volume){
   return Math.round(seg / 60);
 }
 function estimaTotal(letra, volume, tipo){
+  if(letra==='L') return 0;
   return T_AQ + estimaMusc(letra, volume) + T_CORE + T_MOB + T_CARDIO[CARDIO_POR[letra][tipo]];
 }
 function ultimoRegistro(l,n){ for(let i=hist.length-1;i>=0;i--){ const s=hist[i].series && hist[i].series[chaveEx(l,n)]; if(s&&s.length) return s; } return null; }
@@ -495,12 +514,12 @@ function telaInicio(){
   for(let i=0;i<7;i++){
     const d=new Date(ini); d.setDate(d.getDate()+i);
     const s=semana.find(h=>new Date(h.data).toDateString()===d.toDateString());
-    dias+=`<div class="dia ${s?'feito':''} ${i===hojeI?'hoje':''}"><div class="d">${rot[i]}</div><div class="v">${s?s.letra:'·'}</div></div>`;
+    dias+=`<div class="dia ${s?'feito':''} ${i===hojeI?'hoje':''}"><div class="d">${rot[i]}</div><div class="v">${s?(s.letra==='L'?'★':s.letra):'·'}</div></div>`;
   }
   const lista=hist.slice(-12).reverse().map(h=>{
     const d=new Date(h.data);
-    return `<div class="hist"><div class="sel ${h.tipo}">${h.letra}</div>
-      <div class="t"><b>${NOMES[h.letra]} · ${h.tipo==='pesado'?'Pesado':'Volume'}</b>
+    return `<div class="hist"><div class="sel ${h.letra==='L'?'livre':h.tipo}">${h.letra==='L'?'★':h.letra}</div>
+      <div class="t"><b>${NOMES[h.letra]}${h.letra==='L'?'':' · '+(h.tipo==='pesado'?'Pesado':'Volume')}</b>
       <span>${d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})} · ${durTexto(h.min||0)}</span></div>
       <div class="n">${h.volumeTotal?Math.round(h.volumeTotal).toLocaleString('pt-BR')+' kg':''}</div>
       <button class="lixo" data-edit="${h.data}" aria-label="Editar sessão">&#8942;</button></div>`;
@@ -532,7 +551,14 @@ function telaInicio(){
       <button class="btResumo" id="btResumo">Gerar resumo da semana</button></section>`;
 }
 
+function segRotinas(letra){
+  const trava = !!ativa;
+  return `<div class="seg rot quatro${trava?' travado':''}">` +
+    ['A','B','C','L'].map(l=>`<button ${trava?'disabled':''} data-rot="${l}" aria-pressed="${l===letra}"><b>${l==='L'?'★':l}</b><span>${NOMES[l]}</span></button>`).join('') +
+    `</div>`;
+}
 function telaTreino(){
+  if(sel.letra==='L') return telaLivre();
   const letra=sel.letra, volume=sel.tipo==='volume';
   const todos=BLOCOS[letra].map(b=>b.slice());
   const fixos=todos.filter(b=>b[0].fim);
@@ -540,9 +566,7 @@ function telaTreino(){
   if(volume) blocos=blocos.reverse().map(b=>b.slice().reverse());
   blocos=blocos.concat(fixos);
   const trava = !!ativa;
-  let h=`<div class="seletor"><div class="seg rot${trava?' travado':''}">
-      ${['A','B','C'].map(l=>`<button ${trava?'disabled':''} data-rot="${l}" aria-pressed="${l===letra}"><b>${l}</b><span>${NOMES[l]}</span></button>`).join('')}
-    </div><div class="seg tipo${trava?' travado':''}">
+  let h=`<div class="seletor">${segRotinas(letra)}<div class="seg tipo${trava?' travado':''}">
       <button class="p" ${trava?'disabled':''} data-tipo="pesado" aria-pressed="${!volume}"><b>Pesado</b><span>reps baixas</span></button>
       <button class="v" ${trava?'disabled':''} data-tipo="volume" aria-pressed="${volume}"><b>Volume</b><span>ordem invertida</span></button>
     </div>${trava
@@ -637,6 +661,101 @@ const GUIA=`<div class="doc">
 <tr><td>Estação W2 — placas maiores</td><td>6,8 kg cada</td></tr></table>
 <p>1 placa + a menor = 10,8 · 2 + menor = 17,6 · 3 + menor = 24,4 · 4 + menor = 31,2 · 5 + menor = 38</p></div>`;
 
+/* ===================== TREINO LIVRE ===================== */
+const AQ_LIVRE = [
+  ['Esteira ou bike leve','5 min','Ritmo crescente até o corpo aquecer e a respiração subir um pouco. Mesmo em treino curto, não pule.'],
+  ['Gato-vaca','6–8 ciclos lentos','Quatro apoios. Arredonde e arqueie a coluna num movimento contínuo, sem segurar as pontas.']
+];
+
+function catalogoExercicios(){
+  const cat = [];
+  ['A','B','C'].forEach(L => BLOCOS[L].forEach(b => b.forEach(e => {
+    cat.push({ orig:L, n:e.n, un:(e.maq?'placas':(e.un||'total')), maq:!!e.maq, d:e.d||60, grupo:L+' · '+NOMES[L] });
+  })));
+  Object.keys(CORE_ROT).forEach(L => { const e = CORE_ROT[L];
+    cat.push({ orig:L, n:e.n, un:(e.un||'total'), maq:false, d:e.d||45, grupo:'Core' });
+  });
+  return cat;
+}
+const CATALOGO = catalogoExercicios();
+
+function seriesLivre(ex, idx){
+  const k = ex.custom ? chaveEx('L', ex.n) : chaveEx(ex.orig, ex.n);
+  const maq = !!ex.maq;
+  const feito = (ativa && ativa.series && ativa.series[k]) || [];
+  const ant = ultimoRegistro(ex.custom ? 'L' : ex.orig, ex.n);
+  const rot = s => maq ? ((s&&s.pl) ? s.pl+' pl' : '—') : ((s&&s.kg) ? s.kg : '—');
+  const antTxt = ant ? 'Última vez: ' + ant.map(s => rot(s)+'×'+((s&&s.reps)||'—')).join('  ·  ') : 'Sem registro anterior';
+  const nSeries = Math.max(4, feito.length);
+  let linhas = '';
+  for(let i=0;i<nSeries;i++){
+    const f = feito[i] || {}, ph = (ant && ant[i]) || {};
+    const val = maq ? (f.pl ?? '') : (f.kg ?? '');
+    linhas += '<div class="sr '+(f.ok?'feita':'')+'" data-ex="'+k+'" data-i="'+i+'" data-maq="'+(maq?1:0)+'">'+
+      '<span class="i">'+(i+1)+'</span>'+
+      '<div class="campoCarga"><input type="number" inputmode="'+(maq?'numeric':'decimal')+'" step="'+(maq?'1':'0.5')+'" placeholder="'+(maq?(ph.pl??'placas'):(ph.kg??'kg'))+'" value="'+val+'" data-c="'+(maq?'pl':'kg')+'" aria-label="Carga série '+(i+1)+'">'+
+      (maq?'<span class="conv">'+(val!==''?fmtKg(kgPlacas(+val)):'')+'</span>':'')+'</div>'+
+      '<input type="number" inputmode="numeric" placeholder="reps" value="'+(f.reps??'')+'" data-c="reps" aria-label="Repetições série '+(i+1)+'">'+
+      '<button class="ok" data-rest="'+(ex.d||60)+'" aria-label="Concluir série '+(i+1)+'"></button></div>';
+  }
+  return '<div class="series"><p class="ant">'+antTxt+'</p><div class="sh"><span></span><span>'+
+    ROT_UN[maq?'placas':ex.un]+'</span><span>Reps</span><span></span></div>'+linhas+'</div>';
+}
+
+function telaLivre(){
+  const lista = (ativa && ativa.livres) || [];
+  let h = '<div class="seletor">'+segRotinas('L')+
+    '<p class="expl">Sessão fora do programa. <b>Não avança a fila</b> e não conta como treino A, B ou C no resumo semanal.</p></div>';
+
+  h += '<section class="sec"><h2>Aquecimento <span class="dur">5 min</span></h2>';
+  AQ_LIVRE.forEach(a => h += item(a[0], [[a[1],'k']], a[2], null, null, a[0]));
+  h += '</section>';
+
+  h += '<section class="sec"><h2>Exercícios</h2>';
+  if(!lista.length) h += '<p class="vazio">Nenhum exercício adicionado ainda.</p>';
+  lista.forEach((ex, i) => {
+    const extra = seriesLivre(ex, i) + '<button class="removerEx" data-rem="'+i+'">Remover exercício</button>';
+    h += item(ex.n, [[ROT_UN[ex.maq?'placas':ex.un],'k'], [(ex.d||60)+' s','s']], null, null, extra, ex.n);
+  });
+  h += '<button class="btAdd" id="btAdd">+ Adicionar exercício</button></section>';
+
+  const cl = (ativa && ativa.cardio) || {};
+  const formCardio = '<div class="clog"><div class="modo">'+
+    '<button data-mod="esteira" aria-pressed="'+(cl.mod==='esteira')+'">Esteira</button>'+
+    '<button data-mod="bike" aria-pressed="'+(cl.mod==='bike')+'">Bike</button></div>'+
+    '<div class="campos"><div><label>Minutos</label><input type="number" inputmode="numeric" id="cMin" placeholder="min" value="'+(cl.min??'')+'"></div>'+
+    '<div><label>Distância (km)</label><input type="number" inputmode="decimal" step="0.1" id="cKm" placeholder="km" value="'+(cl.km??'')+'"></div></div></div>';
+  h += '<section class="sec"><h2>Cardio <span class="dur">opcional</span></h2>';
+  h += item('Cardio', [['livre','k']], 'Registre modalidade, tempo e distância. Entra na meta semanal de '+META_CARDIO+' minutos normalmente.', null, formCardio, 'treino aeróbico');
+  h += '</section>';
+  return h;
+}
+
+function abrirCatalogo(){
+  const porGrupo = {};
+  CATALOGO.forEach(e => { (porGrupo[e.grupo] = porGrupo[e.grupo] || []).push(e); });
+  let h = '';
+  Object.keys(porGrupo).forEach(g => {
+    h += '<p class="grpCat">'+g+'</p>';
+    porGrupo[g].forEach(e => {
+      h += '<button class="itemCat" data-add="'+encodeURIComponent(JSON.stringify(e))+'">'+e.n+
+           '<span>'+ROT_UN[e.maq?'placas':e.un]+'</span></button>';
+    });
+  });
+  h += '<p class="grpCat">Outro</p><div class="customEx"><input type="text" id="exNome" placeholder="Nome do exercício" maxlength="40"><button id="exAdd">Adicionar</button></div>';
+  document.getElementById('catLista').innerHTML = h;
+  document.getElementById('mCatalogo').classList.add('on');
+}
+
+function adicionarExercicio(ex){
+  if(!ativa){ alert('Toque em "Iniciar treino" na barra de baixo antes de montar a sessão.'); return; }
+  ativa.livres = ativa.livres || [];
+  ativa.livres.push(ex);
+  salvar();
+  document.getElementById('mCatalogo').classList.remove('on');
+  irPara(1);
+}
+
 /* ===================== RESUMO SEMANAL ===================== */
 const META_EX = (()=>{
   const m = {};
@@ -706,7 +825,9 @@ const DIA3 = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
 function gerarResumo(offset){
   const a = semanaDe(offset), b = semanaDe(offset + 1);
-  const S = a.sessoes;
+  const todas = a.sessoes;
+  const S = todas.filter(h=>h.letra!=='L');
+  const LV = todas.filter(h=>h.letra==='L');
   const fimReal = new Date(a.fim); fimReal.setDate(fimReal.getDate() - 1);
   const L = [];
   L.push('RESUMO DA SEMANA — ' + dtBR(a.ini) + ' a ' + dtBR(fimReal));
@@ -720,18 +841,26 @@ function gerarResumo(offset){
       ' (' + (h.tipo === 'pesado' ? 'Pesado' : 'Volume') + ') · ' + durTexto(h.min || 0) +
       (h.volumeTotal ? ' · volume ' + Math.round(h.volumeTotal).toLocaleString('pt-BR') + ' kg' : ''));
   });
-  const tot = S.reduce((x,h)=>x+(h.min||0), 0);
-  const volA = S.reduce((x,h)=>x+(h.volumeTotal||0), 0);
+  const tot = todas.reduce((x,h)=>x+(h.min||0), 0);
+  const volA = todas.reduce((x,h)=>x+(h.volumeTotal||0), 0);
   const volB = b.sessoes.reduce((x,h)=>x+(h.volumeTotal||0), 0);
-  if(S.length){
-    L.push('  Tempo total: ' + durTexto(tot) + ' · média ' + durTexto(Math.round(tot/S.length)));
+  if(todas.length){
+    L.push('  Tempo total: ' + durTexto(tot) + ' · média ' + durTexto(Math.round(tot/todas.length)));
     L.push('  Volume total: ' + Math.round(volA).toLocaleString('pt-BR') + ' kg' +
       (volB ? ' (semana anterior: ' + Math.round(volB).toLocaleString('pt-BR') + ' kg · ' +
         (volA>=volB?'+':'') + Math.round((volA/volB-1)*100) + '%)' : ''));
   }
   L.push('');
+  if(LV.length){
+    L.push('');
+    L.push('TREINOS LIVRES (' + LV.length + ')');
+    LV.forEach(h => L.push('  ' + DIA3[new Date(h.data).getDay()] + ' ' + dtBR(h.data) + ' · ' + durTexto(h.min||0) +
+      ' · ' + Object.keys(h.series||{}).length + ' exercício(s)' +
+      (h.volumeTotal ? ' · volume ' + Math.round(h.volumeTotal).toLocaleString('pt-BR') + ' kg' : '')));
+  }
+  if(LV.length) L.push('');
 
-  const c = S.map(h=>h.cardio).filter(Boolean);
+  const c = todas.map(h=>h.cardio).filter(Boolean);
   const mn = c.reduce((x,y)=>x+(+y.min||0), 0);
   const est = c.filter(x=>x.mod==='esteira').reduce((x,y)=>x+(+y.km||0), 0);
   const bk = c.filter(x=>x.mod==='bike').reduce((x,y)=>x+(+y.km||0), 0);
@@ -741,7 +870,7 @@ function gerarResumo(offset){
   if(bk) L.push('  Bike: ' + bk.toFixed(1).replace('.',',') + ' km');
   L.push('');
 
-  const mA = mapaCargas(S), mB = mapaCargas(b.sessoes);
+  const mA = mapaCargas(todas), mB = mapaCargas(b.sessoes);
   const sub = [], man = [], cai = [], nov = [];
   Object.keys(mA).forEach(k => {
     const meta = META_EX[k]; if(!meta) return;
@@ -855,7 +984,7 @@ document.getElementById('descartar').onclick=()=>{
 };
 
 function iniciar(){
-  ativa={letra:sel.letra,tipo:sel.tipo,inicio:Date.now(),acumulado:0,pausado:null,series:{},feitos:[]};
+  ativa={letra:sel.letra,tipo:sel.tipo,inicio:Date.now(),acumulado:0,pausado:null,series:{},feitos:[],livres:[]};
   salvar(); tickRelogio(); irPara(1);
 }
 function decorridoSeg(){
@@ -926,9 +1055,18 @@ main.addEventListener('click',ev=>{
   const ed=ev.target.closest('.hist');
   if(ed){ const b=ed.querySelector('[data-edit]'); if(b) abrirEdicao(+b.dataset.edit); return; }
   const rot=ev.target.closest('[data-rot]');
-  if(rot){ sel.letra=rot.dataset.rot; irPara(1); return; }
+  if(rot){ sel.letra=rot.dataset.rot; if(sel.letra==='L') sel.tipo='livre'; else if(sel.tipo==='livre') sel.tipo='pesado'; irPara(1); return; }
   const tp=ev.target.closest('[data-tipo]');
   if(tp){ sel.tipo=tp.dataset.tipo; irPara(1); return; }
+  if(ev.target.closest('#btAdd')){ abrirCatalogo(); return; }
+  const rem=ev.target.closest('[data-rem]');
+  if(rem){ const i=+rem.dataset.rem; const nome=ativa.livres[i].n;
+    confirmar('Remover exercício?','<b>'+nome+'</b> sai desta sessão junto com as séries registradas nele.','Remover',()=>{
+      const k=ativa.livres[i].custom?chaveEx('L',nome):chaveEx(ativa.livres[i].orig,nome);
+      delete ativa.series[k];
+      ativa.feitos=ativa.feitos.filter(x=>x!==nome);
+      ativa.livres.splice(i,1); salvar(); irPara(1); });
+    return; }
   const md=ev.target.closest('[data-mod]');
   if(md){
     if(!ativa){ alert('Toque em "Iniciar treino" para registrar o cardio.'); return; }
@@ -1048,6 +1186,19 @@ document.getElementById('rBaixar').onclick=()=>{
   a.href=u; a.download='resumo-treino-'+new Date().toISOString().slice(0,10)+'.txt';
   document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(u),1000);
 };
+
+const mCat=document.getElementById('mCatalogo');
+document.getElementById('catFechar').onclick=()=>mCat.classList.remove('on');
+mCat.addEventListener('click',e=>{
+  if(e.target===mCat){ mCat.classList.remove('on'); return; }
+  const a=e.target.closest('[data-add]');
+  if(a){ adicionarExercicio(JSON.parse(decodeURIComponent(a.dataset.add))); return; }
+  if(e.target.closest('#exAdd')){
+    const c=document.getElementById('exNome'), nome=(c.value||'').trim();
+    if(!nome) return;
+    adicionarExercicio({ n:nome, un:'total', maq:false, d:60, custom:1 });
+  }
+});
 
 function ajustaTopo(){
   const t=document.querySelector('.topo'), a=document.querySelector('.app');
