@@ -163,6 +163,9 @@ button{font-family:inherit}
 .descartar{flex:none;background:none;border:1px solid var(--line2);border-radius:9px;padding:11px 12px;color:var(--muted);font-size:13.5px;font-weight:600;cursor:pointer}
 .modal{position:fixed;inset:0;z-index:60;background:rgba(21,24,28,.45);display:none;align-items:flex-end;justify-content:center}
 .modal.on{display:flex}
+#modal{z-index:90}
+#editar,#mDados,#mResumo,#mCatalogo{z-index:60}
+.modal.atras .modal-in{filter:brightness(.97)}
 .modal-in{background:var(--card);border-radius:17px 17px 0 0;width:100%;max-width:660px;padding:22px 20px calc(20px + env(safe-area-inset-bottom))}
 .modal-in h4{font-size:19px;font-weight:700;margin:0 0 8px}
 .modal-in p{color:var(--muted);font-size:14.5px;margin:0 0 18px}
@@ -1029,11 +1032,18 @@ let acaoConfirmada=null;
 function confirmar(titulo, msg, rotulo, fn){
   mTit.textContent=titulo; mMsg.innerHTML=msg;
   document.getElementById('mSim').textContent=rotulo;
-  acaoConfirmada=fn; modal.classList.add('on');
+  acaoConfirmada=fn;
+  document.querySelectorAll('.modal.on').forEach(m=>{ if(m!==modal) m.classList.add('atras'); });
+  modal.classList.add('on');
 }
-document.getElementById('mNao').onclick=()=>{ modal.classList.remove('on'); acaoConfirmada=null; };
-document.getElementById('mSim').onclick=()=>{ modal.classList.remove('on'); if(acaoConfirmada) acaoConfirmada(); acaoConfirmada=null; };
-modal.onclick=e=>{ if(e.target===modal){ modal.classList.remove('on'); acaoConfirmada=null; } };
+function fecharConfirmacao(){
+  modal.classList.remove('on');
+  document.querySelectorAll('.modal.atras').forEach(m=>m.classList.remove('atras'));
+  acaoConfirmada=null;
+}
+document.getElementById('mNao').onclick=fecharConfirmacao;
+document.getElementById('mSim').onclick=()=>{ const f=acaoConfirmada; fecharConfirmacao(); if(f) f(); };
+modal.onclick=e=>{ if(e.target===modal) fecharConfirmacao(); };
 
 if(!DB.ok) document.getElementById('avisoDb').innerHTML =
   '<p class="alerta-db"><b>Modo temporário.</b> Este navegador não permitiu salvar dados, então o histórico some ao fechar a página. Abra o arquivo direto no navegador ou publique-o para que o registro fique permanente.</p>';
