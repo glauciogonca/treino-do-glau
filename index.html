@@ -189,6 +189,13 @@ button{font-family:inherit}
 .customEx input{flex:1;min-width:0;border:1px solid var(--line2);background:var(--card);border-radius:10px;padding:12px;font-size:16px;color:var(--ink)}
 .customEx button{flex:none;background:var(--pine);color:#fff;border:0;border-radius:10px;padding:12px 16px;font-size:14px;font-weight:600;cursor:pointer}
 .hist .sel.livre{background:var(--gold-bg);color:var(--gold)}
+#dTexto,#dCola{width:100%;height:26vh;border:1px solid var(--line2);border-radius:11px;padding:12px;font-family:"JetBrains Mono",monospace;font-size:11px;line-height:1.55;color:var(--ink);background:var(--card2);resize:none;margin-bottom:13px}
+#dArquivo{width:100%;margin-bottom:12px;font-size:14px}
+.avisoImp{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+.dStatus{font-size:13.5px;margin:0 0 12px;min-height:20px}
+.dStatus.erro{color:var(--rust)}
+.dStatus.ok{color:var(--pine)}
+.btBackup{width:100%;margin-top:9px;background:none;border:1px solid var(--line);border-radius:11px;padding:13px;font-size:14.5px;font-weight:600;color:var(--muted);cursor:pointer}
 .btResumo{width:100%;margin-top:12px;background:var(--ink);color:#fff;border:0;border-radius:11px;padding:14px;font-size:15px;font-weight:600;cursor:pointer}
 .excluirSessao{width:100%;margin-top:11px;background:none;border:0;color:var(--rust);font-size:14px;font-weight:600;padding:11px;cursor:pointer}
 .hist{cursor:pointer}
@@ -273,6 +280,32 @@ button{font-family:inherit}
     <button class="si" style="background:var(--pine)" id="eSalvar">Salvar</button>
   </div>
   <button class="excluirSessao" id="eExcluir">Excluir esta sessão</button>
+</div></div>
+<div class="modal" id="mDados"><div class="modal-in alto">
+  <h4>Backup dos dados</h4>
+  <p id="dResumo"></p>
+  <div class="seg semanaSel">
+    <button data-pane="exp" aria-pressed="true"><b>Exportar</b></button>
+    <button data-pane="imp" aria-pressed="false"><b>Importar</b></button>
+  </div>
+  <div id="paneExp">
+    <textarea id="dTexto" readonly></textarea>
+    <div class="bts">
+      <button class="no" id="dCopiar">Copiar</button>
+      <button class="si" style="background:var(--pine)" id="dBaixar">Baixar .json</button>
+    </div>
+  </div>
+  <div id="paneImp" style="display:none">
+    <p class="avisoImp">Escolha o arquivo de backup ou cole o conteúdo abaixo. O app confere tudo antes de gravar e recusa arquivos incompletos.</p>
+    <input type="file" id="dArquivo" accept="application/json,.json,text/plain">
+    <textarea id="dCola" placeholder="ou cole aqui o conteúdo do backup"></textarea>
+    <p id="dStatus" class="dStatus"></p>
+    <div class="bts">
+      <button class="no" id="dMesclar">Mesclar</button>
+      <button class="si" id="dSubstituir">Substituir tudo</button>
+    </div>
+  </div>
+  <button class="excluirSessao" style="color:var(--muted)" id="dFechar">Fechar</button>
 </div></div>
 <div class="modal" id="mCatalogo"><div class="modal-in alto">
   <h4>Adicionar exercício</h4>
@@ -448,7 +481,7 @@ function estimaMusc(letra, volume){
   let seg = 0;
   BLOCOS[letra].forEach(b => {
     const rodadas = Math.max.apply(null, b.map(e => volume ? e.sv : e.sp));
-    const desc = b[b.length-1].d || 30;
+    const desc = Math.max.apply(null, b.map(x=>x.d||0)) || 30;
     seg += rodadas * (b.length * T_SERIE + desc);
   });
   const cr = CORE_ROT[letra];
@@ -478,8 +511,9 @@ function item(nome, metricas, dica, alerta, extra, busca){
     ${extra||''}</div></div></div>`;
 }
 
-function seriesHTML(letra, e, volume){
+function seriesHTML(letra, e, volume, descanso){
   if(e.semLog) return '';
+  const rest = (descanso!==undefined) ? descanso : (e.d||0);
   const n = volume ? e.sv : e.sp, reps = volume ? e.rv : e.rp, k = chaveEx(letra, e.n);
   const maq = !!e.maq;
   const feito = (ativa && ativa.series && ativa.series[k]) || [];
@@ -498,7 +532,7 @@ function seriesHTML(letra, e, volume){
         ${maq?`<span class="conv">${dica}</span>`:''}
       </div>
       <input type="number" inputmode="numeric" placeholder="${ph.reps??reps}" value="${f.reps??''}" data-c="reps" aria-label="Repetições série ${i+1}">
-      <button class="ok" data-rest="${e.d}" aria-label="Concluir série ${i+1}"></button></div>`;
+      <button class="ok" data-rest="${rest}" aria-label="Concluir série ${i+1}"></button></div>`;
   }
   const rotCarga = ROT_UN[maq ? 'placas' : (e.un || 'total')];
   return `<div class="series"><p class="ant">${antTxt}</p><div class="sh"><span></span><span>${rotCarga}</span><span>Reps</span><span></span></div>${linhas}</div>`;
@@ -548,7 +582,8 @@ function telaInicio(){
       </div>`;
     })()}</section>
     <section class="sec"><h2>Histórico</h2><div class="cartao">${lista||'<p class="vazio">Nenhuma sessão registrada ainda.</p>'}</div>
-      <button class="btResumo" id="btResumo">Gerar resumo da semana</button></section>`;
+      <button class="btResumo" id="btResumo">Gerar resumo da semana</button>
+      <button class="btBackup" id="btBackup">Backup dos dados</button></section>`;
 }
 
 function segRotinas(letra){
@@ -582,7 +617,13 @@ function telaTreino(){
   AQ[letra==='C'?'C':'AB'].forEach(a=>h+=item(a[0],[[a[1],'k']],a[2],null,null,a[0]));
   h+=`</section><section class="sec"><h2>Treino <span class="dur">${estimaMusc(letra,volume)-Math.round((volume?CORE_ROT[letra].sv:CORE_ROT[letra].sp)*(T_SERIE+(CORE_ROT[letra].d||45))/60)} min</span></h2>`;
   blocos.forEach(b=>{
-    const c=b.map(e=>item(e.n,[[(volume?e.sv:e.sp)+' × '+(volume?e.rv:e.rp)],[e.c,'k'],[e.d?e.d+' s':'—','s'],[e.r,'s']],e.dica,e.alerta,seriesHTML(letra,e,volume),e.n)).join('');
+    const dBloco=Math.max.apply(null,b.map(x=>x.d||0));
+    const c=b.map((e,i)=>{
+      const ultimo=(i===b.length-1);
+      const dEx=ultimo?dBloco:0;
+      return item(e.n,[[(volume?e.sv:e.sp)+' × '+(volume?e.rv:e.rp)],[e.c,'k'],[dEx?dEx+' s':'sem pausa','s'],[e.r,'s']],
+        e.dica,e.alerta,seriesHTML(letra,e,volume,dEx),e.n);
+    }).join('');
     h+=b.length===2?`<div class="bis"><p class="rot-bis">Bisérie · sem descanso entre os dois</p>${c}</div>`:c;
   });
   h+=`</section><section class="sec"><h2>Core <span class="dur">15 min</span></h2>`;
@@ -660,6 +701,72 @@ const GUIA=`<div class="doc">
 <tr><td>Barra reta 1,50 m</td><td>6 kg</td></tr><tr><td>Estação W2 — placa menor</td><td>4 kg</td></tr>
 <tr><td>Estação W2 — placas maiores</td><td>6,8 kg cada</td></tr></table>
 <p>1 placa + a menor = 10,8 · 2 + menor = 17,6 · 3 + menor = 24,4 · 4 + menor = 31,2 · 5 + menor = 38</p></div>`;
+
+/* ===================== BACKUP: EXPORTAR E IMPORTAR ===================== */
+const APP_VERSAO = 9;
+
+function montarBackup(){
+  return {
+    app: 'treino-glau',
+    versao: APP_VERSAO,
+    exportadoEm: new Date().toISOString(),
+    totalSessoes: hist.length,
+    hist: hist,
+    ativa: ativa
+  };
+}
+
+function resumoBackup(o){
+  const h = (o && o.hist) || [];
+  if(!h.length) return 'Nenhuma sessão.';
+  const ds = h.map(x => x.data).sort((a,b)=>a-b);
+  const min = h.reduce((a,x)=>a+(x.min||0),0);
+  return h.length + ' sessões · ' + dtBR(ds[0]) + ' a ' + dtBR(ds[ds.length-1]) + ' · ' + durTexto(min) + ' de treino';
+}
+
+function validarBackup(txt){
+  let o;
+  try { o = JSON.parse(txt); }
+  catch(e){ return { ok:false, msg:'O arquivo não é um JSON válido.' }; }
+  if(!o || typeof o !== 'object') return { ok:false, msg:'Conteúdo inesperado.' };
+  if(!Array.isArray(o.hist)) return { ok:false, msg:'Não encontrei a lista de sessões (campo "hist") neste arquivo.' };
+  for(let i=0;i<o.hist.length;i++){
+    const s = o.hist[i];
+    if(!s || typeof s.data !== 'number' || !s.letra || !s.tipo)
+      return { ok:false, msg:'A sessão ' + (i+1) + ' está incompleta. Arquivo recusado para não corromper seus dados.' };
+    if(s.series && typeof s.series !== 'object')
+      return { ok:false, msg:'As séries da sessão ' + (i+1) + ' estão em formato inesperado.' };
+  }
+  if(o.ativa && (typeof o.ativa.inicio !== 'number' || !o.ativa.letra))
+    return { ok:false, msg:'A sessão em andamento do arquivo está incompleta.' };
+  return { ok:true, dados:o };
+}
+
+function aplicarBackup(o, modo){
+  if(modo === 'substituir'){
+    hist = o.hist.slice();
+    ativa = o.ativa || null;
+  } else {
+    const vistos = {};
+    hist.forEach(s => vistos[s.data] = s);
+    o.hist.forEach(s => { if(!vistos[s.data]) vistos[s.data] = s; });
+    hist = Object.keys(vistos).map(k => vistos[k]);
+  }
+  hist.sort((a,b)=>a.data-b.data);
+  const p = proximoDaFila();
+  sel = ativa ? { letra:ativa.letra, tipo:ativa.tipo } : { letra:p[0], tipo:p[1] };
+  salvar();
+  if(typeof tickRelogio==='function'){
+    if(ativa) tickRelogio();
+    else { clearInterval(tRel); const r=document.getElementById('relogio'); if(r) r.classList.remove('on','pausado'); }
+  }
+}
+
+function nomeArquivoBackup(){
+  const d = new Date();
+  const p = n => String(n).padStart(2,'0');
+  return 'treino-glau-backup-' + d.getFullYear() + p(d.getMonth()+1) + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes()) + '.json';
+}
 
 /* ===================== TREINO LIVRE ===================== */
 const AQ_LIVRE = [
@@ -938,7 +1045,8 @@ function irPara(t){
   nid=0;
   main.innerHTML=[telaInicio,telaTreino,()=>GUIA][t]();
   if(t===0){ const b=document.getElementById('irTreino'); if(b) b.onclick=()=>{ if(ativa) sel={letra:ativa.letra,tipo:ativa.tipo}; irPara(1); };
-    const r=document.getElementById('btResumo'); if(r) r.onclick=()=>abrirResumo(0); }
+    const r=document.getElementById('btResumo'); if(r) r.onclick=()=>abrirResumo(0);
+    const bk=document.getElementById('btBackup'); if(bk) bk.onclick=abrirDados; }
   if(t===1){ restaurarMarcas(); irProximo(); }
   atualizarBarra();
   window.scrollTo({top:0,behavior:'instant'});
@@ -1199,6 +1307,72 @@ mCat.addEventListener('click',e=>{
     adicionarExercicio({ n:nome, un:'total', maq:false, d:60, custom:1 });
   }
 });
+
+const mDados=document.getElementById('mDados');
+let importado=null;
+function abrirDados(){
+  const o=montarBackup();
+  document.getElementById('dTexto').value=JSON.stringify(o,null,1);
+  document.getElementById('dResumo').textContent='Neste aparelho: '+resumoBackup(o);
+  document.getElementById('dCola').value='';
+  document.getElementById('dArquivo').value='';
+  status('','');
+  importado=null;
+  trocaPane('exp');
+  mDados.classList.add('on');
+}
+function trocaPane(p){
+  mDados.querySelectorAll('[data-pane]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.pane===p?'true':'false'));
+  document.getElementById('paneExp').style.display = p==='exp'?'':'none';
+  document.getElementById('paneImp').style.display = p==='imp'?'':'none';
+}
+function status(msg,cls){ const e=document.getElementById('dStatus'); e.textContent=msg; e.className='dStatus '+(cls||''); }
+function conferir(txt){
+  const r=validarBackup(txt);
+  if(!r.ok){ importado=null; status(r.msg,'erro'); return; }
+  importado=r.dados;
+  status('Arquivo válido — '+resumoBackup(r.dados)+'. Escolha como aplicar.','ok');
+}
+mDados.addEventListener('click',e=>{
+  const p=e.target.closest('[data-pane]');
+  if(p){ trocaPane(p.dataset.pane); return; }
+  if(e.target===mDados) mDados.classList.remove('on');
+});
+document.getElementById('dFechar').onclick=()=>mDados.classList.remove('on');
+document.getElementById('dCopiar').onclick=()=>{
+  const t=document.getElementById('dTexto'), b=document.getElementById('dCopiar');
+  const feito=()=>{ b.textContent='Copiado'; setTimeout(()=>b.textContent='Copiar',1600); };
+  if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(feito).catch(()=>{t.select();document.execCommand('copy');feito();});
+  else { t.select(); t.setSelectionRange(0,999999); document.execCommand('copy'); feito(); }
+};
+document.getElementById('dBaixar').onclick=()=>{
+  const b=new Blob([document.getElementById('dTexto').value],{type:'application/json;charset=utf-8'});
+  const u=URL.createObjectURL(b), a=document.createElement('a');
+  a.href=u; a.download=nomeArquivoBackup(); document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),1000);
+};
+document.getElementById('dArquivo').onchange=ev=>{
+  const f=ev.target.files&&ev.target.files[0]; if(!f) return;
+  const fr=new FileReader();
+  fr.onload=()=>{ document.getElementById('dCola').value=fr.result; conferir(fr.result); };
+  fr.onerror=()=>status('Não consegui ler o arquivo.','erro');
+  fr.readAsText(f);
+};
+document.getElementById('dCola').oninput=ev=>{ const v=ev.target.value.trim(); if(v) conferir(v); else status('',''); };
+function aplicar(modo){
+  if(!importado){ status('Nenhum backup válido carregado ainda.','erro'); return; }
+  const o=importado;
+  const txt = modo==='substituir'
+    ? 'Todo o histórico deste aparelho será <b>apagado e substituído</b> por: '+resumoBackup(o)+'. Isso não pode ser desfeito.'
+    : 'As sessões do arquivo serão somadas às deste aparelho. Sessões com a mesma data e hora não são duplicadas.';
+  confirmar(modo==='substituir'?'Substituir tudo?':'Mesclar backups?', txt, modo==='substituir'?'Substituir':'Mesclar', ()=>{
+    aplicarBackup(o, modo);
+    mDados.classList.remove('on');
+    irPara(0);
+  });
+}
+document.getElementById('dSubstituir').onclick=()=>aplicar('substituir');
+document.getElementById('dMesclar').onclick=()=>aplicar('mesclar');
 
 function ajustaTopo(){
   const t=document.querySelector('.topo'), a=document.querySelector('.app');

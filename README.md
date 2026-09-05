@@ -75,6 +75,10 @@ Toque em qualquer sessão do histórico para abrir a edição. Dá para corrigir
 
 A data gravada é a de **início** do treino, não a de fim. Um treino que começa às 22h de segunda e termina 00h03 de terça fica registrado na segunda.
 
+## Bisérie e descanso
+
+Numa bisérie o descanso pertence ao **par**, não a cada exercício. O primeiro da dupla mostra "sem pausa" e não dispara o cronômetro; o segundo carrega o tempo de descanso. Nos dias de ordem invertida os dois trocam de posição, e o descanso acompanha — quem estiver em segundo é quem dispara o timer.
+
 ## Treino livre
 
 O quarto botão do seletor de rotinas (★ Livre) abre uma sessão fora do programa, para os dias em que não dá para fazer A, B ou C. Toque em **Iniciar treino** e depois em **+ Adicionar exercício** para montar a sessão: dá para escolher qualquer exercício do programa ou criar um com nome livre.
@@ -86,6 +90,28 @@ Um treino livre **não avança a fila** A → B → C e não conta como sessão 
 ## Resumo semanal
 
 Na tela de Início, o botão **Gerar resumo da semana** monta um relatório em texto com sessões, tempo, volume, cardio contra a meta, comparação de cargas com a semana anterior, exercícios prontos para subir carga e observações automáticas. Dá para escolher entre a semana atual e a anterior, copiar para a área de transferência ou baixar como `.txt`.
+
+## Backup: exportar e importar
+
+Botão **Backup dos dados** na tela de Início.
+
+**Exportar** mostra o JSON completo, com botões para copiar ou baixar o arquivo. O backup inclui todo o histórico — datas, durações, séries com carga e repetições, cardio com modalidade e distância, treinos livres — e também a sessão em andamento, se houver.
+
+**Importar** aceita arquivo ou texto colado. O app valida antes de gravar e recusa arquivos incompletos sem tocar no que já existe. Duas formas de aplicar:
+
+- **Substituir tudo** — apaga o histórico do aparelho e coloca o do arquivo no lugar. É o modo para trocar de aparelho ou reinstalar.
+- **Mesclar** — soma as sessões do arquivo às existentes. Sessões com a mesma data e hora não são duplicadas.
+
+### Trocar o ícone no iPhone sem perder dados
+
+O Safari copia o ícone na instalação e nunca mais o atualiza, então trocar o ícone exige remover e reinstalar o app — e isso apaga o `localStorage`. O procedimento seguro:
+
+1. Abra o app, toque em **Backup dos dados**, aba Exportar, e **baixe o `.json`**. Salve fora do aparelho.
+2. Publique os ícones novos e suba a versão do `sw.js`.
+3. Remova o app da tela de início e adicione de novo.
+4. Abra, toque em **Backup dos dados**, aba Importar, escolha o arquivo e use **Substituir tudo**.
+
+No Android o ícone atualiza sozinho e nada disso é necessário.
 
 ## Onde ficam os dados
 
