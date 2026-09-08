@@ -111,6 +111,8 @@ button{font-family:inherit}
 .item.done .tick{border-color:var(--pine);background:var(--pine-bg)}
 .item.done .tick::after{opacity:1}
 .corpo{flex:1;min-width:0}
+.pos{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 3px}
+.item.done .pos{color:var(--pine)}
 .nome{font-size:16.5px;font-weight:600;line-height:1.25;margin:0}
 .item.done .nome{color:var(--muted)}
 .mt{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
@@ -418,9 +420,9 @@ const BLOCOS = {
 };
 
 const CORE_BASE = [
-  ['Curl-up de McGill','3 séries · 6, 4 e 2 sustentações','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, e entre uma e outra você <b>solta a posição por 2 ou 3 segundos</b>. A série 1 tem 6 sustentações, a 2 tem 4, a 3 tem 2. Descanso de 20 a 30 s entre as séries. <b>Não é uma prancha de 60 segundos.</b><br><b>Posição:</b> deitado de costas, uma perna dobrada com o pé no chão e a outra estendida. Mãos sob a lombar, palmas para baixo, para preservar a curvatura natural.<br><b>Execução:</b> eleve cabeça e ombros poucos centímetros do chão, como se a cabeça e o tronco fossem um bloco só, e segure 10 segundos respirando normal. Uma repetição é um bloco de 10 segundos.<br><b>Regra:</b> a lombar nunca achata contra o chão e o pescoço não se dobra à frente.'],
-  ['Prancha lateral','3 séries · 6, 4 e 2 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, soltando a posição por 2 ou 3 segundos entre elas. Faça as três séries (6, 4 e 2) de um lado e depois as três do outro lado.<br><b>Posição:</b> deitado de lado, cotovelo diretamente sob o ombro, antebraço no chão. Comece com os joelhos dobrados; quando ficar fácil, estenda as pernas e apoie nos pés.<br><b>Execução:</b> suba o quadril até o corpo formar uma linha reta vista de lado e segure 10 segundos. Ombro, quadril e joelho alinhados.<br><b>Progressão:</b> de joelhos para pés e depois subindo a pirâmide para 8/6/4. <b>Nunca aumente os 10 segundos.</b>'],
-  ['Bird dog','3 séries · 6, 4 e 2 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, desfazendo a posição entre elas. Três séries de 6, 4 e 2 com braço direito e perna esquerda; depois três séries com o outro par.<br><b>Posição:</b> quatro apoios, mãos sob os ombros, joelhos sob o quadril, coluna neutra.<br><b>Execução:</b> estenda o braço direito à frente e a perna esquerda atrás, até ambos ficarem na linha do tronco — não mais alto que isso. Segure 10 segundos e troque.<br><b>Regra:</b> imagine um copo d\'água apoiado na lombar. Se o quadril rodar, nada disso vale.<br><b>Progressão:</b> suba a pirâmide para 8/6/4, nunca o tempo de cada sustentação.'],
+  ['Curl-up de McGill','3 séries · 6, 4 e 2 sustentações','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, e entre uma e outra você <b>solta a posição por 2 ou 3 segundos</b>. A série 1 tem 6 sustentações, a 2 tem 4, a 3 tem 2. Descanso de 20 a 30 s entre as séries. <b>Não é uma prancha de 60 segundos.</b><br><b>Posição:</b> deitado de costas, uma perna dobrada com o pé no chão e a outra estendida. Mãos sob a lombar, palmas para baixo — elas são o seu sensor: se sentir a lombar esmagando os dedos, você flexionou a coluna e perdeu o exercício. Cotovelos apoiados no chão. Alterne a perna dobrada entre as séries.<br><b>Execução:</b> o movimento é <b>mínimo</b> — as escápulas mal saem do chão, dois ou três centímetros. Cabeça, pescoço e parte alta das costas se movem como um bloco só. Fixe o olhar num ponto do teto logo acima de você e deixe o olhar acompanhar a cabeça.<br><b>Se sentir o pescoço:</b> é erro de execução, não característica do exercício. Antes de iniciar, <b>pressione a língua contra o céu da boca</b>, logo atrás dos dentes da frente — isso ativa os flexores cervicais profundos e tira carga dos superficiais. Pense em girar a partir do esterno, não do pescoço. Se precisar, apoie uma mão atrás da cabeça <b>sustentando</b> o peso dela, sem puxar.<br><b>O que sentir:</b> tensão na parede abdominal, principalmente na parte alta. Nada no pescoço e nada na lombar.'],
+  ['Prancha lateral','3 séries · 6, 4 e 2 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, soltando a posição por 2 ou 3 segundos entre elas. Faça as três séries (6, 4 e 2) de um lado e depois as três do outro lado.<br><b>Posição:</b> deitado de lado, cotovelo diretamente sob o ombro, antebraço no chão. Comece com os joelhos dobrados; quando ficar fácil, estenda as pernas e apoie nos pés.<br><b>Execução:</b> suba o quadril até o corpo formar uma linha reta vista de lado e segure 10 segundos. Ombro, quadril e joelho alinhados.<br><b>Se sentir o pescoço:</b> o erro típico é o ombro de baixo afundar na direção da orelha. Corrija <b>empurrando o chão com o cotovelo</b>, criando espaço entre ombro e orelha. Cabeça alinhada com a coluna, orelha sobre o ombro, olhar para frente — não para cima. Se persistir, volte para a versão de joelhos ou reduza para 5 segundos por sustentação.<br><b>Progressão:</b> de joelhos para pés e depois subindo a pirâmide para 8/6/4. <b>Nunca aumente os 10 segundos.</b>'],
+  ['Bird dog','3 séries · 6, 4 e 2 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, desfazendo a posição entre elas. Três séries de 6, 4 e 2 com braço direito e perna esquerda; depois três séries com o outro par.<br><b>Posição:</b> quatro apoios, mãos sob os ombros, joelhos sob o quadril, coluna neutra.<br><b>Execução:</b> estenda o braço direito à frente e a perna esquerda atrás, até ambos ficarem na linha do tronco — não mais alto que isso. Segure 10 segundos e troque.<br><b>Detalhes que mudam o exercício:</b> feche o punho da mão estendida e puxe a ponta do pé em direção à canela. Contrair as extremidades aumenta a rigidez de todo o sistema por irradiação.<br><b>Regra:</b> imagine um copo d\'água apoiado na lombar. Se o quadril rodar, nada disso vale. O membro sobe <b>só até a linha do tronco</b>, nunca acima — perna mais alta é lombar em extensão.<br><b>Sustentar é o correto</b>, não apenas fazer o movimento lento: é a sustentação que constrói resistência em rigidez.<br><b>Progressão:</b> quando as repetições ficarem fáceis, "varra o chão" entre uma e outra — traga cotovelo e joelho um na direção do outro por baixo do tronco, sem encostar, e estenda de novo. Depois disso, suba a pirâmide para 8/6/4. <b>Nunca aumente o tempo de cada sustentação.</b>'],
   ['Pallof press','2 × 10 por lado','<b>Posição:</b> em pé <b>de lado</b> para a polia, pés na largura dos ombros, mãos juntas na manopla junto ao esterno. Afaste-se da máquina até o cabo ficar praticamente paralelo ao chão.<br><b>Execução:</b> estenda os braços à frente do peito, segure 2 segundos <b>resistindo à rotação</b> e volte. O objetivo é não girar.<br><b>Regra:</b> o tronco fica vertical. Se você precisa inclinar para o lado oposto, está longe demais para essa carga.']
 ];
 const CORE_ROT = {
@@ -498,14 +500,17 @@ function estimaTotal(letra, volume, tipo){
 function ultimoRegistro(l,n){ for(let i=hist.length-1;i>=0;i--){ const s=hist[i].series && hist[i].series[chaveEx(l,n)]; if(s&&s.length) return s; } return null; }
 
 const YTICON='<svg viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#C4302B"/><path d="M11 6l7 4-7 4z" fill="#fff"/></svg>';
+let posAtual = 0, posTotal = 0;
+function abreBloco(n){ posAtual = 0; posTotal = n; }
 function item(nome, metricas, dica, alerta, extra, busca){
   const id='k'+(nid++);
+  const pos = posTotal ? (++posAtual) + ' de ' + posTotal : '';
   const mts=metricas.filter(Boolean).map(m=>`<span class="m ${m[1]||''}">${m[0]}</span>`).join('');
   const tem=dica||alerta;
   const url='https://www.youtube.com/results?search_query='+encodeURIComponent((busca||nome)+' execução correta');
   return `<div class="item" data-nome="${nome}"><div class="linha">
     <button class="tick" aria-label="Marcar ${nome}"></button>
-    <div class="corpo"><p class="nome">${nome}</p><div class="mt">${mts}</div>
+    <div class="corpo">${pos?`<p class="pos">${pos}</p>`:''}<p class="nome">${nome}</p><div class="mt">${mts}</div>
     <div class="acoes">
       ${tem?`<button class="dica-btn" data-alvo="${id}">Como fazer</button>`:''}
       <a class="yt" href="${url}" target="_blank" rel="noopener">${YTICON} YouTube</a>
@@ -616,9 +621,12 @@ function telaTreino(){
     <span>Musculação <b>${estimaMusc(letra,volume)} min</b></span>
     <span>Cardio <b>${T_CARDIO[CARDIO_POR[letra][sel.tipo]]} min</b></span>
   </div>`;
-  h+=`<section class="sec"><h2>Aquecimento <span class="dur">10 min</span></h2>`;
-  AQ[letra==='C'?'C':'AB'].forEach(a=>h+=item(a[0],[[a[1],'k']],a[2],null,null,a[0]));
-  h+=`</section><section class="sec"><h2>Treino <span class="dur">${estimaMusc(letra,volume)-Math.round((volume?CORE_ROT[letra].sv:CORE_ROT[letra].sp)*(T_SERIE+(CORE_ROT[letra].d||45))/60)} min</span></h2>`;
+  const aq=AQ[letra==='C'?'C':'AB'];
+  h+=`<section class="sec"><h2>Aquecimento <span class="dur">10 min · ${aq.length} itens</span></h2>`;
+  abreBloco(aq.length);
+  aq.forEach(a=>h+=item(a[0],[[a[1],'k']],a[2],null,null,a[0]));
+  h+=`</section><section class="sec"><h2>Treino <span class="dur">${blocos.reduce((n,b)=>n+b.length,0)} exercícios · ${estimaMusc(letra,volume)-Math.round((volume?CORE_ROT[letra].sv:CORE_ROT[letra].sp)*(T_SERIE+(CORE_ROT[letra].d||45))/60)} min</span></h2>`;
+  abreBloco(blocos.reduce((n,b)=>n+b.length,0));
   blocos.forEach(b=>{
     const dBloco=Math.max.apply(null,b.map(x=>x.d||0));
     const c=b.map((e,i)=>{
@@ -629,11 +637,13 @@ function telaTreino(){
     }).join('');
     h+=b.length===2?`<div class="bis"><p class="rot-bis">Bisérie · sem descanso entre os dois</p>${c}</div>`:c;
   });
-  h+=`</section><section class="sec"><h2>Core <span class="dur">15 min</span></h2>`;
+  h+=`</section><section class="sec"><h2>Core <span class="dur">15 min · ${CORE_BASE.length+1} itens</span></h2>`;
+  abreBloco(CORE_BASE.length+1);
   CORE_BASE.forEach(c=>h+=item(c[0],[[c[1],'k']],c[2],null,null,c[0]));
   const cr=CORE_ROT[letra];
   h+=item(cr.n,[[(volume?cr.sv:cr.sp)+' × '+(volume?cr.rv:cr.rp)],[cr.c,'k']],cr.dica,null,seriesHTML(letra,cr,volume),cr.n);
-  h+=`</section><section class="sec"><h2>Mobilidade <span class="dur">12 min</span></h2>`;
+  h+=`</section><section class="sec"><h2>Mobilidade <span class="dur">12 min · ${MOB.length} itens</span></h2>`;
+  abreBloco(MOB.length);
   MOB.forEach(m=>h+=item(m[0],[[m[1],'k']],m[2],null,null,m[0]));
   const cd=CARDIO[CARDIO_POR[letra][sel.tipo]];
   const cl=(ativa&&ativa.cardio)||{};
@@ -647,6 +657,7 @@ function telaTreino(){
       <div><label>Distância (km)</label><input type="number" inputmode="decimal" step="0.1" id="cKm" placeholder="km" value="${cl.km??''}"></div>
     </div></div>`;
   h+=`</section><section class="sec"><h2>Cardio <span class="dur">${T_CARDIO[CARDIO_POR[letra][sel.tipo]]} min · depois da musculação</span></h2>`;
+  abreBloco(0);
   h+=item(cd[0],[[cd[1],'k']],cd[2],null,formCardio,cd[0]+' treino');
   return h+`</section>`;
 }
@@ -817,11 +828,13 @@ function telaLivre(){
   let h = '<div class="seletor">'+segRotinas('L')+
     '<p class="expl">Sessão fora do programa. <b>Não avança a fila</b> e não conta como treino A, B ou C no resumo semanal.</p></div>';
 
-  h += '<section class="sec"><h2>Aquecimento <span class="dur">5 min</span></h2>';
+  h += '<section class="sec"><h2>Aquecimento <span class="dur">5 min · ' + AQ_LIVRE.length + ' itens</span></h2>';
+  abreBloco(AQ_LIVRE.length);
   AQ_LIVRE.forEach(a => h += item(a[0], [[a[1],'k']], a[2], null, null, a[0]));
   h += '</section>';
 
-  h += '<section class="sec"><h2>Exercícios</h2>';
+  h += '<section class="sec"><h2>Exercícios' + (lista.length?' <span class="dur">'+lista.length+' itens</span>':'') + '</h2>';
+  abreBloco(lista.length);
   if(!lista.length) h += '<p class="vazio">Nenhum exercício adicionado ainda.</p>';
   lista.forEach((ex, i) => {
     const extra = seriesLivre(ex, i) + '<button class="removerEx" data-rem="'+i+'">Remover exercício</button>';
@@ -836,6 +849,7 @@ function telaLivre(){
     '<div class="campos"><div><label>Minutos</label><input type="number" inputmode="numeric" id="cMin" placeholder="min" value="'+(cl.min??'')+'"></div>'+
     '<div><label>Distância (km)</label><input type="number" inputmode="decimal" step="0.1" id="cKm" placeholder="km" value="'+(cl.km??'')+'"></div></div></div>';
   h += '<section class="sec"><h2>Cardio <span class="dur">opcional</span></h2>';
+  abreBloco(0);
   h += item('Cardio', [['livre','k']], 'Registre modalidade, tempo e distância. Entra na meta semanal de '+META_CARDIO+' minutos normalmente.', null, formCardio, 'treino aeróbico');
   h += '</section>';
   return h;
