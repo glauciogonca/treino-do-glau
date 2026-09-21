@@ -1,6 +1,6 @@
 # Treino do Glau
 
-App de registro de treino do Ciclo 1. Funciona offline depois da primeira visita.
+App de registro de treino. Funciona offline depois da primeira visita.
 
 ## Publicar no GitHub Pages
 
@@ -44,13 +44,21 @@ Sem isso o celular pode continuar mostrando a versão antiga.
 
 O relógio no topo começa ao tocar em "Iniciar treino". **Toque nele para pausar e toque de novo para retomar** — útil para fazer a mobilidade em casa depois de sair da academia. Pausado, ele fica vermelho com um ícone de play. O tempo salvo no histórico desconta as pausas.
 
-## Cardio
-
-No cartão de cardio, escolha **Esteira** ou **Bike** e preencha minutos e distância. O resumo da semana aparece na tela de Início, com a quilometragem separada por modalidade.
-
 ## Exercícios na estação W2
 
 Nesses exercícios o campo de carga pede o **número de placas grandes** selecionadas abaixo da placa menor, e o app mostra o peso convertido ao lado. A conversão usa placa menor de 4 kg e placas grandes de 6,8 kg — número que veio da ficha técnica do fabricante e ainda não foi conferido na balança.
+
+## Ciclo 2 — a partir de 21/09/2026
+
+O programa mudou. Principais diferenças em relação ao Ciclo 1:
+
+- **Não há mais passagem pesada e passagem de volume.** Cada rotina tem uma faixa de repetições só, e as duas passagens da semana são idênticas.
+- **A primeira sessão B da semana leva o intervalado 4×4** ao final. O app detecta sozinho e mostra o bloco quando é o caso.
+- **O cardio saiu de dentro das sessões.** Caminhada e intervalado são registrados pelo botão na tela de Início.
+- **A mobilidade saiu da academia.** Continua listada no fim do treino, marcada como bloco de casa.
+- **Caneleiras entram como sobrecarga** nos exercícios em que os halteres e as anilhas não permitem incremento fino.
+
+O histórico do Ciclo 1 permanece intacto no app, no backup e nos resumos. Sessões gravadas a partir de agora levam a marca do ciclo, e o resumo semanal avisa quando a comparação atravessa programas diferentes.
 
 ## Qual carga registrar
 
@@ -62,12 +70,20 @@ O cabeçalho da coluna diz sempre qual número o app espera:
 | **kg por lado** | O peso usado no lado que está trabalhando (exercícios unilaterais) |
 | **kg total** | O peso total na barra, incluindo a barra |
 | **Placas** | O número de placas grandes selecionadas na estação W2 |
+| **Canel.** | O peso da caneleira, separado do halter. O app soma os dois |
 
 No cálculo de volume da sessão, exercícios "por mão" e "por lado" são contados duas vezes, já que os dois lados trabalham.
 
-## Meta de cardio
+## Cardio e suas metas
 
-A meta semanal é de **115 minutos**, que é a soma do programa: 3 sessões de zona 2 (25 min), 1 intervalada (20 min) e 2 soltas (10 min). A barra de progresso na tela de Início acompanha o total registrado na semana.
+O cardio é registrado fora da sessão, pelo botão **+ Registrar cardio** na tela de Início. Duas metas semanais, acompanhadas por barras próprias:
+
+| O quê | Meta | O que registrar |
+|---|---|---|
+| Caminhada no deslocamento | 5 por semana, 20 a 25 min | Minutos e distância |
+| Intervalado 4×4 na bike | 1 por semana, após o Treino B | Blocos completados e resistência |
+
+O intervalado registra blocos e resistência em vez de minutos e km porque a progressão acontece na resistência, não no tempo. Se você fizer o intervalado dentro da sessão B, o app grava os dois registros separados automaticamente.
 
 ## Editar o histórico
 
