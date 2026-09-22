@@ -11,7 +11,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Treino do Glau">
-<meta name="description" content="Registro de treino do Ciclo 1">
+<meta name="description" content="Registro de treino do Glau">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -118,26 +118,19 @@ button{font-family:inherit}
 .item.done .pos{color:var(--pine)}
 .nome{font-size:16.5px;font-weight:600;line-height:1.25;margin:0}
 .item.done .nome{color:var(--muted)}
-.mt{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
-.m{font-family:"JetBrains Mono",monospace;font-size:11.5px;background:var(--card2);border-radius:6px;padding:3px 7px}
-.m.k{background:var(--gold-bg);color:var(--gold)}
-.m.s{color:var(--muted)}
-.dica-btn{margin-top:9px;background:none;border:0;padding:0;color:var(--pine);font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
-.wrap{display:none;margin-top:10px}
-.wrap.open{display:block}
 .dica{font-size:13.5px;color:var(--muted);border-left:2px solid var(--line2);padding-left:11px}
 .dica+.dica{margin-top:9px}
 .dica b{color:var(--ink);font-weight:600}
 .dica.alerta{border-left-color:var(--rust);color:#8A3520;background:var(--rust-bg);padding:9px 11px;border-radius:0 8px 8px 0}
 
-.bis{border:1.5px dashed var(--line2);border-radius:15px;padding:9px 9px 1px;margin-bottom:9px;background:rgba(29,94,79,.03)}
+.bis{border:1.5px dashed var(--line2);border-radius:15px;padding:9px 7px 1px;margin-bottom:9px;background:rgba(29,94,79,.03)}
 .rot-bis{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--pine);margin:2px 0 8px 5px}
 
 .series{margin-top:11px;border-top:1px solid var(--line);padding-top:9px}
 .ant{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--dim);margin:0 2px 8px}
 .sh,.sr{display:grid;grid-template-columns:24px 1fr 1fr 36px;gap:7px;align-items:center}
-.sh.quatro,.sr.quatro{grid-template-columns:20px 1fr 0.8fr 0.8fr 36px;gap:5px}
-.sh.quatro span,.sr.quatro input{font-size:15px}
+.sh.quatro,.sr.quatro{grid-template-columns:20px 0.95fr 0.8fr 1fr 36px;gap:5px}
+.sr.quatro input{font-size:15px}
 .sh{font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:0 2px 5px}
 .sr{margin-bottom:6px}
 .sr .i{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--dim);text-align:center}
@@ -160,11 +153,6 @@ button{font-family:inherit}
 .montagem summary::after{content:"ver";font-size:9.5px}
 .montagem[open] summary::after{content:"ocultar"}
 .montagem p{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted);margin:8px 0 2px;line-height:1.65}
-.acoes{display:flex;gap:8px;align-items:center;margin-top:9px;flex-wrap:wrap}
-.yt{display:inline-flex;align-items:center;gap:5px;background:none;border:1px solid var(--line2);border-radius:7px;padding:4px 9px 4px 7px;color:var(--muted);font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;text-decoration:none}
-.yt svg{width:15px;height:11px;flex:none}
-.yt:hover{border-color:var(--rust);color:var(--rust)}
-.dica-btn{margin-top:0}
 .lixo{background:none;border:0;color:var(--dim);font-size:19px;line-height:1;padding:4px 6px;cursor:pointer;flex:none;border-radius:6px}
 .lixo:hover{color:var(--rust);background:var(--rust-bg)}
 .descartar{flex:none;background:none;border:1px solid var(--line2);border-radius:9px;padding:11px 12px;color:var(--muted);font-size:13.5px;font-weight:600;cursor:pointer}
@@ -262,6 +250,149 @@ body.descansando .desc{bottom:0}
 .desc b{font-family:"JetBrains Mono",monospace;font-size:23px;font-weight:700}
 .desc span{flex:1;font-size:13.5px;opacity:.85}
 .desc button{background:rgba(255,255,255,.2);border:0;color:#fff;border-radius:8px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer}
+
+/* v14 · modo foco */
+.cab{cursor:pointer}
+.item .ic,.item .series,.item .removerEx,.item .clog,.item .nota,.item .faixa{display:none}
+.item.aberto .ic{display:flex}
+.item.aberto .faixa{display:block}
+.item.aberto .series,.item.aberto .clog,.item.aberto .nota{display:block}
+.item.aberto .removerEx{display:inline-block}
+.item:not(.aberto){padding:11px 14px}
+.item.atual{border-color:var(--ink);box-shadow:0 3px 12px rgba(21,24,28,.07)}
+.resumoItem{display:none;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--pine);margin:3px 0 0}
+.item.done:not(.aberto) .resumoItem{display:block}
+
+.nota{font-size:12.5px;color:var(--gold);background:var(--gold-bg);border-radius:7px;padding:7px 10px;margin:9px 0 0}
+.m.sg{font-weight:700}
+.m.sg.sobe{background:var(--pine);color:#fff}
+.m.sg.rep{background:var(--pine-bg);color:var(--pine)}
+.m.sg.repete{background:var(--card2);color:var(--muted)}
+/* montagem */
+.montagem{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px}
+.montagem.erro{border-color:var(--rust-line);background:var(--rust-bg)}
+.montagem summary span{letter-spacing:.14em}
+.mLinhas{margin-top:6px}
+.mL{display:grid;grid-template-columns:92px 1fr;gap:1px 10px;padding:8px 0;border-top:1px solid var(--line);font-size:13.5px;align-items:baseline}
+.mL:first-child{border-top:0}
+.mL b{font-weight:600;font-size:13px}
+.mL span{font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--ink)}
+.mL i{grid-column:2;font-style:normal;font-size:12px;color:var(--muted);line-height:1.4}
+.montagem p.mSobra{font-family:inherit;font-size:12px;color:var(--dim);margin:4px 0 0}
+.mAlerta p{font-family:inherit;font-size:13px;color:#8A3520;margin:8px 0 4px;line-height:1.45}
+.btMontado{width:100%;margin-top:10px;background:var(--ink);color:#fff;border:0;border-radius:9px;padding:12px;font-size:14.5px;font-weight:600;cursor:pointer}
+/* início */
+.btLink{display:block;width:100%;background:none;border:0;color:#B9B3A9;font-size:13.5px;padding:11px 0 0;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:inherit}
+.sec .btLink{color:var(--pine);text-align:center}
+.cicloLinha{margin:10px 20px 0;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--dim);letter-spacing:.03em}
+.cardioBts{display:flex;gap:12px;align-items:center;margin-top:14px}
+.btCam{flex:1;background:var(--pine);color:#fff;border:0;border-radius:10px;padding:12px;font-size:14.5px;font-weight:600;cursor:pointer}
+.btCam.feita{background:var(--pine-bg);color:var(--pine)}
+.cardioBts .btLink{width:auto;padding:0 2px;flex:none}
+.dadosBts{display:flex;gap:9px}
+.btSec{flex:1;background:none;border:1px solid var(--line2);border-radius:11px;padding:12px 8px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.fimTit{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 6px!important}
+.fimLista{margin:0 0 18px;padding:0;list-style:none}
+.fimLista li{font-size:14.5px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+.fimLista li b{color:var(--ink);font-weight:600}
+#fimCorpo>p{color:var(--muted);font-size:14.5px}
+.desc #descMais{background:rgba(255,255,255,.12)}
+/* guia */
+.doc .gH4{font-size:14.5px;font-weight:700;color:var(--ink);margin:16px 0 4px}
+.doc .uso{font-size:12px;color:var(--dim)}
+.gDet{border-bottom:1px solid var(--line);padding:11px 0}
+.gDet summary{cursor:pointer;font-weight:600;font-size:14.5px;list-style:none;color:var(--ink)}
+.gDet summary::-webkit-details-marker{display:none}
+.gDet summary span{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--dim);font-weight:500;margin-left:6px}
+.gDet p{margin:9px 0 0}
+.gHist{margin-top:26px;border-top:1px solid var(--line)}
+.gHist table{margin-top:10px}
+.call.erro{border-left-color:var(--rust);color:#8A3520}
+
+/* v15 · blocos, mapa, pular, músculos, folha do como fazer */
+:root{--c-aq:#A87414;--c-tr:#1D5E4F;--c-co:#2C6E96;--c-iv:#B4472C}
+.sec h2 .bl{width:9px;height:9px;border-radius:3px;flex:none;display:inline-block}
+.sec[data-bloco=aq] h2 .bl{background:var(--c-aq)} .sec[data-bloco=tr] h2 .bl{background:var(--c-tr)}
+.sec[data-bloco=co] h2 .bl{background:var(--c-co)} .sec[data-bloco=iv] h2 .bl{background:var(--c-iv)}
+.sec[data-bloco] h2{color:var(--ink)}
+.item.b-aq{border-left:4px solid var(--c-aq)} .item.b-tr{border-left:4px solid var(--c-tr)}
+.item.b-co{border-left:4px solid var(--c-co)} .item.b-iv{border-left:4px solid var(--c-iv)}
+.item.b-aq .pos{color:var(--c-aq)} .item.b-tr .pos{color:var(--c-tr)} .item.b-co .pos{color:var(--c-co)} .item.b-iv .pos{color:var(--c-iv)}
+.item.atual{border-top-color:var(--ink);border-right-color:var(--ink);border-bottom-color:var(--ink)}
+.item.done,.item.pulado{border-left-color:var(--line2)}
+.item.pulado{background:transparent;border-style:dashed}
+.item.pulado .nome{text-decoration:line-through;color:var(--dim)}
+.item.pulado:not(.aberto) .resumoItem{display:block;color:var(--dim)}
+
+.mapa{display:none;gap:5px;padding:0 14px 9px}
+.mapa.on{display:flex}
+.segm{flex:1;min-width:0;display:flex;justify-content:space-between;align-items:center;gap:4px;background:var(--card2);border:0;border-radius:8px;padding:6px 8px;cursor:pointer;border-bottom:3px solid transparent}
+.segm b{font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.segm span{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--dim)}
+.segm.m-aq{border-bottom-color:var(--c-aq)} .segm.m-tr{border-bottom-color:var(--c-tr)} .segm.m-co{border-bottom-color:var(--c-co)} .segm.m-iv{border-bottom-color:var(--c-iv)}
+.segm.agora{background:var(--ink)} .segm.agora b,.segm.agora span{color:#fff}
+.segm.ok{opacity:.55}
+.musc{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+.musc .mp,.musc .ms{font-size:12px;border-radius:999px;padding:3px 9px;line-height:1.3}
+.musc .mp{background:var(--rust-bg);color:#8A3520;font-weight:600}
+.musc .ms{background:none;border:1px solid var(--line2);color:var(--muted)}
+.musc .nao{flex-basis:100%;margin:3px 0 0;font-size:12.5px;color:var(--muted)}
+.musc .nao b{color:var(--ink);font-weight:600}
+.modal-in.folha{max-height:78vh;display:flex;flex-direction:column;padding-top:16px}
+.fTopo{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px}
+.fTopo h4{margin:0}
+.fTopo button{flex:none!important;width:34px;height:34px;padding:0!important;border-radius:50%!important;background:var(--card2);color:var(--muted);font-size:15px!important}
+.fCorpo{overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
+.fCorpo .musc{display:flex;margin:4px 0 14px}
+.fCorpo .dica{font-size:14.5px;line-height:1.6}
+/* histórico e calendário */
+.btHistTudo{width:100%;margin-top:9px;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px;font-size:14.5px;font-weight:600;color:var(--pine);cursor:pointer}
+.calNav{display:flex;align-items:center;justify-content:space-between;margin:16px 18px 0}
+.calNav b{font-size:18px;font-weight:700}
+#btVoltarIni{width:calc(100% - 36px);margin:14px 18px 0}
+.calNav button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);background:var(--card);font-size:22px;line-height:1;color:var(--ink);cursor:pointer}
+.calRes{margin:8px 18px 0;font-size:12.5px;color:var(--muted)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:12px 18px 0}
+.calCab{text-align:center;font-family:"JetBrains Mono",monospace;font-size:9.5px;color:var(--dim);text-transform:uppercase;padding-bottom:2px}
+.calDia{position:relative;aspect-ratio:1/1.1;border:1.5px solid transparent;border-radius:9px;background:var(--card2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0;cursor:pointer;font-family:inherit}
+.calDia .n{font-size:11px;color:var(--dim)}
+.calDia .v{font-size:15px;font-weight:700;min-height:18px}
+.calDia .pt{position:absolute;bottom:5px;width:5px;height:5px;border-radius:50%;background:#2C6E96}
+.calDia.feito{background:var(--pine-bg)} .calDia.feito .v{color:var(--pine)}
+.calDia.lL{background:var(--gold-bg)} .calDia.lL .v{color:var(--gold)}
+.calDia.hoje{border-color:var(--ink)}
+.calDia.sel{background:var(--ink)} .calDia.sel .n,.calDia.sel .v{color:#fff}
+.calLeg{margin:10px 18px 0;font-size:11.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center}
+.calLeg span{font-weight:700;color:var(--pine)} .calLeg .lL{color:var(--gold)}
+.calLeg .pt{display:inline-block;width:6px;height:6px;border-radius:50%;background:#2C6E96}
+.calLimpa{margin-left:auto;background:none;border:0;color:var(--pine);font-family:inherit;font-size:11px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+
+/* v16 · cartão do exercício */
+.topoItem{display:flex;align-items:flex-start;gap:8px}
+.cab{flex:1;min-width:0}
+.alvo{display:none;font-size:12.5px;color:var(--muted);margin:3px 0 0;line-height:1.35}
+.item.aberto .alvo{display:block}
+.ic{gap:5px;align-items:center;flex:none;margin-top:1px}
+.ib{width:32px;height:32px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--muted);display:grid;place-items:center;padding:0;cursor:pointer;flex:none;text-decoration:none}
+.ib svg{width:18px;height:18px;display:block}
+.ic a.ib svg{width:20px;height:14px}
+.ib.on{border-color:var(--rust);color:var(--rust);background:var(--rust-bg)}
+/* no exercício pulado, o botão de desfazer continua à mão */
+.item.pulado .ic{display:flex}
+.item.pulado:not(.aberto) .ic .dica-btn,.item.pulado:not(.aberto) .ic a.ib{display:none}
+.ib:active{background:var(--card2)}
+.compacto{display:none;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted);margin:4px 0 0}
+.item:not(.aberto):not(.done):not(.pulado) .compacto{display:block}
+.faixa{background:var(--card2);border-radius:10px;padding:9px 12px;margin-top:10px}
+.faixaTopo{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.faixaTopo b{font-family:"JetBrains Mono",monospace;font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:-.01em}
+.faixaTopo i{font-style:normal;font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--dim)}
+.faixaTopo .sg{margin-left:auto;font-size:11px;font-weight:700;border-radius:6px;padding:3px 8px;white-space:nowrap}
+.faixaTopo .sg.sobe{background:var(--pine);color:#fff}
+.faixaTopo .sg.rep{background:var(--pine-bg);color:var(--pine)}
+.faixaTopo .sg.repete{background:var(--card);color:var(--muted)}
+.faixaMeta{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted);margin:6px 0 0;line-height:1.4}
+.item .series{margin-top:10px;border-top:0;padding-top:0}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
@@ -274,6 +405,7 @@ body.descansando .desc{bottom:0}
       <button class="aba" id="ab1" aria-pressed="false">Treino</button>
       <button class="aba" id="ab2" aria-pressed="false">Guia</button>
     </div>
+    <div class="mapa" id="mapa"></div>
   </div>
   <div id="avisoDb"></div>
   <main id="main"></main>
@@ -375,7 +507,16 @@ body.descansando .desc{bottom:0}
   </div>
   <button class="excluirSessao" style="color:var(--pine)" id="rBaixar">Baixar como arquivo .txt</button>
 </div></div>
-<div class="desc" id="descanso"><b id="descN">00:00</b><span>Descanso</span><button id="descSkip">Pular</button></div>
+<div class="desc" id="descanso"><b id="descN">00:00</b><span>Descanso</span><button id="descMais">+30 s</button><button id="descSkip">Pular</button></div>
+<div class="modal" id="mDica"><div class="modal-in folha">
+  <div class="fTopo"><h4 id="dNome"></h4><button id="dFecha" aria-label="Fechar">✕</button></div>
+  <div id="dCorpo" class="fCorpo"></div>
+</div></div>
+<div class="modal" id="mFim"><div class="modal-in alto">
+  <h4>Treino salvo</h4><p id="fimSub"></p>
+  <div id="fimCorpo"></div>
+  <div class="bts"><button class="si" style="background:var(--pine)" id="fimOk">Fechar</button></div>
+</div></div>
 
 <script>
 const DB = {
@@ -392,63 +533,65 @@ const AQ = {
   AB: [
     ['Esteira ou bike leve','5 min','Comece num ritmo confortável e aumente aos poucos. Ao fim dos 5 minutos o corpo deve estar aquecido e a respiração um pouco mais rápida, não cansado.'],
     ['Gato-vaca','6–8 ciclos lentos','Quatro apoios: mãos sob os ombros, joelhos sob o quadril. Expirando, empurre o chão e arredonde as costas levando o queixo ao peito. Inspirando, deixe a barriga descer e olhe um pouco à frente. Um ciclo é ir e voltar, em uns 4 segundos. <b>Não segure nenhuma das pontas e não force a amplitude máxima</b>, é movimento e não alongamento.'],
-    ['Abertura com elástico','2 × 15','Em pé, elástico esticado à frente do peito na largura dos ombros, braços quase estendidos e cotovelos levemente soltos. Abra até o elástico encostar no esterno, juntando as escápulas. Volte devagar. Ombros longe das orelhas o tempo todo.'],
-    ['Série de aproximação','8 reps a 50% · 4 reps a 75%','Somente no <b>primeiro exercício do dia</b>. Serve para ajustar o movimento, não para cansar. Não registre no app.']
+    ['Abertura com elástico','2 × 15','Em pé, elástico esticado à frente do peito na largura dos ombros, braços quase estendidos e cotovelos levemente soltos. Abra até o elástico encostar no esterno, juntando as escápulas. Volte devagar. Ombros longe das orelhas o tempo todo.']
   ],
   C: [
     ['Esteira ou bike leve','5 min','Comece num ritmo confortável e aumente aos poucos. Ao fim dos 5 minutos o corpo deve estar aquecido e a respiração um pouco mais rápida.'],
     ['Gato-vaca','6–8 ciclos lentos','Quatro apoios: mãos sob os ombros, joelhos sob o quadril. Expirando, arredonde as costas levando o queixo ao peito. Inspirando, deixe a barriga descer e olhe um pouco à frente. <b>Não segure as pontas nem force o limite.</b>'],
-    ['Ativação de glúteo','2 × 15 por lado','Mini band acima dos joelhos, pés na largura do quadril, meio agachamento com o tronco levemente à frente. Passos laterais mantendo tensão no elástico, <b>sem deixar os joelhos caírem para dentro</b>.'],
-    ['Série de aproximação','8 reps a 50% · 4 reps a 75%','Somente no agachamento. Não registre no app.']
+    ['Ativação de glúteo','2 × 15 por lado','Mini band acima dos joelhos, pés na largura do quadril, meio agachamento com o tronco levemente à frente. Passos laterais mantendo tensão no elástico, <b>sem deixar os joelhos caírem para dentro</b>.']
   ]
 };
+const APROX = 'Antes da 1ª série: 8 reps a 50% e 4 a 75% da carga. Não registre.';
 
+/* mont: o que o exercício exige do equipamento, usado para gerar a montagem e checar conflitos.
+   eq: halter (barras de 40 cm), barra (barra reta), fixo (halteres fixos), caneleira, corpo.
+   canSug: caneleira nos punhos somada ao halter. */
 const BLOCOS = {
   A: [
-    [{n:'Supino inclinado',un:'mao',can:1,c:'15 kg por mão',sp:4,rp:'10–12',d:180,r:'RIR 2',
-      dica:'<b>Montagem:</b> barras de 40 cm com 5 + 5 kg cada, o que dá 12 kg. Para chegar a 15, acrescente a caneleira de 3 kg em cada punho e registre no campo Canel.<br><b>Posição:</b> banco a 30°. Sente com um halter apoiado em cada coxa e deite empurrando-os com as coxas até a altura do peito. Escápulas juntas e presas no banco, pés firmes no chão.<br><b>Execução:</b> cotovelos a cerca de 45° do tronco, não abertos a 90°. Desça até os halteres ficarem na linha do peito e você sentir alongamento. Suba sem bater um halter no outro no topo.<br><b>A série acaba</b> quando você não controla mais a descida.'}],
+    [{n:'Supino inclinado',un:'mao',can:1,aprox:1,mont:{eq:'halter',kg:12},canSug:3,c:'15 kg por mão · 12 + canel. 3',sp:4,rp:'10–12',d:180,r:'RIR 2',
+      dica:'<b>Montagem:</b> halteres de 12 kg com a caneleira de 3 kg em cada punho, total de 15 kg. Registre 12 no campo Halter e 3 no Canel.<br><b>Posição:</b> banco a 30°. Sente com um halter apoiado em cada coxa e deite empurrando-os com as coxas até a altura do peito. Escápulas juntas e presas no banco, pés firmes no chão.<br><b>Execução:</b> cotovelos a cerca de 45° do tronco, não abertos a 90°. Desça até os halteres ficarem na linha do peito e você sentir alongamento. Suba sem bater um halter no outro no topo.<br><b>A série acaba</b> quando você não controla mais a descida.'}],
     [{n:'Supino sentado na estação',un:'placas',maq:1,c:'38 kg · 5 placas',sp:3,rp:'10–12',d:180,r:'RIR 2',
       dica:'<b>Posição:</b> ajuste o assento para as manoplas ficarem na altura do meio do peito. Costas apoiadas, peito aberto, pés no chão.<br><b>Execução:</b> empurre até quase estender o cotovelo, sem travar, e volte em 2 a 3 segundos.<br><b>Erro comum:</b> deixar a placa bater na pilha no fim. Se bateu, você perdeu a tensão antes da hora.'}],
-    [{n:'Desenvolvimento sentado',un:'mao',can:1,c:'12 kg por mão',sp:3,rp:'10–12',d:120,r:'RIR 2',
-      dica:'<b>Posição:</b> banco a 80°, quase vertical. Halteres na altura das orelhas, palmas para frente, cotovelos um pouco à frente do corpo.<br><b>Execução:</b> empurre para cima até quase estender, sem bater os halteres no topo. Desça até as mãos voltarem à altura das orelhas.<br><b>Erro comum:</b> arquear a lombar para ajudar. Costelas para baixo e abdômen firme. Se a lombar arqueia, a carga está alta.'}],
-    [{n:'Crucifixo inclinado 30°',un:'mao',can:1,c:'5 kg por mão',sp:3,rp:'12–15',d:90,r:'RIR 1',
-      dica:'<b>Substitui o voador na estação</b>, com melhor curva de resistência: o pico de tensão acontece com o peitoral alongado, que é onde o estímulo de crescimento é maior.<br><b>Posição:</b> banco a 30°, halteres acima do peito, palmas voltadas uma para a outra.<br><b>Execução:</b> cotovelo levemente flexionado e <b>travado nesse ângulo do início ao fim</b>. Abra os braços em arco até sentir alongamento no peito, na linha do ombro ou pouco abaixo. Feche pelo mesmo caminho, sem bater os halteres.<br><b>Erro comum:</b> deixar o cotovelo abrir e fechar. Se isso acontecer, virou supino.'}],
-    [{n:'Elevação lateral',un:'mao',can:1,c:'5 kg por mão',sp:3,rp:'12–15',d:0,r:'RIR 1',
+    [{n:'Crucifixo inclinado 30°',un:'mao',can:1,mont:{eq:'fixo',kg:5},c:'5 kg por mão',sp:3,rp:'12–15',d:90,r:'RIR 1',
+      dica:'<b>O banco continua em 30°</b>, do supino inclinado. Tire a caneleira.<br><b>Por que este exercício:</b> substitui o voador com melhor curva de resistência. O pico de tensão acontece com o peitoral alongado, que é onde o estímulo de crescimento é maior.<br><b>Posição:</b> halteres acima do peito, palmas voltadas uma para a outra.<br><b>Execução:</b> cotovelo levemente flexionado e <b>travado nesse ângulo do início ao fim</b>. Abra os braços em arco até sentir alongamento no peito, na linha do ombro ou pouco abaixo. Feche pelo mesmo caminho, sem bater os halteres.<br><b>Erro comum:</b> deixar o cotovelo abrir e fechar. Se isso acontecer, virou supino.'}],
+    [{n:'Desenvolvimento sentado',un:'mao',can:1,mont:{eq:'halter',kg:12},c:'12 kg por mão',sp:3,rp:'10–12',d:120,r:'RIR 2',
+      dica:'<b>Halteres de 12 kg, sem caneleira.</b> Agora é a única troca de banco do treino: suba para 80°.<br><b>Posição:</b> banco quase vertical. Halteres na altura das orelhas, palmas para frente, cotovelos um pouco à frente do corpo.<br><b>Execução:</b> empurre para cima até quase estender, sem bater os halteres no topo. Desça até as mãos voltarem à altura das orelhas.<br><b>Erro comum:</b> arquear a lombar para ajudar. Costelas para baixo e abdômen firme. Se a lombar arqueia, a carga está alta.'}],
+    [{n:'Elevação lateral',un:'mao',can:1,mont:{eq:'fixo',kg:5},c:'5 kg por mão',sp:3,rp:'12–15',d:0,r:'RIR 1',
       dica:'<b>Par com o tríceps na polia.</b> Halteres de 5 kg são o seu teto aqui: use a caneleira no punho para continuar progredindo e registre no campo Canel.<br><b>Posição:</b> em pé, halteres ao lado do corpo, cotovelo levemente dobrado e fixo.<br><b>Execução:</b> suba os braços para os lados até a altura dos ombros, com o mindinho um pouco mais alto que o polegar. Desça em 2 segundos.<br><b>Erro comum:</b> impulso do tronco e subir acima da linha do ombro. Dali para cima o trabalho passa para o trapézio.'},
      {n:'Tríceps na polia',un:'placas',maq:1,c:'17,6 kg · 2 placas',sp:3,rp:'12–15',d:90,r:'RIR 1',
-      dica:'<b>Posição:</b> em pé de frente para a polia alta, corda na altura do peito, cotovelos colados ao tronco, tronco levemente à frente.<br><b>Execução:</b> estenda os cotovelos até os braços ficarem retos, afastando as duas pontas da corda no fim. Volte só até o cotovelo formar 90°.<br><b>Erro comum:</b> o cotovelo sair do lugar ou o tronco balançar para ajudar.'}],
-    [{n:'Flexão plus',un:'total',c:'Peso corporal',sp:2,rp:'10–12',d:60,r:'RIR 1',
+      dica:'<b>Posição:</b> em pé de frente para a polia alta, corda na altura do peito, cotovelos colados ao tronco, tronco levemente à frente.<br><b>Execução:</b> estenda os cotovelos até os braços ficarem retos, afastando as duas pontas da corda no fim. Volte só até o cotovelo formar 90°.<br><b>Cotovelo:</b> a corda é pegada neutra, mas aqui o cotovelo estende, e o braquiorradial, que doía na rosca martelo, quase não trabalha. Se aparecer dor na parte de fora do cotovelo, troque pela barra reta com pegada pronada.<br><b>Erro comum:</b> o cotovelo sair do lugar ou o tronco balançar para ajudar.'}],
+    [{n:'Flexão plus',un:'total',mont:{eq:'corpo'},c:'Peso corporal',sp:2,rp:'10–12',d:60,r:'RIR 1',
       dica:'<b>O que muda em relação à flexão comum:</b> no topo, depois de estender os cotovelos, empurre o chão mais 5 cm afastando as escápulas uma da outra. É esse empurrão final que dá nome ao exercício.<br><b>Alvo:</b> serrátil anterior, o estabilizador que mantém a escápula colada ao tórax. <b>Não conta como volume de peito.</b><br><b>Posição:</b> mãos no chão pouco mais abertas que os ombros, corpo em linha reta do calcanhar à cabeça.<br><b>A série acaba</b> quando você não consegue mais fazer o empurrão extra no topo.'}]
   ],
   B: [
-    [{n:'Barra fixa',un:'total',can:1,c:'Peso corporal',sp:3,rp:'8–10',d:180,r:'RIR 2',
+    [{n:'Barra fixa',un:'total',can:1,aprox:1,mont:{eq:'corpo'},c:'Peso corporal',sp:3,rp:'8–10',d:180,r:'RIR 2',
       dica:'<b>Sobrecarga:</b> caneleiras nos tornozelos quando o peso corporal ficar fácil. Registre o peso da caneleira no campo Canel.<br><b>Posição:</b> pegada pronada, mãos pouco mais abertas que os ombros. Comece pendurado com braços estendidos e ombros afastados das orelhas.<br><b>Execução:</b> puxe levando o peito na direção da barra até o queixo passar dela. Desça controlado até estender de novo. Sem balançar as pernas.<br><b>Se não sair nenhuma repetição:</b> faça só a descida, começando com o queixo acima da barra e descendo em 4 a 5 segundos.'}],
     [{n:'Remada baixa na polia',un:'placas',maq:1,c:'38 kg · 5 placas',sp:4,rp:'10–12',d:180,r:'RIR 2',
-      dica:'<b>Virou o principal exercício de costas</b> no lugar da remada curvada, que estava travada e carregava risco lombar desnecessário.<br><b>Posição:</b> sentado de frente para a polia baixa, triângulo nas mãos, pés apoiados, joelhos levemente dobrados, coluna ereta.<br><b>Execução:</b> puxe o triângulo até a barriga, juntando as escápulas no fim. Volte deixando as escápulas irem à frente e sentindo o dorsal alongar, sem arredondar a lombar.<br><b>Erro comum:</b> jogar o tronco para trás e para frente. O tronco fica quase parado.'}],
+      dica:'<b>Barra reta, não o triângulo.</b> O triângulo é pegada neutra, a mesma da rosca martelo que machucou o cotovelo, agora com 38 kg e o cotovelo dobrando. Até a avaliação, use a barra reta com pegada pronada, palmas para baixo, mãos na largura dos ombros. Se 38 kg não sair na faixa, desça uma placa.<br><b>Posição:</b> sentado de frente para a polia baixa, pés apoiados, joelhos levemente dobrados, coluna ereta.<br><b>Execução:</b> puxe a barra até a parte baixa do peito, cotovelos abrindo uns 45° do tronco, juntando as escápulas no fim. Volte deixando as escápulas irem à frente, sem arredondar a lombar.<br><b>Erro comum:</b> jogar o tronco para trás e para frente. O tronco fica quase parado.'}],
     [{n:'Puxada alta supinada',un:'placas',maq:1,c:'38 kg · 5 placas',sp:3,rp:'10–12',d:180,r:'RIR 2',
       dica:'<b>Posição:</b> sentado, coxas travadas sob o apoio. Pegada supinada, palmas voltadas para você, mãos na largura dos ombros.<br><b>Execução:</b> incline o tronco uns 15° para trás e puxe a barra até a parte alta do peito, cotovelos descendo rentes ao corpo. Volte até estender por completo.<br><b>Erro comum:</b> puxar com o tronco em vez dos braços e das costas.'}],
     [{n:'Face pull',un:'placas',maq:1,c:'17,6 kg · 2 placas',sp:3,rp:'15–20',d:0,r:'RIR 1',
-      dica:'<b>Par com a rosca inclinada.</b><br><b>Posição:</b> polia na altura do rosto ou pouco acima, corda com pegada neutra, um passo para trás para tensionar o cabo.<br><b>Execução:</b> puxe a corda na direção do rosto <b>separando as mãos</b>, terminando com os cotovelos altos e as mãos ao lado das orelhas. Segure 1 segundo e volte devagar.<br><b>Não é opcional:</b> trapézio inferior e rotadores fracos são causa direta da sua rigidez cervical.'},
-     {n:'Rosca inclinada unilateral',un:'lado',can:1,c:'5 kg por lado',sp:3,rp:'10–12',d:90,r:'RIR 1',
+      dica:'<b>Par com a rosca inclinada.</b><br><b>Pegada por cima da corda:</b> palmas para baixo, polegares apontando um para o outro. A pegada neutra de costume entra na restrição do cotovelo.<br><b>Polia:</b> no ponto alto, ou no médio se ele ficar na altura da testa. O cabo deve chegar ao rosto na horizontal ou vindo de cima, nunca de baixo. Um passo para trás para tensionar.<br><b>Execução:</b> puxe a corda na direção do rosto <b>separando as mãos</b>, terminando com os cotovelos altos e as mãos ao lado das orelhas. Segure 1 segundo e volte devagar.<br><b>Não é opcional:</b> trapézio inferior e rotadores fracos são causa direta da sua rigidez cervical.'},
+     {n:'Rosca inclinada unilateral',un:'lado',can:1,mont:{eq:'fixo',kg:5},c:'5 kg por lado',sp:3,rp:'10–12',d:90,r:'RIR 1',
       dica:'<b>Pegada supinada, palma para cima.</b> Nenhuma pegada neutra carregada até a avaliação do cotovelo. Se doer, o exercício sai também.<br><b>Posição:</b> banco a 45–60°, sentado com as costas apoiadas. Deixe o braço pendurado solto, <b>atrás da linha do tronco</b>. É essa posição que alonga a cabeça longa do bíceps.<br><b>Execução:</b> sem mover o ombro, flexione o cotovelo até em cima e desça até estender por completo. Um braço de cada vez.<br><b>Sobrecarga:</b> caneleira no punho quando o halter de 5 kg ficar leve.'}],
-    [{n:'Elevação de pernas suspenso',un:'total',can:1,c:'Peso corporal',sp:3,rp:'12–15',d:90,r:'RIR 1',
+    [{n:'Elevação de pernas suspenso',un:'total',can:1,mont:{eq:'corpo'},c:'Peso corporal',sp:3,rp:'12–15',d:90,r:'RIR 1',
       dica:'<b>Posição:</b> pendurado na barra do espaldar, braços estendidos, corpo parado.<br><b>Execução:</b> eleve os joelhos em direção ao peito <b>enrolando a pelve no fim</b>. Não é só levantar a coxa: sem a retroversão da pelve o abdômen quase não trabalha. Desça devagar sem deixar o corpo balançar.<br><b>Progressão:</b> joelhos dobrados → joelhos ao peito → pernas estendidas a 90° → pernas até a barra. Depois disso, caneleira nos tornozelos. Suba de nível só quando o balanço sumir.'}]
   ],
   C: [
-    [{n:'Agachamento',un:'mao',can:1,c:'12 kg por mão · precisa subir',sp:4,rp:'8–10',d:180,r:'RIR 2',
-      dica:'<b>Este exercício precisa subir.</b> Está parado em 12 kg há quatro exposições. Meta: 4 a 6 kg por sessão até chegar a 8 repetições com RIR 2. Como as anilhas não permitem incremento fino, use a caneleira nos punhos e registre no campo Canel.<br><b>Posição:</b> em pé, uma barra de 40 cm carregada em cada mão, ao lado do corpo. Pés na largura dos ombros, pontas levemente para fora.<br><b>Execução:</b> empurre o quadril para trás e desça até a coxa passar da paralela, tronco o mais vertical possível, peso no meio do pé. Suba empurrando o chão.'}],
-    [{n:'Terra romeno',un:'total',c:'38 kg',sp:4,rp:'10–12',d:180,r:'RIR 2',
-      dica:'<b>Montagem:</b> barra reta de 6 kg + 10 + 5 + 1 kg de cada lado = 38 kg. <b>Não desmonte a barra</b> depois: ela é usada logo em seguida no pull-through.<br><b>Posição:</b> em pé segurando a barra à frente das coxas, pés na largura do quadril, joelhos levemente dobrados e travados nesse ângulo.<br><b>Execução:</b> empurre o quadril para trás deixando a barra raspar a coxa, até sentir alongamento atrás das coxas, normalmente pouco abaixo do joelho. Volte empurrando o quadril à frente.<br><b>Não é agachamento:</b> o joelho quase não dobra, quem se move é o quadril.',
+    [{n:'Agachamento',un:'mao',can:1,aprox:1,mont:{eq:'halter',kg:12},canSug:3,c:'15 kg por mão · 12 + canel. 3',sp:4,rp:'8–10',d:180,r:'RIR 2',
+      dica:'<b>Montagem:</b> halteres de 12 kg, os mesmos da panturrilha, com caneleira nos punhos. <b>Não troque anilha.</b> Registre 12 no campo Halter e a caneleira no Canel.<br><b>Progressão:</b> estava parado em 12 kg. Comece com caneleira de 3 kg e suba 1 kg por sessão enquanto fizer 8 repetições com RIR 2. Quando chegar aos 6 kg, o próximo passo depende de anilhas novas.<br><b>Posição:</b> em pé, um halter em cada mão, ao lado do corpo. Pés na largura dos ombros, pontas levemente para fora.<br><b>Execução:</b> empurre o quadril para trás e desça até a coxa passar da paralela, tronco o mais vertical possível, peso no meio do pé. Suba empurrando o chão.'}],
+    [{n:'Terra romeno',un:'total',mont:{eq:'barra',kg:38},c:'38 kg',sp:4,rp:'10–12',d:180,r:'RIR 2',
+      dica:'<b>Montagem:</b> barra reta de 6 kg + 10 + 5 + 1 kg de cada lado = 38 kg. É o único exercício com a barra.<br><b>Posição:</b> em pé segurando a barra à frente das coxas, pés na largura do quadril, joelhos levemente dobrados e travados nesse ângulo.<br><b>Execução:</b> empurre o quadril para trás deixando a barra raspar a coxa, até sentir alongamento atrás das coxas, normalmente pouco abaixo do joelho. Volte empurrando o quadril à frente.<br><b>Não é agachamento:</b> o joelho quase não dobra, quem se move é o quadril.<br><b>Progressão:</b> quando fechar 4 × 12, a próxima subida exige anilhas pequenas que ainda não existem no seu estoque.',
       alerta:'<b>Nunca puxe do chão.</b> Suas anilhas têm diâmetro pequeno e a barra fica abaixo da altura padrão. Puxar dali vira terra em déficit e sobrecarrega a lombar.'}],
     [{n:'Pull-through na polia',un:'placas',maq:1,c:'24,4 kg · 3 placas',sp:3,rp:'12–15',d:90,r:'RIR 1',
       dica:'<b>Substitui a elevação pélvica</b>, que exigia passar 34 kg por cima do corpo duas vezes por sessão. Mesma curva de resistência para o glúteo, sem a montagem insegura.<br><b>Posição:</b> corda de tríceps na polia baixa. De costas para a estação, corda passando <b>entre as pernas</b>, um ou dois passos à frente para tensionar o cabo. Pés na largura dos ombros.<br><b>Execução:</b> empurre o quadril para trás deixando a corda puxar, joelhos levemente dobrados e coluna neutra. Depois estenda o quadril para a frente <b>apertando o glúteo no fim</b>, até o corpo ficar ereto.<br><b>Erro comum:</b> agachar em vez de empurrar o quadril, ou terminar arqueando a lombar em vez de contrair o glúteo.'}],
     [{n:'Cadeira extensora',un:'placas',maq:1,c:'38 kg · 5 placas',sp:3,rp:'12–15',d:0,r:'RIR 1',
-      dica:'<b>Par com a flexora.</b><br><b>Posição:</b> sentado, costas apoiadas, rolo logo acima do peito do pé. O eixo do joelho alinhado com o eixo do aparelho.<br><b>Execução:</b> estenda até a perna ficar reta, segure meio segundo no topo, desça em 2 a 3 segundos.<br><b>Erro comum:</b> jogar o quadril para frente para ajudar no fim da série.'},
+      dica:'<b>Par com a flexora, na mesma pilha.</b> Entre uma e outra só muda o pino: 5 placas aqui, 2 na flexora.<br><b>Posição:</b> sentado, costas apoiadas, rolo logo acima do peito do pé. O eixo do joelho alinhado com o eixo do aparelho.<br><b>Execução:</b> estenda até a perna ficar reta, segure meio segundo no topo, desça em 2 a 3 segundos.<br><b>Erro comum:</b> jogar o quadril para frente para ajudar no fim da série.'},
      {n:'Flexora em pé',un:'placas',maq:1,c:'17,6 kg · 2 placas',sp:3,rp:'12–15',d:90,r:'RIR 1',
       dica:'<b>Posição:</b> em pé de frente para a estação, apoiando as mãos na estrutura. Encaixe a perna no suporte, com o rolo logo acima do calcanhar.<br><b>Execução:</b> puxe o calcanhar em direção ao glúteo e volte devagar até quase estender. Uma perna de cada vez.<br><b>Erro comum:</b> jogar o quadril à frente para ganhar amplitude. O quadril fica parado, quem se move é só o joelho.'}],
-    [{n:'Panturrilha em pé',un:'mao',can:1,c:'20 kg por mão',sp:3,rp:'15–20',d:60,r:'RIR 0–1',
-      dica:'<b>Este exercício precisa subir.</b> Estava em 12 kg com 25 repetições, que é resistência e não força. Suba a carga e volte para a faixa de 15 a 20.<br><b>Posição:</b> antepé no degrau, calcanhares livres no ar, halteres ao lado do corpo, joelhos quase estendidos.<br><b>Execução:</b> desça o calcanhar abaixo do nível do degrau e <b>pause 2 segundos embaixo</b>. Suba até a ponta do pé, segure meio segundo e desça devagar.<br><b>Por que a pausa:</b> a panturrilha responde a alongamento sob carga, não a repetição rápida.'}],
-    [{n:'Roda abdominal',un:'total',c:'Peso corporal',sp:3,rp:'10–12',d:60,r:'RIR 1',
+    [{n:'Panturrilha em pé',un:'mao',can:1,mont:{eq:'halter',kg:12},canSug:6,c:'18 kg por mão · 12 + canel. 6',sp:3,rp:'15–20',d:60,r:'RIR 0–1',
+      dica:'<b>Montagem:</b> os mesmos halteres de 12 kg do agachamento, com a caneleira de 6 kg nos punhos, total de 18 kg por mão. <b>Não troque anilha.</b> Registre 12 no Halter e 6 no Canel.<br><b>Sem degrau, até a plataforma chegar:</b> no chão plano, suba até a ponta máxima do pé, segure 2 segundos no alto e desça devagar até o calcanhar encostar, sem quicar.<br><b>Com a plataforma:</b> antepé na borda, calcanhar livre. Desça abaixo do nível da plataforma e pause 2 segundos embaixo, que é onde está o estímulo maior. No começo a carga provavelmente precisa cair.<br><b>Posição:</b> halteres ao lado do corpo, joelhos quase estendidos.'}],
+    [{n:'Roda abdominal',un:'total',mont:{eq:'corpo'},c:'Peso corporal',sp:3,rp:'10–12',d:60,r:'RIR 1',
       dica:'<b>Posição:</b> de joelhos sobre o colchonete, roda no chão sob os ombros, quadril levemente enrolado para trás.<br><b>Execução:</b> role à frente só até onde consegue manter o quadril travado e a lombar sem arquear. Volte puxando com o abdômen, não com os braços.<br><b>A série termina quando a lombar arqueia</b>, não quando o abdômen cansa. Progrida amplitude antes de progredir posição.'}]
   ]
 };
@@ -457,12 +600,12 @@ const CORE_BASE = [
   ['Curl-up de McGill','3 séries · 5, 3 e 1 sustentações','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, e entre uma e outra você <b>solta a posição por 2 ou 3 segundos</b>. A série 1 tem 5 sustentações, a 2 tem 3, a 3 tem 1. Descanso de 20 a 30 s entre as séries. <b>Não é uma prancha de 50 segundos.</b><br><b>Posição:</b> deitado de costas, uma perna dobrada com o pé no chão e a outra estendida. Mãos sob a lombar, palmas para baixo. Elas são o seu sensor: se sentir a lombar esmagando os dedos, você flexionou a coluna e perdeu o exercício. Cotovelos apoiados no chão. Alterne a perna dobrada entre as séries.<br><b>Execução:</b> o movimento é <b>mínimo</b>, as escápulas mal saem do chão, dois ou três centímetros. Cabeça, pescoço e parte alta das costas se movem como um bloco só.<br><b>Se sentir o pescoço:</b> é erro de execução. Antes de iniciar, <b>pressione a língua contra o céu da boca</b>, logo atrás dos dentes da frente. Pense em girar a partir do esterno, não do pescoço. Se precisar, apoie uma mão atrás da cabeça <b>sustentando</b> o peso dela, sem puxar.<br><b>O que sentir:</b> tensão na parede abdominal, principalmente na parte alta. Nada no pescoço e nada na lombar.'],
   ['Prancha lateral','3 séries · 5, 3 e 1 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, soltando a posição por 2 ou 3 segundos entre elas. Faça as três séries de um lado e depois as três do outro.<br><b>Posição:</b> deitado de lado, cotovelo diretamente sob o ombro, antebraço no chão. <b>Comece de joelhos</b> e só passe para os pés quando as três séries saírem sem tremor.<br><b>Execução:</b> suba o quadril até o corpo formar uma linha reta vista de lado e segure 10 segundos. Ombro, quadril e joelho alinhados.<br><b>Se sentir o pescoço:</b> o erro típico é o ombro de baixo afundar na direção da orelha. Corrija <b>empurrando o chão com o cotovelo</b>, criando espaço entre ombro e orelha. Cabeça alinhada com a coluna, olhar para frente. Se persistir, reduza para 5 segundos por sustentação.'],
   ['Bird dog','3 séries · 5, 3 e 1 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, desfazendo a posição entre elas. Três séries com braço direito e perna esquerda, depois três com o outro par.<br><b>Posição:</b> quatro apoios, mãos sob os ombros, joelhos sob o quadril, coluna neutra.<br><b>Execução:</b> estenda o braço direito à frente e a perna esquerda atrás, até ambos ficarem na linha do tronco, não mais alto que isso.<br><b>Detalhes que mudam o exercício:</b> feche o punho da mão estendida e puxe a ponta do pé em direção à canela. Contrair as extremidades aumenta a rigidez de todo o sistema por irradiação.<br><b>Regra:</b> imagine um copo d\'água apoiado na lombar. Se o quadril rodar, nada disso vale.<br><b>Se estiver difícil:</b> faça só o braço, depois só a perna, e junte os dois depois de uma ou duas semanas.'],
-  ['Pallof press','2 × 10 por lado','<b>Posição:</b> em pé <b>de lado</b> para a polia, pés na largura dos ombros, mãos juntas na manopla junto ao esterno. Afaste-se da máquina até o cabo ficar praticamente paralelo ao chão.<br><b>Execução:</b> estenda os braços à frente do peito, segure 2 segundos <b>resistindo à rotação</b> e volte. O objetivo é não girar.<br><b>Regra:</b> o tronco fica vertical. Se você precisa inclinar para o lado oposto, está longe demais para essa carga.']
+  ['Pallof press','2 × 10 por lado','<b>Polia no ponto médio</b>, na altura do peito. <b>Posição:</b> em pé <b>de lado</b> para a polia, pés na largura dos ombros, mãos juntas segurando a corda junto ao esterno. Afaste-se da máquina até o cabo ficar paralelo ao chão.<br><b>Execução:</b> estenda os braços à frente do peito, segure 2 segundos <b>resistindo à rotação</b> e volte. O objetivo é não girar.<br><b>Regra:</b> o tronco fica vertical. Se você precisa inclinar para o lado oposto, está longe demais para essa carga.']
 ];
 
 const CORE_ROT = {
-  A:{n:'Prancha frontal com peso',un:'total',c:'6 kg',sp:3,rp:'30–45 s',d:45,r:'—',tempo:1,
-     dica:'<b>Posição:</b> antebraços no chão, cotovelos sob os ombros, pés na largura do quadril. Anilha apoiada sobre a lombar.<br><b>Execução:</b> corpo em linha reta, glúteo contraído, costelas para baixo. Respire normalmente.<br><b>Registro:</b> o campo de repetições recebe <b>segundos</b> neste exercício.<br><b>Progressão:</b> primeiro por alavanca, cotovelos mais à frente da linha dos ombros, e só depois por carga. <b>Nunca passe de 45 segundos.</b>'}
+  A:{n:'Prancha frontal com peso',un:'total',mont:{eq:'caneleira',kg:6},c:'6 kg',sp:3,rp:'30–45 s',d:45,r:'',tempo:1,
+     dica:'<b>Posição:</b> antebraços no chão, cotovelos sob os ombros, pés na largura do quadril. Caneleira de 6 kg sobre a lombar, que não escorrega como a anilha.<br><b>Execução:</b> corpo em linha reta, glúteo contraído, costelas para baixo. Respire normalmente.<br><b>Registro:</b> o campo de repetições recebe <b>segundos</b> neste exercício.<br><b>Progressão:</b> primeiro por alavanca, cotovelos mais à frente da linha dos ombros, e só depois por carga. <b>Nunca passe de 45 segundos.</b>'}
 };
 
 const MOB = [
@@ -472,11 +615,66 @@ const MOB = [
   ['Alongamento cervical em duas etapas','40 s por lado','<b>Uma sequência só, sem soltar entre as etapas.</b> Sentado, segure a borda do assento com a mão direita. Isso trava o ombro direito para baixo, que é o que faz o alongamento funcionar.<br><b>Etapa 1:</b> incline a orelha esquerda na direção do ombro esquerdo, olhando para frente. Segure 20 segundos. Pega o trapézio superior.<br><b>Etapa 2:</b> da mesma posição, gire o olhar para baixo, na direção da axila esquerda. Segure mais 20 segundos. Pega o elevador da escápula.<br>Troque de lado.<br><b>Como saber se está certo:</b> o alongamento aparece na lateral e atrás do pescoço do lado que está segurando a cadeira. Se não sentir nada, puxe o assento com mais firmeza para baixo.<br><b>Pare imediatamente</b> se aparecer formigamento ou choque descendo pelo braço.']
 ];
 
-const MONTAGEM = {
-  A:['2 barras de 40 cm · 5 + 5 kg cada = 12 kg por mão','Caneleiras de 3 kg nos punhos para chegar a 15 kg no supino','Halteres de 5 kg para crucifixo e elevação lateral','Estação: 5 placas no supino sentado, 2 no tríceps'],
-  B:['Estação: 5 placas na remada e na puxada, 2 no face pull','Halteres de 5 kg para a rosca inclinada','Caneleiras nos tornozelos para a barra fixa'],
-  C:['Barra reta · 10 + 5 + 1 kg de cada lado = 38 kg','<b>Não desmonte a barra</b> entre o terra romeno e o pull-through','2 barras de 40 cm · 5 + 5 kg cada = 12 kg por mão','Estação: 3 placas no pull-through, 5 na extensora, 2 na flexora']
-};
+/* ===================== ESTOQUE E MONTAGEM ===================== */
+/* Tudo que existe na academia. A montagem de cada treino é calculada daqui, e o app avisa
+   quando um programa pede mais anilha do que existe ou obriga a trocar anilha no meio da sessão. */
+const ESTOQUE = { anilhas:{10:2, 5:6, 3:2, 1:2}, barraHalter:2, barraReta:6 };
+const TIPOS_ANILHA = [10,5,3,1];
+/* menor combinação de anilhas por lado; mult = quantas pontas recebem a mesma combinação */
+function combinaAnilhas(lado, disp, mult){
+  let best = null;
+  (function rec(i, rest, uso){
+    if(Math.abs(rest) < 1e-9){ const n = Object.values(uso).reduce((a,b)=>a+b,0); if(!best || n < best.n) best = { n, uso:Object.assign({},uso) }; return; }
+    if(i >= TIPOS_ANILHA.length || rest < 0) return;
+    const t = TIPOS_ANILHA[i], max = Math.floor((disp[t]||0)/mult);
+    for(let q = Math.min(max, Math.floor(rest/t + 1e-9)); q >= 0; q--){ uso[t] = q; rec(i+1, rest - q*t, uso); }
+    delete uso[t];
+  })(0, lado, {});
+  return best ? best.uso : null;
+}
+const fmtAnilhas = u => TIPOS_ANILHA.filter(t => u[t]).map(t => (u[t]>1 ? u[t]+' × ' : '') + t).join(' + ');
+const fmtNum = v => String(v).replace('.',',');
+function exerciciosDe(letra){
+  const out = []; BLOCOS[letra].forEach(b => b.forEach(e => out.push(e)));
+  if(CORE_ROT[letra]) out.push(CORE_ROT[letra]);
+  return out;
+}
+function montagemDe(letra){
+  const g = { halter:{}, barra:{}, fixo:{}, can:{}, maq:[] };
+  const add = (o, k, n) => { (o[k] = o[k] || []).push(n); };
+  exerciciosDe(letra).forEach(e => {
+    if(e.maq){ g.maq.push(e); return; }
+    const m = e.mont || {};
+    if(m.eq === 'halter' || m.eq === 'barra' || m.eq === 'fixo') add(g[m.eq], m.kg, e.n);
+    if(m.eq === 'caneleira') add(g.can, m.kg, e.n);
+    if(e.canSug) add(g.can, e.canSug, e.n);
+  });
+  const disp = Object.assign({}, ESTOQUE.anilhas), linhas = [], alertas = [];
+  const hk = Object.keys(g.halter).map(Number), bk = Object.keys(g.barra).map(Number);
+  if(hk.length > 1) alertas.push('Halteres em ' + hk.join(' e ') + ' kg na mesma sessão: obriga a trocar anilha no meio do treino.');
+  if(bk.length > 1) alertas.push('Barra reta em ' + bk.join(' e ') + ' kg na mesma sessão: obriga a trocar anilha no meio do treino.');
+  const consome = (u, mult) => Object.keys(u).forEach(t => disp[t] -= u[t]*mult);
+  hk.forEach(kg => {
+    const lado = (kg - ESTOQUE.barraHalter) / 2;
+    const u = lado === 0 ? {} : combinaAnilhas(lado, disp, 4);
+    if(!u){ alertas.push('Não há anilhas para halteres de ' + kg + ' kg. Cada tipo de anilha precisa vir em 4 iguais, uma por ponta.'); return; }
+    consome(u, 4);
+    linhas.push({ eq:'Halteres', mont:(lado ? fmtAnilhas(u) + ' kg por lado' : 'sem anilha'), tot:kg + ' kg por mão', usos:g.halter[kg] });
+  });
+  bk.forEach(kg => {
+    const lado = (kg - ESTOQUE.barraReta) / 2;
+    const u = combinaAnilhas(lado, disp, 2);
+    if(!u){ alertas.push('Não há anilhas para a barra reta a ' + kg + ' kg junto com o resto da montagem.'); return; }
+    consome(u, 2);
+    linhas.push({ eq:'Barra reta', mont:fmtAnilhas(u) + ' kg por lado', tot:kg + ' kg', usos:g.barra[kg] });
+  });
+  Object.keys(g.fixo).forEach(kg => linhas.push({ eq:'Halteres fixos', mont:kg + ' kg', tot:'', usos:g.fixo[kg] }));
+  const ck = Object.keys(g.can).map(Number).sort((a,b)=>a-b);
+  if(ck.length) linhas.push({ eq:'Caneleiras', mont:ck.map(k=>k+' kg').join(' e '), tot:'', usos:[].concat.apply([], ck.map(k => g.can[k].map(n => n + ': ' + k + ' kg'))) });
+  if(g.maq.length) linhas.push({ eq:'Estação', mont:'só muda o pino', tot:'', usos:g.maq.map(e => e.n + ': ' + ((String(e.c).match(/(\d+) placas?/)||['',''])[1]) + ' pl') });
+  const sobra = TIPOS_ANILHA.filter(t => disp[t] > 0).map(t => disp[t] + ' × ' + t + ' kg');
+  return { linhas, alertas, sobra };
+}
 
 const NOMES = { A:'Empurrar', B:'Puxar', C:'Pernas', L:'Livre' };
 const FILA = ['A','B','C'];
@@ -539,23 +737,111 @@ function estimaTotal(letra, passagem){
 function ultimoRegistro(l,n){ for(let i=hist.length-1;i>=0;i--){ const s=hist[i].series && hist[i].series[chaveEx(l,n)]; if(s&&s.length) return s; } return null; }
 
 const YTICON='<svg viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#C4302B"/><path d="M11 6l7 4-7 4z" fill="#fff"/></svg>';
-let posAtual = 0, posTotal = 0;
-function abreBloco(n){ posAtual = 0; posTotal = n; }
-function item(nome, metricas, dica, alerta, extra, busca){
+/* músculos de cada exercício: [alvo, ajudam, o que não deve sentir] */
+const MUSC = {
+  'Esteira ou bike leve':[['Coração e pulmão'],['Pernas'],''],
+  'Gato-vaca':[['Coluna inteira, em mobilidade'],[],'Dor ou pinçada. É movimento, não alongamento forçado.'],
+  'Abertura com elástico':[['Deltoide posterior','Romboides','Trapézio médio'],[],'Trapézio superior subindo os ombros.'],
+  'Ativação de glúteo':[['Glúteo médio'],['Glúteo mínimo'],'Queimação só na frente da coxa.'],
+  'Supino inclinado':[['Peitoral, parte superior'],['Deltoide anterior','Tríceps'],'Dor na frente do ombro. Cotovelos abertos demais.'],
+  'Supino sentado na estação':[['Peitoral, parte média'],['Deltoide anterior','Tríceps'],'Ombros subindo em direção às orelhas.'],
+  'Crucifixo inclinado 30°':[['Peitoral, alongado embaixo'],['Deltoide anterior'],'Esforço no bíceps ou no cotovelo.'],
+  'Desenvolvimento sentado':[['Deltoide anterior','Deltoide lateral'],['Tríceps','Trapézio superior'],'Lombar arqueando ou doendo.'],
+  'Elevação lateral':[['Deltoide lateral'],['Supraespinhal'],'Trapézio no pescoço fazendo o trabalho.'],
+  'Tríceps na polia':[['Tríceps'],[],'Dor na parte de fora do cotovelo.'],
+  'Flexão plus':[['Serrátil anterior'],['Peitoral','Tríceps','Abdômen'],'Lombar afundando.'],
+  'Prancha frontal com peso':[['Reto abdominal','Transverso'],['Glúteo','Serrátil'],'Lombar. Se sentir, o quadril caiu.'],
+  'Barra fixa':[['Latíssimo do dorso'],['Bíceps','Braquial','Romboides','Trapézio inferior'],'Pescoço tenso e ombros subindo.'],
+  'Remada baixa na polia':[['Romboides','Trapézio médio','Latíssimo'],['Deltoide posterior','Bíceps'],'Lombar trabalhando para balançar o tronco.'],
+  'Puxada alta supinada':[['Latíssimo do dorso'],['Bíceps','Redondo maior'],'Só o braço cansando, sem sentir as costas.'],
+  'Face pull':[['Deltoide posterior','Trapézio médio e inferior','Manguito rotador'],[],'Trapézio superior e pescoço.'],
+  'Rosca inclinada unilateral':[['Bíceps, cabeça longa'],['Braquial'],'Dor no cotovelo. Se aparecer, pare.'],
+  'Elevação de pernas suspenso':[['Reto abdominal, parte baixa'],['Flexores do quadril','Oblíquos','Antebraço'],'Só a frente do quadril trabalhando: faltou enrolar a pelve.'],
+  'Agachamento':[['Quadríceps','Glúteo máximo'],['Adutores','Eretores da coluna'],'Dor no joelho ou na lombar.'],
+  'Terra romeno':[['Posteriores da coxa','Glúteo máximo'],['Eretores da coluna','Antebraço'],'Lombar queimando mais que a parte de trás da coxa.'],
+  'Pull-through na polia':[['Glúteo máximo'],['Posteriores da coxa'],'Lombar no fim do movimento.'],
+  'Cadeira extensora':[['Quadríceps'],[],'Dor aguda na patela.'],
+  'Flexora em pé':[['Posteriores da coxa'],['Gastrocnêmio'],'Lombar compensando.'],
+  'Panturrilha em pé':[['Gastrocnêmio'],['Sóleo'],'Só a planta do pé cansando.'],
+  'Roda abdominal':[['Reto abdominal'],['Oblíquos','Latíssimo','Serrátil'],'Lombar. É o sinal para encerrar a série.'],
+  'Curl-up de McGill':[['Reto abdominal'],['Oblíquos'],'Pescoço ou lombar.'],
+  'Prancha lateral':[['Oblíquos','Quadrado lombar'],['Glúteo médio'],'Ombro de baixo afundando, pescoço.'],
+  'Bird dog':[['Eretores e multífidos','Glúteo máximo'],['Deltoide'],'Quadril girando para o lado.'],
+  'Pallof press':[['Oblíquos','Transverso'],['Glúteo médio'],'Tronco girando ou inclinando.'],
+  'Intervalado 4×4 na bike':[['Coração e pulmão'],['Quadríceps','Glúteo'],'']
+};
+function muscHTML(nome){
+  const m=MUSC[nome]; if(!m) return '';
+  return '<div class="musc">'+m[0].map(x=>'<span class="mp">'+x+'</span>').join('')+m[1].map(x=>'<span class="ms">'+x+'</span>').join('')+
+    (m[2]?'<p class="nao"><b>Não deve sentir:</b> '+m[2]+'</p>':'')+'</div>';
+}
+
+let posAtual = 0, posTotal = 0, blocoAtual = '';
+function abreBloco(n, bloco){ posAtual = 0; posTotal = n; if(bloco!==undefined) blocoAtual = bloco; }
+const DICAS = {};
+/* carga em duas partes: o número que importa primeiro, o equivalente depois */
+function partesCarga(e){
+  const p = String(e.c||'').split(' · ');
+  if(e.maq) return [p[1] || p[0], p[1] ? p[0] : ''];
+  return [p[0], p.slice(1).join(' · ')];
+}
+const ICO_AJUDA = '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M7.6 7.7a2.5 2.5 0 1 1 2.9 2.5v1.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="10.4" cy="14.4" r="1" fill="currentColor"/></svg>';
+const ICO_PULAR = '<svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="8.6" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M4.4 15.6 15.6 4.4" stroke="currentColor" stroke-width="1.5"/></svg>';
+const ICO_VOLTAR = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10a6 6 0 1 0 1.8-4.3M4 3v3.4h3.4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+function item(nome, o){
+  o = o || {};
   const id='k'+(nid++);
   const pos = posTotal ? (++posAtual) + ' de ' + posTotal : '';
-  const mts=metricas.filter(Boolean).map(m=>`<span class="m ${m[1]||''}">${m[0]}</span>`).join('');
-  const tem=dica||alerta;
-  const url='https://www.youtube.com/results?search_query='+encodeURIComponent((busca||nome)+' execução correta');
-  return `<div class="item" data-nome="${nome}"><div class="linha">
+  const tem = o.dica || o.alerta;
+  if(tem) DICAS[id]={ nome, dica:o.dica, alerta:o.alerta };
+  const url='https://www.youtube.com/results?search_query='+encodeURIComponent((o.busca||nome)+' execução correta');
+  const alvo = (MUSC[nome]||[[]])[0].join(' · ');
+  const compacto = [o.carga, o.metaCurta || o.meta].filter(Boolean).join(' · ');
+  return `<div class="item b-${blocoAtual}" data-nome="${nome}"><div class="linha">
     <button class="tick" aria-label="Marcar ${nome}"></button>
-    <div class="corpo">${pos?`<p class="pos">${pos}</p>`:''}<p class="nome">${nome}</p><div class="mt">${mts}</div>
-    <div class="acoes">
-      ${tem?`<button class="dica-btn" data-alvo="${id}">Como fazer</button>`:''}
-      <a class="yt" href="${url}" target="_blank" rel="noopener">${YTICON} YouTube</a>
-    </div>
-    ${tem?`<div class="wrap" id="${id}">${dica?`<div class="dica">${dica}</div>`:''}${alerta?`<div class="dica alerta">${alerta}</div>`:''}</div>`:''}
-    ${extra||''}</div></div></div>`;
+    <div class="corpo">
+      <div class="topoItem">
+        <div class="cab" role="button" aria-label="Abrir ou fechar ${nome}">
+          ${pos?`<p class="pos">${pos}</p>`:''}
+          <p class="nome">${nome}</p>
+          ${alvo?`<p class="alvo">${alvo}</p>`:''}
+        </div>
+        <div class="ic">
+          ${tem?`<button class="ib dica-btn" data-alvo="${id}" aria-label="Como fazer">${ICO_AJUDA}</button>`:''}
+          <a class="ib" href="${url}" target="_blank" rel="noopener" aria-label="Vídeo no YouTube">${YTICON}</a>
+          <button class="ib pular-btn" aria-label="Não vou fazer este exercício">${ICO_PULAR}</button>
+        </div>
+      </div>
+      <p class="compacto">${compacto}</p>
+      <p class="resumoItem"></p>
+      ${(o.carga||o.meta)?`<div class="faixa">
+        <div class="faixaTopo"><b>${o.carga||''}</b>${o.carga2?`<i>${o.carga2}</i>`:''}${o.sinal?`<span class="sg ${o.sinal[1]}">${o.sinal[0]}</span>`:''}</div>
+        ${o.meta?`<p class="faixaMeta">${o.meta}</p>`:''}
+      </div>`:''}
+      ${o.nota?`<p class="nota">${o.nota}</p>`:''}
+      ${o.extra||''}
+    </div></div></div>`;
+}
+
+const vaz = v => (v === '' || v == null) ? null : v;
+/* carga prevista pelo programa: placas para a estação, kg do halter ou da barra */
+function padraoCarga(e){
+  if(e.maq){ const m = String(e.c).match(/(\d+) placa/); return m ? +m[1] : ''; }
+  const m = e.mont || {};
+  return (m.eq==='halter' || m.eq==='barra' || m.eq==='fixo') ? m.kg : '';
+}
+const fmtDesc = d => (d >= 60 && d % 60 === 0) ? (d/60) + ' min' : d + ' s';
+const pisoFaixa = txt => { const n = String(txt||'').match(/\d+/g); return n ? +n[0] : null; };
+/* dupla progressão lida da última sessão deste exercício */
+function sinalProgressao(letra, e){
+  if(e.tempo) return null;
+  const ant = ultimoRegistro(letra, e.n); if(!ant) return null;
+  const feitas = ant.filter(s => s && s.ok && +s.reps > 0); if(!feitas.length) return null;
+  const topo = topoFaixa(e.rp), piso = pisoFaixa(e.rp); if(!topo) return null;
+  if(feitas.length >= e.sp && feitas.every(s => +s.reps >= topo)) return ['Subir carga','sobe'];
+  if(feitas.some(s => +s.reps < piso)) return ['Manter carga','repete'];
+  return ['Buscar +1 rep','rep'];
 }
 
 function seriesHTML(letra, e, descanso){
@@ -565,36 +851,31 @@ function seriesHTML(letra, e, descanso){
   const maq = !!e.maq, can = !!e.can;
   const feito = (ativa && ativa.series && ativa.series[k]) || [];
   const ant = ultimoRegistro(letra, e.n);
-  const rot = s => {
-    if(!s) return '—';
-    if(maq) return s.pl ? s.pl+' pl' : '—';
-    const base = s.kg ? +s.kg : 0, c = s.can ? +s.can : 0;
-    if(!base && !c) return '—';
-    return c ? (base+c)+'' : base+'';
-  };
-  const antTxt = ant ? 'Última vez: ' + ant.map(s => rot(s)+'×'+((s&&s.reps)||'—')).join('  ·  ') : 'Primeira vez neste exercício';
+  const pad = padraoCarga(e);
   const cols = can ? 'quatro' : '';
   let linhas='';
   for(let i=0;i<n;i++){
     const f=feito[i]||{}, ph=(ant&&ant[i])||{};
     const val = maq ? (f.pl??'') : (f.kg??'');
     const conv = maq ? (val!=='' ? fmtKg(kgPlacas(+val)) : '')
-               : (can && (val!=='' || (f.can??'')!=='') ? 'total ' + (((+val||0)+(+(f.can||0)))||0) + ' kg' : '');
+               : (can && (val!=='' || (f.can??'')!=='') ? 'total ' + fmtNum(((+val||0)+(+(f.can||0)))||0) + ' kg' : '');
+    const phCarga = maq ? (vaz(ph.pl) ?? (pad!==''?pad:'placas'))
+                        : (vaz(ph.kg) ?? (pad!==''?pad:(can&&e.un==='total'?'corpo':'kg')));
     linhas+='<div class="sr '+cols+' '+(f.ok?'feita':'')+'" data-ex="'+k+'" data-i="'+i+'" data-maq="'+(maq?1:0)+'">'+
       '<span class="i">'+(i+1)+'</span>'+
       '<div class="campoCarga">'+
-        '<input type="number" inputmode="'+(maq?'numeric':'decimal')+'" step="'+(maq?'1':'0.5')+'" placeholder="'+(maq?(ph.pl??'placas'):(ph.kg??(can&&e.un==='total'?'corpo':'kg')))+'" value="'+val+'" data-c="'+(maq?'pl':'kg')+'" aria-label="Carga série '+(i+1)+'">'+
-        (conv?'<span class="conv">'+conv+'</span>':'<span class="conv"></span>')+
+        '<input type="number" inputmode="'+(maq?'numeric':'decimal')+'" step="'+(maq?'1':'0.5')+'" placeholder="'+phCarga+'" value="'+val+'" data-c="'+(maq?'pl':'kg')+'" aria-label="Carga série '+(i+1)+'">'+
+        '<span class="conv">'+conv+'</span>'+
       '</div>'+
-      (can?'<input type="number" inputmode="decimal" step="0.5" placeholder="'+(ph.can??'canel.')+'" value="'+(f.can??'')+'" data-c="can" aria-label="Caneleira série '+(i+1)+'">':'')+
-      '<input type="number" inputmode="numeric" placeholder="'+(ph.reps??reps)+'" value="'+(f.reps??'')+'" data-c="reps" aria-label="Repetições série '+(i+1)+'">'+
+      (can?'<input type="number" inputmode="decimal" step="0.5" placeholder="'+(vaz(ph.can) ?? (e.canSug||'0'))+'" value="'+(f.can??'')+'" data-c="can" aria-label="Caneleira série '+(i+1)+'">':'')+
+      '<input type="number" inputmode="numeric" placeholder="'+(vaz(ph.reps) ?? reps)+'" value="'+(f.reps??'')+'" data-c="reps" aria-label="Repetições série '+(i+1)+'">'+
       '<button class="ok" data-rest="'+rest+'" aria-label="Concluir série '+(i+1)+'"></button></div>';
   }
   const rotCarga = maq ? 'Placas'
     : can ? (e.un==='total' ? 'Base' : 'Halter')
     : ROT_UN[e.un||'total'];
   const cab = '<div class="sh '+cols+'"><span></span><span>'+rotCarga+'</span>'+(can?'<span>Canel.</span>':'')+'<span>'+(e.tempo?'Segundos':'Reps')+'</span><span></span></div>';
-  return '<div class="series"><p class="ant">'+antTxt+'</p>'+cab+linhas+'</div>';
+  return '<div class="series">'+cab+linhas+'</div>';
 }
 
 const CIC = CICLOS[0];
@@ -613,11 +894,23 @@ const rotuloSessao = h => {
   if(h.letra==='L') return 'Treino livre';
   if(h.letra==='W') return 'Caminhada';
   if(h.letra==='I') return 'Intervalado 4×4';
-  const p = h.passagem ? h.passagem+'ª da semana'
-          : (h.tipo==='pesado' ? 'Pesado' : h.tipo==='volume' ? 'Volume' : '');
+  const p = (h.tipo==='pesado' ? 'Pesado' : h.tipo==='volume' ? 'Volume' : '');
   return NOMES[h.letra] + (p ? ' · ' + p : '');
 };
 const iconeSessao = h => ({L:'★',W:'▲',I:'◆'})[h.letra] || h.letra;
+
+function linhaHist(h){
+  const d=new Date(h.data);
+  const cls = h.letra==='L'?'livre' : ehCardio(h)?'cardio' : 'treino';
+  const extra = h.letra==='I' ? (h.blocos?h.blocos+'/4 blocos':'')
+              : h.letra==='W' ? (h.km?(+h.km).toFixed(1).replace('.',',')+' km':'')
+              : (h.volumeTotal?Math.round(h.volumeTotal).toLocaleString('pt-BR')+' kg':'');
+  return '<div class="hist"><div class="sel '+cls+'">'+iconeSessao(h)+'</div>'+
+    '<div class="t"><b>'+rotuloSessao(h)+'</b>'+
+    '<span>'+d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' · '+durTexto(h.min||0)+(h.pulados&&h.pulados.length?' · '+h.pulados.length+' não feito'+(h.pulados.length>1?'s':''):'')+'</span></div>'+
+    '<div class="n">'+extra+'</div>'+
+    '<button class="lixo" data-edit="'+h.data+'" aria-label="Editar sessão">&#8942;</button></div>';
+}
 
 function telaInicio(){
   const prox=proximoDaFila(), em=!!ativa;
@@ -637,29 +930,20 @@ function telaInicio(){
     dias+='<div class="dia '+(t?'feito':'')+' '+(i===hojeI?'hoje':'')+'"><div class="d">'+rot[i]+'</div>'+
       '<div class="v">'+(t?iconeSessao(t):'·')+'</div>'+(c?'<div class="pt"></div>':'')+'</div>';
   }
-  const lista=hist.slice(-14).reverse().map(h=>{
-    const d=new Date(h.data);
-    const cls = h.letra==='L'?'livre' : ehCardio(h)?'cardio' : 'treino';
-    const extra = h.letra==='I' ? (h.blocos?h.blocos+'/4 blocos':'')
-                : h.letra==='W' ? (h.km?(+h.km).toFixed(1).replace('.',',')+' km':'')
-                : (h.volumeTotal?Math.round(h.volumeTotal).toLocaleString('pt-BR')+' kg':'');
-    return '<div class="hist"><div class="sel '+cls+'">'+iconeSessao(h)+'</div>'+
-      '<div class="t"><b>'+rotuloSessao(h)+'</b>'+
-      '<span>'+d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' · '+durTexto(h.min||0)+'</span></div>'+
-      '<div class="n">'+extra+'</div>'+
-      '<button class="lixo" data-edit="'+h.data+'" aria-label="Editar sessão">&#8942;</button></div>';
-  }).join('');
+  const todas=hist.slice().sort((a,b)=>b.data-a.data);
+  const lista=todas.slice(0,10).map(linhaHist).join('');
 
   const cam=semana.filter(h=>h.letra==='W'), itv=semana.filter(h=>h.letra==='I');
   const minCardio=semana.filter(ehCardio).reduce((a,h)=>a+(h.min||0),0);
   const kmCam=cam.reduce((a,h)=>a+(+h.km||0),0);
   const pctCam=Math.min(100,Math.round(cam.length/META_CAMINHADAS*100));
   const pctItv=Math.min(100,Math.round(itv.length/META_INTERVALADO*100));
+  const nomeProx = letraProx==='L' ? 'Treino livre' : letraProx+' · '+NOMES[letraProx];
 
   return '<div class="hero"><p class="lab">'+(em?'Sessão em andamento':'Próximo na fila')+'</p>'+
-      '<h3>'+letraProx+' · '+NOMES[letraProx]+'</h3>'+
-      '<p>'+passProx+'ª passagem da semana'+(temIntervalado(letraProx,passProx)?' · com intervalado 4×4 ao final':'')+
-      '<br>Duração estimada: '+durTexto(estimaTotal(letraProx,passProx))+'</p>'+
+      '<h3>'+nomeProx+'</h3>'+
+      '<p>'+(letraProx==='L'?'Fora do programa':passProx+'ª passagem da semana'+(temIntervalado(letraProx,passProx)?' · com intervalado 4×4 ao final':'')+
+      '<br>Duração estimada: '+durTexto(estimaTotal(letraProx,passProx)))+'</p>'+
       '<button class="btn" id="irTreino">'+(em?'Continuar treino':'Abrir treino')+'</button></div>'+
     '<div class="stats">'+
       '<div class="stat"><b>'+treinos.length+'</b><span>'+(treinos.length===1?'sessão':'sessões')+'</span></div>'+
@@ -681,9 +965,43 @@ function telaInicio(){
       '<p class="cicloTxt">Início em '+new Date(CIC.inicio+'T12:00:00').toLocaleDateString('pt-BR')+
       ' · reavaliar em '+dataReavaliacao().toLocaleDateString('pt-BR')+'</p>'+
     '</div></section>'+
-    '<section class="sec"><h2>Histórico</h2><div class="cartao">'+(lista||'<p class="vazio">Nenhuma sessão registrada ainda.</p>')+'</div>'+
+    '<section class="sec"><h2>Histórico <span class="dur">últimos '+Math.min(10,todas.length)+'</span></h2><div class="cartao">'+(lista||'<p class="vazio">Nenhuma sessão registrada ainda.</p>')+'</div>'+
+      (todas.length?'<button class="btHistTudo" id="btHistTudo">Ver histórico completo · calendário</button>':'')+
       '<button class="btResumo" id="btResumo">Gerar resumo da semana</button>'+
       '<button class="btBackup" id="btBackup">Backup dos dados</button></section>';
+}
+
+/* histórico completo em calendário mensal */
+let calMes=null, calDia=null;
+const MESES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+function telaHistorico(){
+  if(!calMes){ const h=new Date(); calMes=new Date(h.getFullYear(),h.getMonth(),1); }
+  const ano=calMes.getFullYear(), mes=calMes.getMonth();
+  const doMes=hist.filter(h=>{ const d=new Date(h.data); return d.getFullYear()===ano && d.getMonth()===mes; }).sort((a,b)=>b.data-a.data);
+  const nProg=doMes.filter(h=>['A','B','C'].indexOf(h.letra)>=0).length, nLiv=doMes.filter(h=>h.letra==='L').length;
+  const nCam=doMes.filter(h=>h.letra==='W').length, nItv=doMes.filter(h=>h.letra==='I').length;
+  const minTr=doMes.filter(h=>!ehCardio(h)).reduce((a,h)=>a+(h.min||0),0);
+  const offset=(new Date(ano,mes,1).getDay()+6)%7, nd=new Date(ano,mes+1,0).getDate();
+  const hojeStr=new Date().toDateString();
+  let cel=['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'].map(d=>'<div class="calCab">'+d+'</div>').join('');
+  for(let i=0;i<offset;i++) cel+='<div class="calVazio"></div>';
+  for(let d=1; d<=nd; d++){
+    const ds=new Date(ano,mes,d).toDateString();
+    const doDia=doMes.filter(h=>new Date(h.data).toDateString()===ds);
+    const t=doDia.find(h=>!ehCardio(h)), c=doDia.find(ehCardio);
+    const cls=(t?' feito l'+t.letra:'')+(ds===hojeStr?' hoje':'')+(calDia===ds?' sel':'');
+    cel+='<button class="calDia'+cls+'" data-dia="'+ds+'"><span class="n">'+d+'</span><span class="v">'+(t?iconeSessao(t):'')+'</span>'+(c?'<i class="pt"></i>':'')+'</button>';
+  }
+  const lista=(calDia ? doMes.filter(h=>new Date(h.data).toDateString()===calDia) : doMes);
+  const tituloLista = calDia ? new Date(calDia).toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit'}) : 'Todas de '+MESES[mes];
+  return '<div class="calNav"><button data-cal="-1" aria-label="Mês anterior">‹</button><b>'+MESES[mes][0].toUpperCase()+MESES[mes].slice(1)+' de '+ano+'</b><button data-cal="1" aria-label="Próximo mês">›</button></div>'+
+    '<p class="calRes">'+nProg+' sessões do programa'+(nLiv?' · '+nLiv+' livres':'')+' · '+durTexto(minTr)+' · '+nCam+' caminhadas · '+nItv+' intervalado'+(nItv===1?'':'s')+'</p>'+
+    '<div class="cal">'+cel+'</div>'+
+    '<p class="calLeg"><span class="lA">A</span> Empurrar <span class="lB">B</span> Puxar <span class="lC">C</span> Pernas <span class="lL">★</span> Livre <i class="pt"></i> cardio</p>'+
+    '<section class="sec"><h2>'+tituloLista+(calDia?' <button class="calLimpa" data-dia="">ver o mês</button>':'')+'</h2><div class="cartao">'+
+      (lista.length ? lista.map(linhaHist).join('') : '<p class="vazio">Nada registrado'+(calDia?' neste dia':' neste mês')+'.</p>')+
+    '</div></section>'+
+    '<button class="btHistTudo" id="btVoltarIni">Voltar ao início</button>';
 }
 
 function segRotinas(letra){
@@ -692,6 +1010,19 @@ function segRotinas(letra){
     ['A','B','C','L'].map(l=>`<button ${trava?'disabled':''} data-rot="${l}" aria-pressed="${l===letra}"><b>${l==='L'?'★':l}</b><span>${NOMES[l]}</span></button>`).join('') +
     `</div>`;
 }
+
+function cardMontagem(letra){
+  const m = montagemDe(letra);
+  const minha = ativa && ativa.letra === letra;
+  const pronto = minha && ativa.montado && !m.alertas.length;
+  let h = '<details class="montagem'+(m.alertas.length?' erro':'')+'"'+(pronto?'':' open')+'><summary><span>Montagem'+(pronto?' · pronta':'')+'</span></summary>';
+  if(m.alertas.length) h += '<div class="mAlerta">'+m.alertas.map(a=>'<p>'+a+'</p>').join('')+'</div>';
+  h += '<div class="mLinhas">'+m.linhas.map(l=>'<div class="mL"><b>'+l.eq+'</b><span>'+l.mont+(l.tot?' → '+l.tot:'')+'</span>'+(l.usos.length?'<i>'+l.usos.join(' · ')+'</i>':'')+'</div>').join('')+'</div>';
+  if(m.sobra.length) h += '<p class="mSobra">Sobram: '+m.sobra.join(', ')+'</p>';
+  if(minha && !ativa.montado) h += '<button class="btMontado" id="btMontado">Montado</button>';
+  return h + '</details>';
+}
+
 function telaTreino(){
   if(sel.letra==='L') return telaLivre();
   const letra=sel.letra;
@@ -699,49 +1030,45 @@ function telaTreino(){
   const blocos=BLOCOS[letra].map(b=>b.slice());
   const trava = !!ativa;
   const nEx = blocos.reduce((n,b)=>n+b.length,0);
-  const minMusc = estimaMusc(letra);
   const crr = CORE_ROT[letra];
-  const minCoreRot = crr ? Math.round(crr.sp*(T_SERIE+(crr.d||45))/60) : 0;
+  const itv = temIntervalado(letra,passagem);
 
   let h='<div class="seletor">'+segRotinas(letra)+
     (trava
-      ? '<p class="travaAviso"><b>'+letra+' · '+NOMES[letra]+'</b> em andamento. Encerre ou descarte para trocar de rotina.</p>'
-      : '<p class="expl">'+passagem+'ª passagem desta rotina na semana.'+
-        (temIntervalado(letra,passagem)?' <b>Esta sessão leva o intervalado 4×4</b> ao final.':'')+'</p>')+
-    '</div>'+
-  '<details class="montagem"><summary>Montagem das anilhas</summary><p>'+MONTAGEM[letra].join('<br>')+'</p></details>'+
-  '<div class="estimativa">'+
-    '<span>Total <b>'+durTexto(estimaTotal(letra,passagem))+'</b></span>'+
-    '<span>Musculação <b>'+minMusc+' min</b></span>'+
-    (temIntervalado(letra,passagem)?'<span>Intervalado <b>'+MIN_INTERVALADO+' min</b></span>':'')+
-  '</div>';
+      ? '<p class="travaAviso"><b>'+letra+' · '+NOMES[letra]+'</b> em andamento. Para trocar de rotina, encerre ou descarte pelo cronômetro no topo.</p>'
+      : '<p class="expl">'+NOMES[letra]+' · cerca de '+durTexto(estimaTotal(letra,passagem))+(itv?'. <b>Esta sessão leva o intervalado 4×4</b> ao final.':'')+'</p>')+
+    '</div>'+cardMontagem(letra);
 
   const aq=AQ[letra==='C'?'C':'AB'];
-  h+='<section class="sec"><h2>Aquecimento <span class="dur">'+T_AQ+' min · '+aq.length+' itens</span></h2>';
-  abreBloco(aq.length);
-  aq.forEach(a=>h+=item(a[0],[[a[1],'k']],a[2],null,null,a[0]));
+  h+='<section class="sec" data-bloco="aq"><h2><i class="bl"></i>Aquecimento <span class="dur">'+T_AQ+' min</span></h2>';
+  abreBloco(aq.length,'aq');
+  aq.forEach(a=>h+=item(a[0],{carga:a[1],dica:a[2]}));
 
-  h+='</section><section class="sec"><h2>Treino <span class="dur">'+nEx+' exercícios · '+(minMusc-minCoreRot)+' min</span></h2>';
-  abreBloco(nEx);
+  h+='</section><section class="sec" data-bloco="tr"><h2><i class="bl"></i>Treino <span class="dur">'+nEx+' exercícios</span></h2>';
+  abreBloco(nEx,'tr');
   blocos.forEach(b=>{
     const dBloco=Math.max.apply(null,b.map(x=>x.d||0));
     const c=b.map((e,i)=>{
-      const ultimo=(i===b.length-1);
-      const dEx=ultimo?dBloco:0;
-      return item(e.n,[[e.sp+' × '+e.rp],[e.c,'k'],[dEx?dEx+' s':'sem pausa','s'],[e.r,'s']],
-        e.dica,e.alerta,seriesHTML(letra,e,dEx),e.n);
+      const dEx=(i===b.length-1)?dBloco:0;
+      const sg=sinalProgressao(letra,e);
+      const meta=e.sp+' × '+e.rp+(e.r?' · '+e.r:'')+' · '+(dEx?'descanso '+fmtDesc(dEx):'sem pausa');
+      const metaCurta=e.sp+' × '+e.rp;
+      const pc=partesCarga(e);
+      return item(e.n,{carga:pc[0], carga2:pc[1], meta:meta, sinal:sg, dica:e.dica, alerta:e.alerta,
+        extra:seriesHTML(letra,e,dEx), nota:e.aprox?APROX:'', metaCurta:metaCurta});
     }).join('');
-    h+=b.length===2?'<div class="bis"><p class="rot-bis">Par de antagonistas · alterne sem descanso, descanse ao fim do par</p>'+c+'</div>':c;
+    h+=b.length===2?'<div class="bis"><p class="rot-bis">Par · alterne sem descanso, descanse ao fim</p>'+c+'</div>':c;
   });
 
   const nCore = CORE_BASE.length + (crr?1:0);
-  h+='</section><section class="sec"><h2>Core <span class="dur">'+T_CORE+' min · '+nCore+' itens</span></h2>';
-  abreBloco(nCore);
-  CORE_BASE.forEach(c=>h+=item(c[0],[[c[1],'k']],c[2],null,null,c[0]));
-  if(crr) h+=item(crr.n,[[crr.sp+' × '+crr.rp],[crr.c,'k']],crr.dica,null,seriesHTML(letra,crr),crr.n);
+  h+='</section><section class="sec" data-bloco="co"><h2><i class="bl"></i>Core <span class="dur">'+T_CORE+' min</span></h2>';
+  abreBloco(nCore,'co');
+  CORE_BASE.forEach(c=>h+=item(c[0],{carga:c[1],dica:c[2]}));
+  if(crr){ const pc=partesCarga(crr);
+    h+=item(crr.n,{carga:pc[0], carga2:pc[1], meta:crr.sp+' × '+crr.rp+' · descanso '+fmtDesc(crr.d||45), dica:crr.dica, extra:seriesHTML(letra,crr)}); }
   h+='</section>';
 
-  if(temIntervalado(letra,passagem)){
+  if(itv){
     const iv=(ativa&&ativa.intervalado)||{};
     const form='<div class="clog">'+
       '<div class="campos">'+
@@ -749,100 +1076,50 @@ function telaTreino(){
         '<div><label>Resistência</label><input type="number" inputmode="numeric" id="iRes" placeholder="nível" value="'+(iv.res??'')+'"></div>'+
       '</div>'+
       '<p class="avisoImp" style="margin:10px 0 0">A progressão acontece na <b>resistência</b>, não no tempo. Mantenha os 4 blocos de 4 minutos e suba o nível da bike.</p></div>';
-    h+='<section class="sec"><h2>Intervalado 4×4 <span class="dur">'+MIN_INTERVALADO+' min · após o treino</span></h2>';
-    abreBloco(0);
-    h+=item('Intervalado 4×4 na bike',[['4 blocos de 4 min','k'],['3 min leve entre eles','s']],
-      '<b>Estrutura:</b> 10 minutos de aquecimento progressivo, depois 4 blocos de 4 minutos em esforço 8 a 9 numa escala de 10, com 3 minutos leves entre eles. Sem desaquecimento formal, a caminhada até o apartamento resolve.<br><b>Nos blocos</b> a respiração é ofegante e falar fica impossível. Se você consegue conversar, suba a resistência.<br><b>Por que depois do treino B:</b> o efeito de interferência entre cardio e força se concentra em membros inferiores. Após costas e bíceps, o custo é desprezível.',
-      null, form, 'treino intervalado 4x4 bicicleta');
+    h+='<section class="sec" data-bloco="iv"><h2><i class="bl"></i>Intervalado 4×4 <span class="dur">'+MIN_INTERVALADO+' min · após o treino</span></h2>';
+    abreBloco(0,'iv');
+    h+=item('Intervalado 4×4 na bike',{carga:'4 blocos de 4 min', meta:'3 min leve entre eles · esforço 8 a 9',
+      busca:'treino intervalado 4x4 bicicleta', extra:form,
+      dica:'<b>Estrutura:</b> 10 minutos de aquecimento progressivo, depois 4 blocos de 4 minutos em esforço 8 a 9 numa escala de 10, com 3 minutos leves entre eles. Sem desaquecimento formal, a caminhada até o apartamento resolve.<br><b>Nos blocos</b> a respiração é ofegante e falar fica impossível. Se você consegue conversar, suba a resistência.<br><b>Por que depois do treino B:</b> o efeito de interferência entre cardio e força se concentra em membros inferiores. Após costas e bíceps, o custo é desprezível.',
+      });
     h+='</section>';
   }
-
-  h+='<section class="sec"><h2>Mobilidade <span class="dur">em casa · '+MOB.length+' itens</span></h2>'+
-     '<p class="expl" style="margin:0 0 11px">Este bloco saiu da academia. Faça em casa, à noite, com calma. Cadeira, toalha e parede resolvem tudo.</p>';
-  abreBloco(MOB.length);
-  MOB.forEach(m=>h+=item(m[0],[[m[1],'k']],m[2],null,null,m[0]));
-  return h+'</section>';
+  return h;
 }
 
-const GUIA=`<div class="doc">
-<h3>O que mudou no Ciclo 2</h3>
-<p>As sessões estavam em <b>2h06 de média</b>, com 27 a 29 séries cada, somando 12h36 semanais. O volume chegava a 24 a 28 séries por grupo muscular, acima da faixa útil de 10 a 20. E os compostos principais estavam parados: agachamento em 12 kg, terra romeno em 34 kg e remada curvada em 26 kg por quatro exposições seguidas.</p>
-<p>O corte reduz o tempo pela metade e devolve margem de recuperação. Volume semanal agora: peito 17, ombro 12, tríceps 12, costas 20, bíceps 6, quadríceps 14, posterior 14. Tudo dentro da faixa.</p>
-
-<h3>Sem passagem pesada e de volume</h3>
-<p>Cada rotina tem <b>uma faixa de repetições só</b>. As duas passagens da semana são idênticas, com uma exceção: a primeira sessão B leva o intervalado 4×4 ao final. O app detecta isso sozinho e mostra o bloco quando é o caso.</p>
-
-<h3>Par de antagonistas</h3>
-<p>O símbolo de par indica dois exercícios que você monta juntos e <b>alterna sem descanso entre eles</b>, descansando 90 segundos ao fim do par. Cada músculo mantém descanso completo, mas o tempo total cai.</p>
-<p>Os pares foram montados com halter de um lado e estação do outro, para não conflitar a montagem.</p>
-
-<h3>Caneleiras como sobrecarga</h3>
-<p>Os halteres de 5 kg e as anilhas disponíveis criam saltos grandes demais. As caneleiras resolvem: <b>nos tornozelos</b> para barra fixa e elevação de pernas, <b>nos punhos</b> para rosca, elevação lateral, supino e agachamento.</p>
-<p>Nos exercícios com o campo <b>Canel.</b>, registre o peso da caneleira separado do halter. O app soma os dois e usa o total nas comparações.</p>
-
-<h3>Cardio saiu das sessões</h3>
-<p>Antes aparecia em 10 de 12 treinos, com 18 minutos médios de bike moderada. Aquele formato ficava numa zona intermediária: intenso demais para recuperação, leve e curto demais para elevar condicionamento.</p>
-<table><tr><th>O quê</th><th>Quando</th><th>Duração</th><th>Para quê</th></tr>
-<tr><td>Caminhada no deslocamento</td><td>5x / semana</td><td>20–25 min</td><td>Base aeróbica, zona 2</td></tr>
-<tr><td>Intervalado 4×4 na bike</td><td>1x / semana, após o Treino B</td><td>25 min</td><td>VO2máx</td></tr></table>
-<p>Saldo: saem 90 minutos semanais de bike de dentro das sessões, entram 25. Ganho líquido de 65 minutos, com estímulo melhor.</p>
-<p><b>Registre pelo botão</b> na tela de Início. A caminhada pede minutos e distância; o intervalado pede blocos completados e resistência, porque é na resistência que a progressão acontece.</p>
-
-<h3>Por que o intervalado depois do Treino B</h3>
-<p>O efeito de interferência entre cardio e força se concentra em membros inferiores. Colocar intervalado no dia de pernas é a única combinação realmente ruim. Após costas e bíceps, o custo é desprezível.</p>
-
-<h3>Exercícios que saíram</h3>
-<table><tr><th>Removido</th><th>Motivo</th></tr>
-<tr><td>Rosca martelo</td><td>Dor no cotovelo há mais de um mês, provocada pela pegada neutra. Fora por prazo indefinido, até avaliação presencial</td></tr>
-<tr><td>Remada curvada</td><td>Travada em 26 kg por quatro exposições. Limitada por lombar e pegada, não pelas costas</td></tr>
-<tr><td>Elevação pélvica</td><td>Montagem insegura, 34 kg passando por cima do corpo duas vezes por sessão. Virou pull-through</td></tr>
-<tr><td>Voador na estação</td><td>Oscilando sem progressão. Virou crucifixo inclinado, com pico de tensão na posição alongada</td></tr>
-<tr><td>Tríceps testa</td><td>Tríceps já coberto por supinos e tríceps na polia</td></tr>
-<tr><td>Encolhimento, afundo para trás, supino sentado no B</td><td>Volume redundante</td></tr></table>
-<div class="call"><b>Restrição ativa:</b> nenhuma pegada neutra carregada até a avaliação do cotovelo. A rosca inclinada supinada está permitida. Se doer, ela também sai.</div>
-
-<h3>Regras de execução</h3>
+function tabelaMontagem(L){
+  const m = montagemDe(L);
+  return '<p class="gH4">Treino '+L+' · '+NOMES[L]+'</p>'+
+    (m.alertas.length ? '<div class="call erro">'+m.alertas.join('<br>')+'</div>' : '')+
+    '<table><tr><th>Equipamento</th><th>Montagem</th></tr>'+
+    m.linhas.map(l=>'<tr><td>'+l.eq+'</td><td>'+l.mont+(l.tot?' → '+l.tot:'')+(l.usos.length?'<br><span class="uso">'+l.usos.join(' · ')+'</span>':'')+'</td></tr>').join('')+
+    '</table>'+(m.sobra.length?'<p class="uso">Sobram: '+m.sobra.join(', ')+'</p>':'');
+}
+function guiaHTML(){
+  const est = TIPOS_ANILHA.map(t => ESTOQUE.anilhas[t] + ' × ' + t).join(', ') + ' kg';
+  return `<div class="doc">
+<h3>Regras do ${CIC.nome}</h3>
 <ul>
-<li><b>Descanso dos compostos intocado.</b> Três minutos em agachamento, terra romeno, remada baixa, puxada e supinos.</li>
-<li><b>Agachamento e panturrilha precisam subir.</b> De 4 a 6 kg por sessão no agachamento até chegar a 8 repetições com RIR 2.</li>
-<li><b>Não desmonte a barra</b> entre o terra romeno e o pull-through. O Treino C era o mais lento, 4,4 min por série, por causa de troca de anilha.</li>
+<li><b>ABC duas vezes por semana</b>, 6 sessões. As duas passagens são iguais. A primeira sessão B da semana leva o intervalado 4×4 ao final, e o app mostra o bloco sozinho.</li>
+<li><b>Descanso dos compostos intocado:</b> 3 minutos em agachamento, terra romeno, remada baixa, puxada e supinos.</li>
+<li><b>Par:</b> alterne os dois exercícios sem descanso e descanse ao fim do par. O cronômetro começa sozinho depois do segundo.</li>
+<li><b>Caneleiras</b> fazem o incremento fino que as anilhas não permitem. Nos punhos para supino, agachamento, panturrilha, rosca e elevação lateral. Nos tornozelos para barra fixa e elevação de pernas. Registre no campo Canel., o app soma.</li>
+<li><b>Uma montagem por treino.</b> Anilha não se troca no meio da sessão. Se um programa novo exigir isso, a montagem acusa o conflito.</li>
 </ul>
+<div class="call"><b>Restrição do cotovelo:</b> nenhuma pegada neutra com carga e cotovelo dobrando até a avaliação. Remada baixa com barra reta pronada, face pull com a corda segura por cima, rosca só supinada. Se a rosca inclinada doer, ela também sai.</div>
 
-<h3>RIR, repetições em reserva</h3>
-<p>Quantas repetições você <b>ainda conseguiria fazer</b> ao encerrar a série. RIR 2 é parar faltando duas. Compostos ficam em RIR 2, isoladores em RIR 0 a 1.</p>
+<h3>Progressão</h3>
+<p>Cada exercício tem uma faixa, por exemplo 4 × 10–12. <b>Dupla progressão:</b> comece com a carga em que faz 10 com o RIR indicado, suba repetições de uma sessão para outra e, ao fazer 12 em todas as séries, suba a carga no menor incremento e volte a 10.</p>
+<p>O app faz essa conta a partir da última vez e mostra o sinal em cada exercício:</p>
+<table><tr><th>Sinal</th><th>Quando aparece</th></tr>
+<tr><td>Subir carga</td><td>Você fez o topo da faixa em todas as séries</td></tr>
+<tr><td>Buscar +1 rep</td><td>Dentro da faixa, mas sem o topo em todas</td></tr>
+<tr><td>Manter carga</td><td>Alguma série ficou abaixo do piso da faixa</td></tr></table>
+<p><b>RIR</b> é quantas repetições você ainda conseguiria fazer ao parar. RIR 2 é parar faltando duas. Compostos em RIR 2, isoladores em RIR 0 a 1.</p>
 
-<h3>Dupla progressão</h3>
-<p>Cada exercício tem uma faixa, por exemplo 4 × 10–12.</p>
-<ul><li>Escolha a carga em que você faz <b>10 repetições</b> com o RIR indicado.</li>
-<li>Sessão após sessão, aumente <b>repetições</b>: 10 → 11 → 12.</li>
-<li>Ao fazer <b>12 em todas as séries</b> mantendo o RIR, suba a carga no menor incremento possível.</li>
-<li>As repetições caem para 10 e o ciclo recomeça.</li></ul>
-
-<h3>Se faltar um dia</h3>
-<p>A rotina é uma <b>fila</b>: A → B → C → A → B → C. O app sugere o próximo a partir da última sessão registrada, não do dia da semana. Faltou um dia? O próximo treino é simplesmente o próximo da fila.</p>
-
-<h3>Descarga</h3>
-<p>A cada <b>6 a 8 semanas</b>, uma semana com metade das séries e a mesma carga. Não é opcional: é o que permite continuar subindo depois.</p>
-
-<h3>Montagem · Treino A</h3>
-<table><tr><th>Equipamento</th><th>Montagem</th></tr>
-<tr><td>2 barras de 40 cm</td><td>5 + 5 kg cada = 12 kg por mão</td></tr>
-<tr><td>Caneleiras</td><td>3 kg nos punhos para chegar a 15 kg no supino</td></tr>
-<tr><td>Halteres</td><td>5 kg para crucifixo e elevação lateral</td></tr>
-<tr><td>Estação</td><td>5 placas no supino sentado, 2 no tríceps</td></tr></table>
-
-<h3>Montagem · Treino B</h3>
-<table><tr><th>Equipamento</th><th>Montagem</th></tr>
-<tr><td>Estação</td><td>5 placas na remada e na puxada, 2 no face pull</td></tr>
-<tr><td>Halteres</td><td>5 kg para a rosca inclinada</td></tr>
-<tr><td>Caneleiras</td><td>Nos tornozelos para a barra fixa</td></tr></table>
-
-<h3>Montagem · Treino C</h3>
-<table><tr><th>Equipamento</th><th>Montagem</th></tr>
-<tr><td>Barra reta</td><td>10 + 5 + 1 kg de cada lado = 38 kg</td></tr>
-<tr><td>2 barras de 40 cm</td><td>5 + 5 kg cada = 12 kg por mão</td></tr>
-<tr><td>Estação</td><td>3 placas no pull-through, 5 na extensora, 2 na flexora</td></tr></table>
-<div class="call">A barra de 38 kg serve o terra romeno e o pull-through em sequência. <b>Não desmonte entre os dois.</b></div>
+<h3>Montagem por treino</h3>
+<p>Calculada a partir do seu estoque de anilhas: ${est}. Halteres precisam de <b>4 anilhas iguais</b> de cada tipo, uma por ponta, por isso só as de 5 kg servem neles hoje. Ao comprar anilhas para os halteres, compre de 4 em 4.</p>
+${['A','B','C'].map(tabelaMontagem).join('')}
 
 <h3>Pesos de referência</h3>
 <table><tr><th>Item</th><th>Peso</th></tr>
@@ -851,16 +1128,44 @@ const GUIA=`<div class="doc">
 <tr><td>Estação: placas maiores</td><td>6,8 kg cada</td></tr></table>
 <p>1 placa + a menor = 10,8 · 2 = 17,6 · 3 = 24,4 · 4 = 31,2 · 5 = 38,0 kg</p>
 
-<h3>Programas anteriores</h3>
-<p>O histórico de sessões nunca é apagado quando o programa muda. Os treinos do Ciclo 1 continuam no app, no backup e no resumo semanal, com a carga e a data que você registrou.</p>
+<h3>Cardio</h3>
+<table><tr><th>O quê</th><th>Quando</th><th>Duração</th></tr>
+<tr><td>Caminhada no deslocamento</td><td>5x / semana</td><td>20–25 min, zona 2</td></tr>
+<tr><td>Intervalado 4×4 na bike</td><td>1x / semana, após o Treino B</td><td>25 min</td></tr></table>
+<p>A caminhada se registra com um toque na tela de Início. O intervalado entra dentro da sessão B, ou por Outro registro.</p>
+
+<h3>Se faltar um dia</h3>
+<p>A rotina é uma <b>fila</b>: A → B → C → A → B → C. O app sugere o próximo a partir da última sessão registrada, não do dia da semana.</p>
+
+<h3>Descarga</h3>
+<p>A cada <b>6 a 8 semanas</b>, uma semana com metade das séries e a mesma carga. É o que permite continuar subindo depois.</p>
+
+<h3>Mobilidade em casa</h3>
+<p>Fora da academia, à noite, com calma. Cadeira, toalha e parede resolvem tudo.</p>
+${MOB.map(m=>'<details class="gDet"><summary>'+m[0]+' <span>'+m[1]+'</span></summary><p>'+m[2]+'</p></details>').join('')}
+
+<details class="gDet gHist"><summary>Por que o ${CIC.nome} é assim</summary>
+<p>As sessões estavam em <b>2h06 de média</b>, com 27 a 29 séries cada. O volume chegava a 24 a 28 séries por grupo muscular, acima da faixa útil de 10 a 20, e os compostos principais estavam parados. O corte reduziu o tempo pela metade. Volume semanal: peito 17, ombro 12, tríceps 12, costas 20, bíceps 6, quadríceps 14, posterior 14.</p>
+<p><b>Cardio fora das sessões.</b> Antes aparecia em 10 de 12 treinos, com 18 minutos de bike moderada: intenso demais para recuperar, curto demais para condicionar. Virou caminhada diária em zona 2 e um intervalado semanal para VO2máx.</p>
+<p><b>Intervalado depois do B.</b> A interferência entre cardio e força se concentra nos membros inferiores. Depois de costas e bíceps, o custo é desprezível.</p>
+<table><tr><th>Saiu</th><th>Motivo</th></tr>
+<tr><td>Rosca martelo</td><td>Dor no cotovelo provocada pela pegada neutra. Fora até avaliação presencial</td></tr>
+<tr><td>Remada curvada</td><td>Travada em 26 kg, limitada por lombar e pegada</td></tr>
+<tr><td>Elevação pélvica</td><td>Montagem insegura. Virou pull-through</td></tr>
+<tr><td>Voador na estação</td><td>Sem progressão. Virou crucifixo inclinado</td></tr>
+<tr><td>Tríceps testa</td><td>Tríceps já coberto por supinos e polia</td></tr>
+<tr><td>Encolhimento, afundo para trás</td><td>Volume redundante</td></tr></table>
+<p><b>Ajustes de 22/09.</b> Panturrilha passou a 12 kg + caneleira de 6 kg, para não desmontar a barra do terra romeno. Remada baixa com barra reta e face pull com pegada por cima, por causa do cotovelo. Treino A reordenado para trocar o banco uma vez só.</p>
 <table><tr><th>Ciclo</th><th>Período</th><th>Formato</th></tr>
 ${CICLOS.map(c=>'<tr><td>'+c.nome+'</td><td>'+new Date(c.inicio+'T12:00:00').toLocaleDateString('pt-BR')+(c.fim?' a '+new Date(c.fim+'T12:00:00').toLocaleDateString('pt-BR'):' em diante')+'</td><td>'+c.resumo+'</td></tr>').join('')}
 </table>
-<p>Exercícios que saíram do programa, como a rosca martelo, mantêm o histórico intacto. Se voltarem depois da avaliação do cotovelo, os números anteriores ainda estarão lá.</p>
+<p>O histórico nunca é apagado quando o programa muda. Exercícios que saíram mantêm os números anteriores.</p>
+</details>
 </div>`;
+}
 
 /* ===================== BACKUP: EXPORTAR E IMPORTAR ===================== */
-const APP_VERSAO = 13;
+const APP_VERSAO = 17;
 
 function montarBackup(){
   return {
@@ -912,7 +1217,7 @@ function aplicarBackup(o, modo){
   }
   hist.sort((a,b)=>a.data-b.data);
   const p = proximoDaFila();
-  sel = ativa ? { letra:ativa.letra, tipo:ativa.tipo } : { letra:p[0], tipo:p[1] };
+  sel = { letra: ativa ? ativa.letra : p };
   salvar();
   if(typeof tickRelogio==='function'){
     if(ativa) tickRelogio();
@@ -950,8 +1255,8 @@ function seriesLivre(ex, idx){
   const meta = { maq:maq, can:can, un:ex.un };
   const feito = (ativa && ativa.series && ativa.series[k]) || [];
   const ant = ultimoRegistro(ex.custom ? 'L' : ex.orig, ex.n);
-  const rot = s => { const v = valorSerie(s, meta); return v===null ? '—' : (maq ? v+' pl' : v+''); };
-  const antTxt = ant ? 'Última vez: ' + ant.map(s => rot(s)+'×'+((s&&s.reps)||'—')).join('  ·  ') : 'Sem registro anterior';
+  const rot = s => { const v = valorSerie(s, meta); return v===null ? '-' : (maq ? v+' pl' : v+''); };
+  const antTxt = ant ? 'Última vez: ' + ant.map(s => rot(s)+'×'+((s&&s.reps)||'-')).join('  ·  ') : 'Sem registro anterior';
   const nSeries = Math.max(4, feito.length);
   const cols = can ? 'quatro' : '';
   let linhas = '';
@@ -964,7 +1269,7 @@ function seriesLivre(ex, idx){
       '<span class="i">'+(i+1)+'</span>'+
       '<div class="campoCarga"><input type="number" inputmode="'+(maq?'numeric':'decimal')+'" step="'+(maq?'1':'0.5')+'" placeholder="'+(maq?(ph.pl??'placas'):(ph.kg??'kg'))+'" value="'+val+'" data-c="'+(maq?'pl':'kg')+'" aria-label="Carga série '+(i+1)+'">'+
       '<span class="conv">'+conv+'</span></div>'+
-      (can?'<input type="number" inputmode="decimal" step="0.5" placeholder="'+(ph.can??'canel.')+'" value="'+(f.can??'')+'" data-c="can" aria-label="Caneleira série '+(i+1)+'">':'')+
+      (can?'<input type="number" inputmode="decimal" step="0.5" placeholder="'+(ph.can??'0')+'" value="'+(f.can??'')+'" data-c="can" aria-label="Caneleira série '+(i+1)+'">':'')+
       '<input type="number" inputmode="numeric" placeholder="reps" value="'+(f.reps??'')+'" data-c="reps" aria-label="Repetições série '+(i+1)+'">'+
       '<button class="ok" data-rest="'+(ex.d||60)+'" aria-label="Concluir série '+(i+1)+'"></button></div>';
   }
@@ -977,17 +1282,17 @@ function telaLivre(){
   let h = '<div class="seletor">'+segRotinas('L')+
     '<p class="expl">Sessão fora do programa. <b>Não avança a fila</b> e não conta como treino A, B ou C no resumo semanal.</p></div>';
 
-  h += '<section class="sec"><h2>Aquecimento <span class="dur">5 min · ' + AQ_LIVRE.length + ' itens</span></h2>';
-  abreBloco(AQ_LIVRE.length);
-  AQ_LIVRE.forEach(a => h += item(a[0], [[a[1],'k']], a[2], null, null, a[0]));
+  h += '<section class="sec" data-bloco="aq"><h2><i class="bl"></i>Aquecimento <span class="dur">5 min</span></h2>';
+  abreBloco(AQ_LIVRE.length,'aq');
+  AQ_LIVRE.forEach(a => h += item(a[0], {carga:a[1], dica:a[2]}));
   h += '</section>';
 
-  h += '<section class="sec"><h2>Exercícios' + (lista.length?' <span class="dur">'+lista.length+' itens</span>':'') + '</h2>';
-  abreBloco(lista.length);
+  h += '<section class="sec" data-bloco="tr"><h2><i class="bl"></i>Exercícios' + (lista.length?' <span class="dur">'+lista.length+' itens</span>':'') + '</h2>';
+  abreBloco(lista.length,'tr');
   if(!lista.length) h += '<p class="vazio">Nenhum exercício adicionado ainda.</p>';
   lista.forEach((ex, i) => {
     const extra = seriesLivre(ex, i) + '<button class="removerEx" data-rem="'+i+'">Remover exercício</button>';
-    h += item(ex.n, [[ROT_UN[ex.maq?'placas':ex.un],'k'], [(ex.d||60)+' s','s']], null, null, extra, ex.n);
+    h += item(ex.n, {carga:ROT_UN[ex.maq?'placas':ex.un], meta:'descanso '+fmtDesc(ex.d||60), extra:extra});
   });
   h += '<button class="btAdd" id="btAdd">+ Adicionar exercício</button></section>';
 
@@ -1024,7 +1329,7 @@ const META_EX = (()=>{
   const m = {};
   Object.keys(BLOCOS).forEach(L => BLOCOS[L].forEach(bl => bl.forEach(e => {
     m[chaveEx(L, e.n)] = { nome:e.n, letra:L, un:(e.maq?'placas':(e.un||'total')),
-      maq:!!e.maq, can:!!e.can, tempo:!!e.tempo, sp:e.sp, rp:e.rp };
+      maq:!!e.maq, can:!!e.can, tempo:!!e.tempo, sp:e.sp, rp:e.rp, pad:padraoCarga(e), canSug:e.canSug||0 };
   })));
   Object.keys(CORE_ROT).forEach(L => { const e = CORE_ROT[L];
     m[chaveEx(L, e.n)] = { nome:e.n, letra:L, un:(e.un||'total'),
@@ -1110,7 +1415,7 @@ function gerarResumo(offset){
   const fimReal = new Date(a.fim); fimReal.setDate(fimReal.getDate() - 1);
   const L = [];
 
-  L.push('RESUMO DA SEMANA — ' + dtBR(a.ini) + ' a ' + dtBR(fimReal));
+  L.push('RESUMO DA SEMANA: ' + dtBR(a.ini) + ' a ' + dtBR(fimReal));
   L.push('Treino do Glau · ' + CIC.nome + (semanaDoCiclo()>=1 ? ' · semana ' + semanaDoCiclo() + ' de ' + (CIC.semanas||8) : '') + ' · 59 kg · 1,64 m');
   L.push('');
 
@@ -1120,6 +1425,7 @@ function gerarResumo(offset){
     L.push('  ' + DIA3[new Date(h.data).getDay()] + ' ' + dtBR(h.data) + ' · ' + h.letra + ' ' + NOMES[h.letra] +
       ' (' + (h.passagem||1) + 'ª) · ' + durTexto(h.min || 0) +
       (h.volumeTotal ? ' · volume ' + Math.round(h.volumeTotal).toLocaleString('pt-BR') + ' kg' : ''));
+    if(h.pulados && h.pulados.length) L.push('    não fez: ' + h.pulados.join(', '));
   });
   const tot  = treinos.reduce((x,h)=>x+(h.min||0), 0);
   const volA = treinos.reduce((x,h)=>x+(h.volumeTotal||0), 0);
@@ -1175,7 +1481,7 @@ function gerarResumo(offset){
 
   const prontos = prontosParaSubir(S);
   L.push('PRONTOS PARA SUBIR CARGA');
-  if(prontos.length) prontos.forEach(p => L.push('  ' + p.nome + ' — topo da faixa (' + p.topo + ' reps) atingido com ' + p.v + ' ' + p.un));
+  if(prontos.length) prontos.forEach(p => L.push('  ' + p.nome + ': topo da faixa (' + p.topo + ' reps) atingido com ' + p.v + ' ' + p.un));
   else L.push('  Nenhum exercício bateu o topo da faixa em todas as séries.');
   L.push('');
 
@@ -1226,63 +1532,143 @@ modal.onclick=e=>{ if(e.target===modal) fecharConfirmacao(); };
 if(!DB.ok) document.getElementById('avisoDb').innerHTML =
   '<p class="alerta-db"><b>Modo temporário.</b> Este navegador não permitiu salvar dados, então o histórico some ao fechar a página. Abra o arquivo direto no navegador ou publique-o para que o registro fique permanente.</p>';
 
+let focoManual = null;   /* null = automático; nome = aberto à mão; '' = tudo fechado */
+let render = 0;          /* cada troca de tela incrementa, para a trava não restaurar rolagem antiga */
 function irPara(t){
-  telaAtual=t;
+  telaAtual=t; render++;
   [0,1,2].forEach(i=>document.getElementById('ab'+i).setAttribute('aria-pressed', i===t?'true':'false'));
-  titulo.textContent=['Treino do Glau','Treino do dia','Guia'][t];
+  titulo.textContent=['Treino do Glau','Treino do dia','Guia','Histórico'][t];
   nid=0;
-  main.innerHTML=[telaInicio,telaTreino,()=>GUIA][t]();
-  if(t===0){ const b=document.getElementById('irTreino'); if(b) b.onclick=()=>{ if(ativa) sel={letra:ativa.letra}; irPara(1); };
-    const r=document.getElementById('btResumo'); if(r) r.onclick=()=>abrirResumo(0);
-    const bk=document.getElementById('btBackup'); if(bk) bk.onclick=abrirDados;
-    const bc=document.getElementById('btCardio'); if(bc) bc.onclick=abrirCardio; }
-  if(t===1){ restaurarMarcas(); irProximo(); }
+  main.innerHTML=[telaInicio,telaTreino,guiaHTML,telaHistorico][t]();
+  const on=(id,fn)=>{ const b=document.getElementById(id); if(b) b.onclick=fn; };
+  if(t===0){
+    on('irTreino',()=>{ if(ativa) sel={letra:ativa.letra}; irPara(1); });
+    on('btResumo',()=>abrirResumo(0));
+    on('btBackup',abrirDados);
+    on('btCardio',abrirCardio);
+    on('btHistTudo',()=>{ calMes=null; calDia=null; irPara(3); });
+  }
+  if(t===3) on('btVoltarIni',()=>irPara(0));
   atualizarBarra();
+  if(t===1){
+    on('btMontado',()=>{ if(!ativa) return; ativa.montado=true; salvar(); irPara(1); });
+    restaurarMarcas();
+    const rolou = aplicarFoco(ativa ? 'instant' : false);
+    if(rolou) return;
+  }
   window.scrollTo({top:0,behavior:'instant'});
 }
 [0,1,2].forEach(i=>document.getElementById('ab'+i).onclick=()=>irPara(i));
 
-function marcarItem(it, on){
-  it.classList.toggle('done', on);
-  if(ativa){ const nm=it.dataset.nome; ativa.feitos=ativa.feitos.filter(x=>x!==nm); if(on) ativa.feitos.push(nm); salvar(); }
-  atualizarBarra();
-}
 function restaurarMarcas(){
   if(!ativa||!ativa.feitos) return;
   if(ativa.letra!==sel.letra) return;
-  main.querySelectorAll('.item').forEach(el=>{ if(ativa.feitos.indexOf(el.dataset.nome)>=0) el.classList.add('done'); });
+  const pul=ativa.pulados||[];
+  main.querySelectorAll('.item').forEach(el=>{ if(ativa.feitos.indexOf(el.dataset.nome)>=0) el.classList.add('done'); if(pul.indexOf(el.dataset.nome)>=0) el.classList.add('pulado'); });
 }
-function irProximo(){
-  if(!ativa) return;
+
+/* resumo de uma linha para o exercício concluído */
+function resumoDoItem(it){
+  const rows=[...it.querySelectorAll('.sr.feita')];
+  if(!rows.length) return it.querySelector('.sr') ? 'Marcado sem séries' : 'Feito';
+  const maq=rows[0].dataset.maq==='1';
+  const cargas=rows.map(r=>{
+    const a=r.querySelector(maq?'[data-c="pl"]':'[data-c="kg"]').value, c=r.querySelector('[data-c="can"]');
+    if(a==='' && (!c || c.value==='')) return '';
+    return maq ? a+' pl' : fmtNum((+a||0)+(c?(+c.value||0):0))+' kg';
+  });
+  const reps=rows.map(r=>r.querySelector('[data-c="reps"]').value||'-');
+  if(reps.every(r=>r==='-')) return (cargas[0]?cargas[0]+' · ':'')+rows.length+(rows.length===1?' série':' séries');
+  if(cargas.every(c=>c===cargas[0])) return (cargas[0]?cargas[0]+' · ':'')+reps.join(' · ');
+  return rows.map((r,i)=>(cargas[i]||'-')+' × '+reps[i]).join(' · ');
+}
+/* modo foco: o item atual (ou o par atual) fica aberto, os feitos viram uma linha, o resto fica compacto */
+const resolvido = e => e.classList.contains('done') || e.classList.contains('pulado');
+/* o foco anda para a frente: procura a partir do último resolvido e só volta ao topo se não sobrar nada adiante */
+function proximoNaoResolvido(itens){
+  const i = (ativa && ativa.ultimoFeito) ? itens.findIndex(e=>e.dataset.nome===ativa.ultimoFeito) : -1;
+  if(i>=0){ const adiante = itens.slice(i+1).find(e=>!resolvido(e)); if(adiante) return adiante; }
+  return itens.find(e=>!resolvido(e));
+}
+function aplicarFoco(rolar){
   const itens=[...main.querySelectorAll('.item')];
-  if(!itens.some(e=>e.classList.contains('done'))) return;
-  const prox=itens.find(e=>!e.classList.contains('done'));
-  if(prox) setTimeout(()=>prox.scrollIntoView({block:'center',behavior:'instant'}),30);
+  const atual = ativa ? proximoNaoResolvido(itens) : null;
+  const comPar = it => { const bis=it.closest('.bis'); return bis ? [...bis.querySelectorAll('.item')] : [it]; };
+  const auto=new Set(), abrir=new Set();
+  if(atual) comPar(atual).filter(e=>!resolvido(e)).forEach(e=>auto.add(e));
+  if(focoManual===null) auto.forEach(e=>abrir.add(e));
+  else if(focoManual){ const it=itens.find(e=>e.dataset.nome===focoManual); if(it) comPar(it).forEach(e=>abrir.add(e)); }
+  itens.forEach(it=>{
+    it.classList.toggle('aberto', abrir.has(it));
+    it.classList.toggle('atual', auto.has(it));
+    const r=it.querySelector('.resumoItem');
+    if(r) r.textContent = it.classList.contains('pulado') ? 'Não vou fazer' : it.classList.contains('done') ? resumoDoItem(it) : '';
+    const pb=it.querySelector('.pular-btn');
+    if(pb){ const pl=it.classList.contains('pulado');
+      pb.innerHTML = pl?ICO_VOLTAR:ICO_PULAR;
+      pb.classList.toggle('on',pl);
+      pb.setAttribute('aria-label', pl?'Voltar a fazer este exercício':'Não vou fazer este exercício'); }
+  });
+  atualizarMapa();
+  const alvo = itens.find(e=>abrir.has(e));
+  if(rolar && alvo){ rolarAteOTopo(alvo, rolar==='instant'?'instant':'smooth'); return true; }
+  return false;
 }
+
+/* o topo do bloco aberto para logo abaixo do cabeçalho fixo, nunca fora da tela */
+function rolarAteOTopo(el, beh){
+  const alvo = el.closest('.bis') || el;
+  requestAnimationFrame(()=>{
+    const topo = document.querySelector('.topo').offsetHeight;
+    const y = alvo.getBoundingClientRect().top + window.scrollY - topo - 10;
+    window.scrollTo({ top: Math.max(0, y), behavior: beh });
+  });
+}
+
+/* mapa de posição no topo: em que bloco você está e quanto falta em cada um */
+const NOME_BLOCO={aq:'Aquec.',tr:'Treino',co:'Core',iv:'Intervalado'};
+function atualizarMapa(){
+  const el=document.getElementById('mapa');
+  if(telaAtual!==1){ if(el.classList.contains('on')){ el.innerHTML=''; el.classList.remove('on'); ajustaTopo(); } return; }
+  const secs=[...main.querySelectorAll('section[data-bloco]')];
+  const atual=main.querySelector('.item.atual');
+  el.innerHTML=secs.map((sc,i)=>{
+    const its=[...sc.querySelectorAll('.item')], r=its.filter(resolvido).length;
+    const agora=atual && sc.contains(atual), ok=its.length && r===its.length;
+    return '<button class="segm m-'+sc.dataset.bloco+(agora?' agora':'')+(ok?' ok':'')+'" data-ir="'+i+'"><b>'+NOME_BLOCO[sc.dataset.bloco]+'</b><span>'+(ok?'✓':r+'/'+its.length)+'</span></button>';
+  }).join('');
+  if(!el.classList.contains('on')){ el.classList.add('on'); ajustaTopo(); }
+}
+document.getElementById('mapa').onclick=e=>{
+  const b=e.target.closest('[data-ir]'); if(!b) return;
+  const sc=main.querySelectorAll('section[data-bloco]')[+b.dataset.ir]; if(!sc) return;
+  const y=sc.getBoundingClientRect().top+window.scrollY-document.querySelector('.topo').offsetHeight-6;
+  window.scrollTo({top:y,behavior:'smooth'});
+};
+
 function atualizarBarra(){
-  if(telaAtual!==1){ barra.classList.remove('on'); return; }
+  if(telaAtual!==1){ barra.classList.remove('on'); atualizarMapa(); return; }
   barra.classList.add('on');
-  const itens=main.querySelectorAll('.item').length, feitos=main.querySelectorAll('.item.done').length;
-  cont.textContent=feitos+'/'+itens;
-  progi.style.width=(itens?feitos/itens*100:0)+'%';
+  const sr=main.querySelectorAll('.item:not(.pulado) .sr').length, sf=main.querySelectorAll('.item:not(.pulado) .sr.feita').length;
+  if(sr){ cont.textContent=sf+'/'+sr+' séries'; progi.style.width=(sf/sr*100)+'%'; }
+  else {
+    const itens=main.querySelectorAll('.item').length, feitos=[...main.querySelectorAll('.item')].filter(resolvido).length;
+    cont.textContent=feitos+'/'+itens; progi.style.width=(itens?feitos/itens*100:0)+'%';
+  }
   const btnDesc=document.getElementById('descartar');
   if(ativa){ acao.textContent='Encerrar'; acao.classList.add('fim'); btnDesc.style.display=''; }
   else { acao.textContent='Iniciar treino'; acao.classList.remove('fim'); btnDesc.style.display='none'; }
+  atualizarMapa();
 }
 acao.onclick=()=>{
   if(!ativa){ iniciar(); return; }
   const min=Math.max(1,Math.round(decorridoSeg()/60));
   confirmar('Encerrar treino?','A sessão será salva no histórico com '+durTexto(min)+' de duração e a fila avança para o próximo treino.','Encerrar',encerrar);
 };
-document.getElementById('descartar').onclick=()=>{
-  confirmar('Descartar este treino?','Tudo que você registrou nesta sessão será perdido. <b>Seu histórico anterior não é afetado.</b>','Descartar',()=>{
-    ativa=null; salvar(); clearInterval(tRel); relogio.classList.remove('on','pausado'); irPara(1);
-  });
-};
 
 function iniciar(){
-  ativa={letra:sel.letra,passagem:passagemDe(sel.letra),inicio:Date.now(),acumulado:0,pausado:null,series:{},feitos:[],livres:[],ciclo:CIC.id};
-  salvar(); tickRelogio(); irPara(1);
+  ativa={letra:sel.letra,passagem:passagemDe(sel.letra),inicio:Date.now(),acumulado:0,pausado:null,series:{},feitos:[],pulados:[],ultimoFeito:null,livres:[],ciclo:CIC.id,montado:false};
+  focoManual=null; salvar(); tickRelogio(); desbloquearAudio(); pedirWakeLock(); irPara(1);
 }
 function decorridoSeg(){
   if(!ativa) return 0;
@@ -1298,14 +1684,38 @@ function tickRelogio(){
   upd();
   if(!ativa.pausado) tRel=setInterval(upd,1000);
 }
-relogio.onclick=()=>{
+function alternarPausa(){
   if(!ativa) return;
   if(ativa.pausado){ ativa.acumulado=(ativa.acumulado||0)+(Date.now()-ativa.pausado); ativa.pausado=null; }
   else { ativa.pausado=Date.now(); }
   salvar(); tickRelogio();
-};
+}
+const rotuloAtiva = () => ativa ? (ativa.letra==='L' ? 'Treino livre' : ativa.letra+' · '+NOMES[ativa.letra]) : '';
+relogio.onclick=alternarPausa;
+document.getElementById('descartar').onclick=()=>descartarSessao();
+function descartarSessao(){
+  confirmar('Descartar este treino?','Tudo que você registrou nesta sessão será perdido. <b>Seu histórico anterior não é afetado.</b>','Descartar',()=>{
+    ativa=null; focoManual=null; salvar(); clearInterval(tRel); relogio.classList.remove('on','pausado');
+    soltarWakeLock(); pararDescanso(); irPara(1);
+  });
+}
+
+const somaReps = arr => (arr||[]).filter(s=>s&&s.ok).reduce((a,s)=>a+(+s.reps||0),0);
 function encerrar(){
   const min=Math.max(1,Math.round(decorridoSeg()/60));
+  const rot=rotuloAtiva();
+  /* comparação com a última vez, feita antes de gravar a sessão atual */
+  const melhoras=[]; let nSeries=0;
+  Object.keys(ativa.series).forEach(k=>{
+    const arr=(ativa.series[k]||[]).filter(s=>s&&s.ok); nSeries+=arr.length;
+    const meta=META_EX[k]; if(!meta||!arr.length) return;
+    const p=k.split('|'), ant=ultimoRegistro(p[0], p[1]);
+    const agora=melhorDaSerie(ativa.series[k],meta), antes=melhorDaSerie(ant,meta);
+    if(!agora||!antes) return;
+    const u=meta.maq?' placas':' kg';
+    if(agora.v>antes.v) melhoras.push('<b>'+meta.nome+'</b> '+fmtNum(antes.v)+' → '+fmtNum(agora.v)+u);
+    else if(agora.v===antes.v){ const ra=somaReps(ativa.series[k]), rb=somaReps(ant); if(ra>rb) melhoras.push('<b>'+meta.nome+'</b> +'+(ra-rb)+' reps com '+fmtNum(agora.v)+u); }
+  });
   let vol=0;
   Object.keys(ativa.series).forEach(k=>{
     const meta=META_EX[k];
@@ -1314,12 +1724,57 @@ function encerrar(){
   });
   const iv=ativa.intervalado;
   const temIv = iv && iv.blocos!=='' && iv.blocos!=null;
-  hist.push({data:ativa.inicio,letra:ativa.letra,passagem:ativa.passagem||1,ciclo:ativa.ciclo||CIC.id,min:temIv?Math.max(1,min-MIN_INTERVALADO):min,series:ativa.series,volumeTotal:vol});
+  const minMusc = temIv?Math.max(1,min-MIN_INTERVALADO):min;
+  const reg={data:ativa.inicio,letra:ativa.letra,passagem:ativa.passagem||1,ciclo:ativa.ciclo||CIC.id,min:minMusc,series:ativa.series,volumeTotal:vol};
+  if(ativa.pulados && ativa.pulados.length) reg.pulados=ativa.pulados.slice();
+  hist.push(reg);
   if(temIv) hist.push({data:ativa.inicio+1,letra:'I',ciclo:ativa.ciclo||CIC.id,min:MIN_INTERVALADO,blocos:iv.blocos,res:iv.res||''});
-  ativa=null; salvar(); clearInterval(tRel); relogio.classList.remove('on','pausado');
+  ativa=null; focoManual=null; salvar(); clearInterval(tRel); relogio.classList.remove('on','pausado');
+  soltarWakeLock(); pararDescanso();
   sel={letra:proximoDaFila()};
   irPara(0);
+  abrirFechamento({rot, min:minMusc, nSeries, melhoras, iv:temIv});
 }
+/* com uma janela aberta, o fundo não rola: o iOS rola a página de trás se não travar */
+let travado=false, yTravado=0, travaRender=-1;
+function atualizarTravaFundo(){
+  const aberto = !!document.querySelector('.modal.on');
+  if(aberto === travado) return;
+  travado = aberto;
+  const b = document.body;
+  if(aberto){
+    yTravado = window.scrollY; travaRender = render;
+    b.style.position='fixed'; b.style.top=(-yTravado)+'px'; b.style.left='0'; b.style.right='0'; b.style.width='100%';
+  } else {
+    b.style.position=''; b.style.top=''; b.style.left=''; b.style.right=''; b.style.width='';
+    if(render===travaRender) window.scrollTo(0, yTravado);
+  }
+}
+(function(){
+  const obs = new MutationObserver(atualizarTravaFundo);
+  document.querySelectorAll('.modal').forEach(m=>obs.observe(m,{attributes:true,attributeFilter:['class']}));
+})();
+
+const mDica=document.getElementById('mDica');
+function abrirDica(id){
+  const d=DICAS[id]; if(!d) return;
+  document.getElementById('dNome').textContent=d.nome;
+  document.getElementById('dCorpo').innerHTML=muscHTML(d.nome)+(d.dica?'<div class="dica">'+d.dica+'</div>':'')+(d.alerta?'<div class="dica alerta">'+d.alerta+'</div>':'');
+  document.getElementById('dCorpo').scrollTop=0;
+  mDica.classList.add('on');
+}
+document.getElementById('dFecha').onclick=()=>mDica.classList.remove('on');
+mDica.onclick=e=>{ if(e.target===mDica) mDica.classList.remove('on'); };
+const mFim=document.getElementById('mFim');
+function abrirFechamento(r){
+  document.getElementById('fimSub').textContent = r.rot+' · '+durTexto(r.min)+' · '+r.nSeries+(r.nSeries===1?' série':' séries')+(r.iv?' · intervalado registrado':'');
+  document.getElementById('fimCorpo').innerHTML = r.melhoras.length
+    ? '<p class="fimTit">Acima da última vez</p><ul class="fimLista">'+r.melhoras.map(m=>'<li>'+m+'</li>').join('')+'</ul>'
+    : '<p>Nenhuma carga ou repetição acima da última vez nesta sessão. O sinal de cada exercício mostra o que buscar na próxima.</p>';
+  mFim.classList.add('on');
+}
+document.getElementById('fimOk').onclick=()=>mFim.classList.remove('on');
+mFim.onclick=e=>{ if(e.target===mFim) mFim.classList.remove('on'); };
 
 const modalEd=document.getElementById('editar');
 let edTs=null;
@@ -1342,20 +1797,24 @@ document.getElementById('eSalvar').onclick=()=>{
   const m=+document.getElementById('eMin').value;
   if(m>0) s.min=Math.round(m);
   hist.sort((a,b)=>a.data-b.data);
-  salvar(); modalEd.classList.remove('on'); edTs=null; irPara(0);
+  salvar(); modalEd.classList.remove('on'); edTs=null; irPara(telaAtual===3?3:0);
 };
 document.getElementById('eExcluir').onclick=()=>{
   const s=hist.find(x=>x.data===edTs); if(!s) return;
   const ts=edTs; modalEd.classList.remove('on'); edTs=null;
   confirmar('Excluir este registro?','<b>'+rotuloSessao(s)+'</b> de '+new Date(ts).toLocaleDateString('pt-BR')+' sairá do histórico. Isso não pode ser desfeito.','Excluir',()=>{
-    hist=hist.filter(x=>x.data!==ts); sel={letra:proximoDaFila()}; salvar(); irPara(0); });
+    hist=hist.filter(x=>x.data!==ts); sel={letra:proximoDaFila()}; salvar(); irPara(telaAtual===3?3:0); });
 };
 
 main.addEventListener('click',ev=>{
   const ed=ev.target.closest('.hist');
   if(ed){ const b=ed.querySelector('[data-edit]'); if(b) abrirEdicao(+b.dataset.edit); return; }
+  const cal=ev.target.closest('[data-cal]');
+  if(cal){ calMes=new Date(calMes.getFullYear(), calMes.getMonth()+(+cal.dataset.cal), 1); calDia=null; irPara(3); return; }
+  const dia=ev.target.closest('[data-dia]');
+  if(dia){ calDia = (dia.dataset.dia && calDia!==dia.dataset.dia) ? dia.dataset.dia : null; irPara(3); return; }
   const rot=ev.target.closest('[data-rot]');
-  if(rot){ sel.letra=rot.dataset.rot; irPara(1); return; }
+  if(rot){ sel.letra=rot.dataset.rot; focoManual=null; irPara(1); return; }
   if(ev.target.closest('#btAdd')){ abrirCatalogo(); return; }
   const rem=ev.target.closest('[data-rem]');
   if(rem){ const i=+rem.dataset.rem; const nome=ativa.livres[i].n;
@@ -1366,11 +1825,22 @@ main.addEventListener('click',ev=>{
       ativa.livres.splice(i,1); salvar(); irPara(1); });
     return; }
   const d=ev.target.closest('.dica-btn');
-  if(d){ const w=document.getElementById(d.dataset.alvo); d.textContent=w.classList.toggle('open')?'Fechar':'Como fazer'; return; }
+  if(d){ abrirDica(d.dataset.alvo); return; }
+  const pu=ev.target.closest('.pular-btn');
+  if(pu){
+    if(!ativa){ alert('Inicie o treino para marcar o que não vai fazer.'); return; }
+    const it=pu.closest('.item'), nm=it.dataset.nome, on=it.classList.toggle('pulado');
+    ativa.pulados=(ativa.pulados||[]).filter(x=>x!==nm);
+    if(on){ ativa.pulados.push(nm); it.classList.remove('done'); ativa.feitos=ativa.feitos.filter(x=>x!==nm); ativa.ultimoFeito=nm; }
+    salvar(); focoManual=null; aplicarFoco(on?'smooth':false); atualizarBarra(); return; }
   const t=ev.target.closest('.tick');
   if(t){ const it=t.closest('.item'); const on=it.classList.toggle('done');
-    if(ativa){ const nm=it.dataset.nome; ativa.feitos=ativa.feitos.filter(x=>x!==nm); if(on) ativa.feitos.push(nm); salvar(); }
-    atualizarBarra(); return; }
+    if(it.classList.contains('pulado')){ it.classList.remove('pulado'); if(ativa) ativa.pulados=(ativa.pulados||[]).filter(x=>x!==it.dataset.nome); }
+    if(ativa){ const nm=it.dataset.nome; ativa.feitos=ativa.feitos.filter(x=>x!==nm); if(on){ ativa.feitos.push(nm); ativa.ultimoFeito=nm; } salvar(); }
+    focoManual=null;
+    aplicarFoco(on && ativa ? 'smooth' : false); atualizarBarra(); return; }
+  const cab=ev.target.closest('.cab');
+  if(cab){ const it=cab.closest('.item'); focoManual = it.classList.contains('aberto') ? '' : it.dataset.nome; aplicarFoco('smooth'); return; }
   const ok=ev.target.closest('.ok');
   if(ok){ const sr=ok.closest('.sr');
     if(!ativa){ alert('Toque em "Iniciar treino" na barra de baixo para registrar as séries.'); return; }
@@ -1379,15 +1849,18 @@ main.addEventListener('click',ev=>{
       const maq=sr.dataset.maq==='1';
       const cCar=sr.querySelector(maq?'[data-c="pl"]':'[data-c="kg"]');
       const cRep=sr.querySelector('[data-c="reps"]');
-      const nome=sr.dataset.ex.split('|')[1];
-      const ant=ultimoRegistro(sr.dataset.ex.split('|')[0], nome);
-      const ref=ant && ant[+sr.dataset.i];
       const cCan2=sr.querySelector('[data-c="can"]');
-      if(ref){
-        if(cCar.value==='') cCar.value = maq ? (ref.pl??'') : (ref.kg??'');
-        if(cCan2 && cCan2.value==='') cCan2.value = ref.can??'';
-        if(cRep.value==='') cRep.value = ref.reps??'';
-      }
+      const p=sr.dataset.ex.split('|');
+      const ant=ultimoRegistro(p[0], p[1]);
+      const ref=ant && ant[+sr.dataset.i];
+      const meta=META_EX[sr.dataset.ex];
+      /* carga: repete a série de cima desta sessão; se não houver, a última vez; se não houver, o programa */
+      const acima=sr.previousElementSibling && sr.previousElementSibling.classList.contains('sr') ? sr.previousElementSibling : null;
+      const vAcima=c=>{ const e=acima&&acima.querySelector('[data-c="'+c+'"]'); return e&&e.value!=='' ? e.value : null; };
+      const cargaAcima=vAcima(maq?'pl':'kg'), canAcima=vAcima('can');
+      if(cCar.value==='') cCar.value = cargaAcima ?? (ref ? ((maq?ref.pl:ref.kg)??'') : (meta && meta.pad!=null ? meta.pad : ''));
+      if(cCan2 && cCan2.value==='') cCan2.value = (cargaAcima!==null ? (canAcima??'') : (ref ? (ref.can??'') : (meta&&meta.canSug?meta.canSug:'')));
+      if(cRep.value==='') cRep.value = (ref && vaz(ref.reps)) ?? (vAcima('reps') ?? '');
     }
     gravarSerie(sr);
     sincronizarItem(sr.closest('.item'));
@@ -1414,8 +1887,9 @@ function sincronizarItem(it){
     it.classList.toggle('done',todas);
     const nm=it.dataset.nome;
     ativa.feitos=ativa.feitos.filter(x=>x!==nm);
-    if(todas) ativa.feitos.push(nm);
+    if(todas){ ativa.feitos.push(nm); ativa.ultimoFeito=nm; focoManual=null; }
     salvar();
+    aplicarFoco(todas ? 'smooth' : false);
   }
   atualizarBarra();
 }
@@ -1433,29 +1907,70 @@ function gravarSerie(sr){
     ativa.series[k][i]={ pl, kg: pl!=='' ? +kgPlacas(+pl).toFixed(1) : '', reps, ok:sr.classList.contains('feita') };
   } else {
     const kg=campo.value, can=cCan?cCan.value:'';
-    if(conv) conv.textContent = (cCan && (kg!=='' || can!=='')) ? 'total ' + (((+kg||0)+(+can||0))||0) + ' kg' : '';
+    if(conv) conv.textContent = (cCan && (kg!=='' || can!=='')) ? 'total ' + fmtNum(((+kg||0)+(+can||0))||0) + ' kg' : '';
     ativa.series[k][i]={ kg, can, reps, ok:sr.classList.contains('feita') };
   }
   salvar();
 }
 
+/* descanso: conta pelo horário-alvo, então sobrevive à tela bloqueada */
 let descFim=0;
+function pararDescanso(){ clearInterval(tDesc); descFim=0; descEl.classList.remove('on'); document.body.classList.remove('descansando'); }
 function tickDesc(){
   const r=Math.round((descFim-Date.now())/1000);
   descN.textContent=mmss(Math.max(0,r));
-  if(r<=0){ clearInterval(tDesc); descEl.classList.remove('on'); document.body.classList.remove('descansando'); }
+  if(r<=0){ const atrasado=Date.now()-descFim>5000; pararDescanso(); if(!atrasado) bip(); }
 }
 function comecarDescanso(s){
   clearInterval(tDesc); descFim=Date.now()+s*1000; descEl.classList.add('on');
   document.body.classList.add('descansando');
   tickDesc(); tDesc=setInterval(tickDesc,250);
 }
+document.getElementById('descSkip').onclick=pararDescanso;
+document.getElementById('descMais').onclick=()=>{ if(!descFim) return; descFim+=30000; tickDesc(); };
+
+/* aviso sonoro: o iPhone só libera áudio depois de um toque na tela */
+let actx=null;
+function desbloquearAudio(){
+  try{
+    if(!actx){ const C=window.AudioContext||window.webkitAudioContext; if(!C) return; actx=new C(); }
+    if(actx.state==='suspended') actx.resume();
+  }catch(e){}
+}
+function bip(){
+  try{
+    if(!actx) return;
+    if(actx.state==='suspended') actx.resume();
+    const t0=actx.currentTime;
+    [0,0.24].forEach(dt=>{
+      const o=actx.createOscillator(), g=actx.createGain();
+      o.type='sine'; o.frequency.value=880;
+      g.gain.setValueAtTime(0.0001,t0+dt);
+      g.gain.exponentialRampToValueAtTime(0.4,t0+dt+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t0+dt+0.17);
+      o.connect(g); g.connect(actx.destination); o.start(t0+dt); o.stop(t0+dt+0.2);
+    });
+    if(navigator.vibrate) navigator.vibrate([120,80,120]);
+  }catch(e){}
+}
+
+/* tela acesa durante a sessão (Screen Wake Lock) */
+let wl=null;
+async function pedirWakeLock(){
+  try{
+    if(!('wakeLock' in navigator) || !ativa || document.hidden || wl) return;
+    wl=await navigator.wakeLock.request('screen');
+    wl.addEventListener('release',()=>{ wl=null; });
+  }catch(e){ wl=null; }
+}
+function soltarWakeLock(){ try{ if(wl) wl.release(); }catch(e){} wl=null; }
+['touchend','click'].forEach(ev=>document.addEventListener(ev,()=>{ desbloquearAudio(); if(ativa && !wl) pedirWakeLock(); },{passive:true}));
+
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden) return;
   if(descEl.classList.contains('on')) tickDesc();
-  if(ativa) tickRelogio();
+  if(ativa){ tickRelogio(); pedirWakeLock(); }
 });
-document.getElementById('descSkip').onclick=()=>{ clearInterval(tDesc); descFim=0; descEl.classList.remove('on'); document.body.classList.remove('descansando'); };
 
 if(ativa){ sel={letra:ativa.letra}; tickRelogio(); }
 const mResumo=document.getElementById('mResumo'), rTexto=document.getElementById('rTexto');
@@ -1520,7 +2035,7 @@ function conferir(txt){
   const r=validarBackup(txt);
   if(!r.ok){ importado=null; status(r.msg,'erro'); return; }
   importado=r.dados;
-  status('Arquivo válido — '+resumoBackup(r.dados)+'. Escolha como aplicar.','ok');
+  status('Arquivo válido: '+resumoBackup(r.dados)+'. Escolha como aplicar.','ok');
 }
 mDados.addEventListener('click',e=>{
   const p=e.target.closest('[data-pane]');

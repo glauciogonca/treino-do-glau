@@ -1,6 +1,6 @@
 # Treino do Glau
 
-App de registro de treino. Funciona offline depois da primeira visita.
+App de registro de treino. Funciona offline depois da primeira visita. Versão 17.
 
 ## Publicar no GitHub Pages
 
@@ -22,115 +22,91 @@ icons/apple-touch-icon.png
 
 Todos os caminhos são relativos, então funciona em subpasta sem ajuste.
 
-## Importante: teste com o app instalado
+## Atualizar o app depois de mudar algo
 
-Abrir o `index.html` num navegador ou numa pré-visualização não é o mesmo que usar o app instalado. Instalado na tela de início, ele roda em modo `standalone`, sem barra de navegador e sem os gestos do navegador. Bugs de layout e de zoom precisam ser avaliados nesse modo.
+O service worker guarda os arquivos em cache. Ao publicar uma versão nova, suba o `index.html` e o `sw.js` juntos. A linha de versão do `sw.js` já vem trocada (`treino-glau-v17`). Sem isso o celular pode continuar mostrando a versão antiga.
 
 ## Instalar no celular
 
 - **iPhone (Safari):** abra o endereço, toque em Compartilhar e depois em "Adicionar à Tela de Início".
-- **Android (Chrome):** abra o endereço e aceite "Instalar app", ou use o menu ⋮ → "Adicionar à tela inicial".
+- **Android (Chrome):** abra o endereço e aceite "Instalar app".
 
-## Atualizar o app depois de mudar algo
+Teste sempre com o app instalado. Instalado, ele roda sem barra de navegador, e é nesse modo que layout, zoom e tela acesa precisam ser avaliados.
 
-O service worker guarda os arquivos em cache. Depois de editar o `index.html`:
+## Como o app se organiza
 
-1. Abra o `sw.js` e mude a linha da versão, por exemplo de `treino-glau-v1` para `treino-glau-v2`.
-2. Faça o commit dos dois arquivos.
+| Tela | Serve para |
+|---|---|
+| **Início** | Próximo treino, números da semana, metas de cardio, programa, últimas 10 sessões, resumo e backup |
+| **Histórico** | Calendário mensal com todas as sessões. Abre pelo botão *Ver histórico completo* no Início. Toque num dia para ver só aquele dia |
+| **Treino** | A execução: montagem, exercícios, registro de séries e descanso |
+| **Guia** | Consulta: regras, progressão, montagem de cada treino, pesos, cardio, mobilidade em casa |
 
-Sem isso o celular pode continuar mostrando a versão antiga.
+## Montagem
 
-## Cronômetro
+A montagem de cada treino é **calculada pelo app** a partir do estoque de anilhas registrado no código (`ESTOQUE`) e da carga de cada exercício. Se um programa pedir duas cargas diferentes nos halteres na mesma sessão, ou mais anilha do que existe, a montagem mostra o conflito em vermelho antes de você começar.
 
-O relógio no topo começa ao tocar em "Iniciar treino". **Toque nele para pausar e toque de novo para retomar** — útil para fazer a mobilidade em casa depois de sair da academia. Pausado, ele fica vermelho com um ícone de play. O tempo salvo no histórico desconta as pausas.
+Halteres precisam de 4 anilhas iguais de cada tipo, uma por ponta. Por isso, hoje, só as de 5 kg servem neles. Ao comprar anilhas para os halteres, compre de 4 em 4 e atualize o `ESTOQUE`.
 
-## Exercícios na estação W2
+Com a sessão iniciada, toque em **Montado** e o card recolhe.
 
-Nesses exercícios o campo de carga pede o **número de placas grandes** selecionadas abaixo da placa menor, e o app mostra o peso convertido ao lado. A conversão usa placa menor de 4 kg e placas grandes de 6,8 kg — número que veio da ficha técnica do fabricante e ainda não foi conferido na balança.
+## Durante o treino
 
-## Ciclo 2 — a partir de 21/09/2026
-
-O programa mudou. Principais diferenças em relação ao Ciclo 1:
-
-- **Não há mais passagem pesada e passagem de volume.** Cada rotina tem uma faixa de repetições só, e as duas passagens da semana são idênticas.
-- **A primeira sessão B da semana leva o intervalado 4×4** ao final. O app detecta sozinho e mostra o bloco quando é o caso.
-- **O cardio saiu de dentro das sessões.** Caminhada e intervalado são registrados pelo botão na tela de Início.
-- **A mobilidade saiu da academia.** Continua listada no fim do treino, marcada como bloco de casa.
-- **Caneleiras entram como sobrecarga** nos exercícios em que os halteres e as anilhas não permitem incremento fino.
-
-O histórico do Ciclo 1 permanece intacto no app, no backup e nos resumos. Sessões gravadas a partir de agora levam a marca do ciclo, e o resumo semanal avisa quando a comparação atravessa programas diferentes.
+- **Blocos com cor:** aquecimento em amarelo, treino em verde, core em azul, intervalado em vermelho. A faixa no topo mostra em que bloco você está e quanto falta em cada um; toque num bloco para ir até ele.
+- **Um exercício aberto por vez:** o atual abre sozinho. Ao abrir outro pelo nome, os demais fecham. No par, os dois ficam abertos juntos.
+- **Ao abrir um exercício**, a tela se reposiciona para o topo do cartão ficar logo abaixo do cabeçalho. Num par, o topo do par inteiro.
+- **O foco anda para a frente.** Ao concluir ou pular um exercício, o app vai para o próximo dali em diante. Só volta ao começo da lista quando não sobra nada adiante.
+- **O cartão fechado** mostra só nome, carga e séries × repetições, numa linha.
+- **O cartão aberto** mostra o músculo alvo, um bloco com a carga em destaque e a prescrição embaixo, e a tabela de séries. Detalhes que você consulta uma vez (músculos auxiliares, o que não deve sentir, execução) ficam no *Como fazer*.
+- **Três ícones** no canto do cartão aberto: **?** abre o *Como fazer*, o **vídeo** procura no YouTube e o **círculo cortado** marca *não vou fazer*.
+- **Como fazer:** abre numa janela por cima da tela, sem empurrar o resto da lista. Só uma fica aberta por vez. Com qualquer janela aberta o fundo fica travado, e ao fechar a lista volta exatamente onde estava.
+- **Não vou fazer:** o exercício fica riscado e sai da contagem de séries, o app segue para o próximo e a sessão salva registra o que ficou de fora. O botão vira uma seta de desfazer e continua visível no cartão riscado.
+- **Sinal de progressão:** *Subir carga*, *Buscar +1 rep* ou *Manter carga*, calculado pela dupla progressão a partir da última vez.
+- **Preenchimento:** ao marcar uma série vazia, o app repete a carga da série de cima; se for a primeira, usa a da última vez; se nunca foi feito, usa a do programa.
+- **Descanso:** começa sozinho, tem **+30 s** e **Pular**, e toca um aviso sonoro no fim. Com o modo silencioso ligado, o iPhone pode não tocar.
+- **Tela acesa:** durante a sessão o app pede para a tela não apagar. No app instalado funciona a partir do iOS 18.4.
+- **Cronômetro no topo:** toque para pausar e toque de novo para retomar.
+- **Descartar e Encerrar:** na barra de baixo. Os dois pedem confirmação. Ao encerrar, uma tela mostra o que subiu em relação à última vez.
 
 ## Qual carga registrar
 
-O cabeçalho da coluna diz sempre qual número o app espera:
-
 | Rótulo | O que digitar |
 |---|---|
-| **kg por mão** | O peso de **um** halter, não a soma dos dois |
-| **kg por lado** | O peso usado no lado que está trabalhando (exercícios unilaterais) |
+| **Halter** | O peso de **um** halter, sem a caneleira |
+| **Canel.** | O peso da caneleira, separado. O app soma os dois |
+| **kg por lado** | O peso usado no lado que está trabalhando |
 | **kg total** | O peso total na barra, incluindo a barra |
 | **Placas** | O número de placas grandes selecionadas na estação W2 |
-| **Canel.** | O peso da caneleira, separado do halter. O app soma os dois |
+| **Base** | Peso corporal: deixe vazio e registre só a caneleira, se houver |
 
-No cálculo de volume da sessão, exercícios "por mão" e "por lado" são contados duas vezes, já que os dois lados trabalham.
+Na estação, o app converte placas em kg com placa menor de 4 kg e placas grandes de 6,8 kg.
 
-## Cardio e suas metas
+## Cardio
 
-O cardio é registrado fora da sessão, pelo botão **+ Registrar cardio** na tela de Início. Duas metas semanais, acompanhadas por barras próprias:
-
-| O quê | Meta | O que registrar |
+| O quê | Meta | Como registrar |
 |---|---|---|
-| Caminhada no deslocamento | 5 por semana, 20 a 25 min | Minutos e distância |
-| Intervalado 4×4 na bike | 1 por semana, após o Treino B | Blocos completados e resistência |
-
-O intervalado registra blocos e resistência em vez de minutos e km porque a progressão acontece na resistência, não no tempo. Se você fizer o intervalado dentro da sessão B, o app grava os dois registros separados automaticamente.
+| Caminhada no deslocamento | 5 por semana, 20 a 25 min | **+ Registrar cardio** na tela de Início, com minutos e distância |
+| Intervalado 4×4 na bike | 1 por semana, após o Treino B | Dentro da primeira sessão B da semana, ou por **+ Registrar cardio** |
 
 ## Editar o histórico
 
-Toque em qualquer sessão do histórico para abrir a edição. Dá para corrigir a data e hora de início, ajustar a duração ou excluir a sessão.
-
-A data gravada é a de **início** do treino, não a de fim. Um treino que começa às 22h de segunda e termina 00h03 de terça fica registrado na segunda.
-
-## Bisérie e descanso
-
-Numa bisérie o descanso pertence ao **par**, não a cada exercício. O primeiro da dupla mostra "sem pausa" e não dispara o cronômetro; o segundo carrega o tempo de descanso. Nos dias de ordem invertida os dois trocam de posição, e o descanso acompanha — quem estiver em segundo é quem dispara o timer.
+Toque em qualquer sessão, no Início ou no calendário, para corrigir data, duração ou excluir. A data gravada é a de **início** do treino.
 
 ## Treino livre
 
-O quarto botão do seletor de rotinas (★ Livre) abre uma sessão fora do programa, para os dias em que não dá para fazer A, B ou C. Toque em **Iniciar treino** e depois em **+ Adicionar exercício** para montar a sessão: dá para escolher qualquer exercício do programa ou criar um com nome livre.
+O botão ★ Livre abre uma sessão fora do programa. Ela não avança a fila A → B → C e aparece numa seção própria do resumo semanal.
 
-Exercícios escolhidos do programa entram no mesmo histórico daquele exercício, então o "Última vez" e a comparação de cargas continuam funcionando.
+## Resumo semanal e backup
 
-Um treino livre **não avança a fila** A → B → C e não conta como sessão do programa no resumo semanal — aparece numa seção própria. O cardio dele conta normalmente na meta de 115 minutos.
+No fim da tela de Início:
 
-## Resumo semanal
-
-Na tela de Início, o botão **Gerar resumo da semana** monta um relatório em texto com sessões, tempo, volume, cardio contra a meta, comparação de cargas com a semana anterior, exercícios prontos para subir carga e observações automáticas. Dá para escolher entre a semana atual e a anterior, copiar para a área de transferência ou baixar como `.txt`.
-
-## Backup: exportar e importar
-
-Botão **Backup dos dados** na tela de Início.
-
-**Exportar** mostra o JSON completo, com botões para copiar ou baixar o arquivo. O backup inclui todo o histórico — datas, durações, séries com carga e repetições, cardio com modalidade e distância, treinos livres — e também a sessão em andamento, se houver.
-
-**Importar** aceita arquivo ou texto colado. O app valida antes de gravar e recusa arquivos incompletos sem tocar no que já existe. Duas formas de aplicar:
-
-- **Substituir tudo** — apaga o histórico do aparelho e coloca o do arquivo no lugar. É o modo para trocar de aparelho ou reinstalar.
-- **Mesclar** — soma as sessões do arquivo às existentes. Sessões com a mesma data e hora não são duplicadas.
+- **Resumo da semana:** relatório em texto para copiar ou baixar, com sessões, tempo, cargas contra a semana anterior e exercícios prontos para subir.
+- **Backup:** exporta o JSON completo e importa com validação. *Substituir tudo* troca o histórico do aparelho pelo do arquivo; *Mesclar* soma sem duplicar.
 
 ### Trocar o ícone no iPhone sem perder dados
 
-O Safari copia o ícone na instalação e nunca mais o atualiza, então trocar o ícone exige remover e reinstalar o app — e isso apaga o `localStorage`. O procedimento seguro:
-
-1. Abra o app, toque em **Backup dos dados**, aba Exportar, e **baixe o `.json`**. Salve fora do aparelho.
-2. Publique os ícones novos e suba a versão do `sw.js`.
-3. Remova o app da tela de início e adicione de novo.
-4. Abra, toque em **Backup dos dados**, aba Importar, escolha o arquivo e use **Substituir tudo**.
-
-No Android o ícone atualiza sozinho e nada disso é necessário.
+Trocar o ícone exige remover e reinstalar o app, e isso apaga os dados. Antes, baixe o backup em `.json`; depois de reinstalar, importe com **Substituir tudo**.
 
 ## Onde ficam os dados
 
-Séries, cargas e histórico ficam no `localStorage` do próprio navegador, no seu aparelho. Não vão para servidor nenhum.
-
-Consequências: limpar os dados do site apaga o histórico, e o histórico não sincroniza entre aparelhos. Se algum dia quiser backup ou sincronização, é preciso adicionar exportação de dados.
+No `localStorage` do navegador, no próprio aparelho. Não vão para servidor nenhum e não sincronizam entre aparelhos. Faça backup de tempos em tempos.
