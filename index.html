@@ -291,6 +291,12 @@ body.descansando .desc{bottom:0}
 .cardioBts .btLink{width:auto;padding:0 2px;flex:none}
 .dadosBts{display:flex;gap:9px}
 .btSec{flex:1;background:none;border:1px solid var(--line2);border-radius:11px;padding:12px 8px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.fTempo{display:flex;gap:8px;margin:0 0 18px}
+.fTempo>div{flex:1;background:var(--card2);border-radius:10px;padding:10px 8px;text-align:center}
+.fTempo span{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.fTempo b{display:block;font-family:"JetBrains Mono",monospace;font-size:15.5px;font-weight:700;margin-top:4px}
+.fTempo .acima b{color:var(--rust)}
+.fTempo .abaixo b{color:var(--pine)}
 .fimTit{font-family:"JetBrains Mono",monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:0 0 6px!important}
 .fimLista{margin:0 0 18px;padding:0;list-style:none}
 .fimLista li{font-size:14.5px;padding:9px 0;border-bottom:1px solid var(--line);color:var(--muted)}
@@ -514,6 +520,7 @@ body.descansando .desc{bottom:0}
 </div></div>
 <div class="modal" id="mFim"><div class="modal-in alto">
   <h4>Treino salvo</h4><p id="fimSub"></p>
+  <div class="fTempo" id="fimTempo"></div>
   <div id="fimCorpo"></div>
   <div class="bts"><button class="si" style="background:var(--pine)" id="fimOk">Fechar</button></div>
 </div></div>
@@ -597,9 +604,9 @@ const BLOCOS = {
 };
 
 const CORE_BASE = [
-  ['Curl-up de McGill','3 séries · 5, 3 e 1 sustentações','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, e entre uma e outra você <b>solta a posição por 2 ou 3 segundos</b>. A série 1 tem 5 sustentações, a 2 tem 3, a 3 tem 1. Descanso de 20 a 30 s entre as séries. <b>Não é uma prancha de 50 segundos.</b><br><b>Posição:</b> deitado de costas, uma perna dobrada com o pé no chão e a outra estendida. Mãos sob a lombar, palmas para baixo. Elas são o seu sensor: se sentir a lombar esmagando os dedos, você flexionou a coluna e perdeu o exercício. Cotovelos apoiados no chão. Alterne a perna dobrada entre as séries.<br><b>Execução:</b> o movimento é <b>mínimo</b>, as escápulas mal saem do chão, dois ou três centímetros. Cabeça, pescoço e parte alta das costas se movem como um bloco só.<br><b>Se sentir o pescoço:</b> é erro de execução. Antes de iniciar, <b>pressione a língua contra o céu da boca</b>, logo atrás dos dentes da frente. Pense em girar a partir do esterno, não do pescoço. Se precisar, apoie uma mão atrás da cabeça <b>sustentando</b> o peso dela, sem puxar.<br><b>O que sentir:</b> tensão na parede abdominal, principalmente na parte alta. Nada no pescoço e nada na lombar.'],
-  ['Prancha lateral','3 séries · 5, 3 e 1 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, soltando a posição por 2 ou 3 segundos entre elas. Faça as três séries de um lado e depois as três do outro.<br><b>Posição:</b> deitado de lado, cotovelo diretamente sob o ombro, antebraço no chão. <b>Comece de joelhos</b> e só passe para os pés quando as três séries saírem sem tremor.<br><b>Execução:</b> suba o quadril até o corpo formar uma linha reta vista de lado e segure 10 segundos. Ombro, quadril e joelho alinhados.<br><b>Se sentir o pescoço:</b> o erro típico é o ombro de baixo afundar na direção da orelha. Corrija <b>empurrando o chão com o cotovelo</b>, criando espaço entre ombro e orelha. Cabeça alinhada com a coluna, olhar para frente. Se persistir, reduza para 5 segundos por sustentação.'],
-  ['Bird dog','3 séries · 5, 3 e 1 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, desfazendo a posição entre elas. Três séries com braço direito e perna esquerda, depois três com o outro par.<br><b>Posição:</b> quatro apoios, mãos sob os ombros, joelhos sob o quadril, coluna neutra.<br><b>Execução:</b> estenda o braço direito à frente e a perna esquerda atrás, até ambos ficarem na linha do tronco, não mais alto que isso.<br><b>Detalhes que mudam o exercício:</b> feche o punho da mão estendida e puxe a ponta do pé em direção à canela. Contrair as extremidades aumenta a rigidez de todo o sistema por irradiação.<br><b>Regra:</b> imagine um copo d\'água apoiado na lombar. Se o quadril rodar, nada disso vale.<br><b>Se estiver difícil:</b> faça só o braço, depois só a perna, e junte os dois depois de uma ou duas semanas.'],
+  ['Curl-up de McGill','2 séries · 5 e 5 sustentações','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, e entre uma e outra você <b>solta a posição por 2 ou 3 segundos</b>. Duas séries de 5 sustentações, com 20 a 30 s de descanso entre elas. <b>Não é uma prancha de 50 segundos.</b><br><b>Se a qualidade cair</b> nas duas últimas sustentações da segunda série, volte à pirâmide original de 5, 3 e 1: ela existe justamente para a fadiga não estragar a execução.<br><b>Posição:</b> deitado de costas, uma perna dobrada com o pé no chão e a outra estendida. Mãos sob a lombar, palmas para baixo. Elas são o seu sensor: se sentir a lombar esmagando os dedos, você flexionou a coluna e perdeu o exercício. Cotovelos apoiados no chão. Alterne a perna dobrada entre as séries.<br><b>Execução:</b> o movimento é <b>mínimo</b>, as escápulas mal saem do chão, dois ou três centímetros. Cabeça, pescoço e parte alta das costas se movem como um bloco só.<br><b>Se sentir o pescoço:</b> é erro de execução. Antes de iniciar, <b>pressione a língua contra o céu da boca</b>, logo atrás dos dentes da frente. Pense em girar a partir do esterno, não do pescoço. Se precisar, apoie uma mão atrás da cabeça <b>sustentando</b> o peso dela, sem puxar.<br><b>O que sentir:</b> tensão na parede abdominal, principalmente na parte alta. Nada no pescoço e nada na lombar.'],
+  ['Prancha lateral','2 séries · 5 e 5 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, soltando a posição por 2 ou 3 segundos entre elas. Faça as duas séries de um lado e depois as duas do outro.<br><b>Posição:</b> deitado de lado, cotovelo diretamente sob o ombro, antebraço no chão. <b>Comece de joelhos</b> e só passe para os pés quando as três séries saírem sem tremor.<br><b>Execução:</b> suba o quadril até o corpo formar uma linha reta vista de lado e segure 10 segundos. Ombro, quadril e joelho alinhados.<br><b>Se sentir o pescoço:</b> o erro típico é o ombro de baixo afundar na direção da orelha. Corrija <b>empurrando o chão com o cotovelo</b>, criando espaço entre ombro e orelha. Cabeça alinhada com a coluna, olhar para frente. Se persistir, reduza para 5 segundos por sustentação.'],
+  ['Bird dog','2 séries · 5 e 5 por lado','<b>Como contar:</b> cada "repetição" é uma sustentação de 10 segundos, desfazendo a posição entre elas. Duas séries com braço direito e perna esquerda, depois duas com o outro par.<br><b>Posição:</b> quatro apoios, mãos sob os ombros, joelhos sob o quadril, coluna neutra.<br><b>Execução:</b> estenda o braço direito à frente e a perna esquerda atrás, até ambos ficarem na linha do tronco, não mais alto que isso.<br><b>Detalhes que mudam o exercício:</b> feche o punho da mão estendida e puxe a ponta do pé em direção à canela. Contrair as extremidades aumenta a rigidez de todo o sistema por irradiação.<br><b>Regra:</b> imagine um copo d\'água apoiado na lombar. Se o quadril rodar, nada disso vale.<br><b>Se estiver difícil:</b> faça só o braço, depois só a perna, e junte os dois depois de uma ou duas semanas.'],
   ['Pallof press','2 × 10 por lado','<b>Polia no ponto médio</b>, na altura do peito. <b>Posição:</b> em pé <b>de lado</b> para a polia, pés na largura dos ombros, mãos juntas segurando a corda junto ao esterno. Afaste-se da máquina até o cabo ficar paralelo ao chão.<br><b>Execução:</b> estenda os braços à frente do peito, segure 2 segundos <b>resistindo à rotação</b> e volte. O objetivo é não girar.<br><b>Regra:</b> o tronco fica vertical. Se você precisa inclinar para o lado oposto, está longe demais para essa carga.']
 ];
 
@@ -714,6 +721,8 @@ const chaveEx = (l,n) => l+'|'+n;
 const PLACA_MENOR = 4, PLACA_UN = 6.8;
 const kgPlacas = n => (n>0 ? PLACA_MENOR + n*PLACA_UN : 0);
 const ROT_UN = { placas:'Placas', mao:'kg por mão', lado:'kg por lado', total:'kg total' };
+/* versão curta, para quando a coluna de caneleira divide o espaço */
+const ROT_CURTO = { placas:'Placas', mao:'Por mão', lado:'Por lado', total:'Base' };
 const FATOR = { mao:2, lado:2, placas:1, total:1 };
 const META_CAMINHADAS = 5, META_INTERVALADO = 1, MIN_CAMINHADA = 22, MIN_INTERVALADO = 25;
 const fmtKg = v => v.toFixed(1).replace('.',',') + ' kg';
@@ -872,7 +881,7 @@ function seriesHTML(letra, e, descanso){
       '<button class="ok" data-rest="'+rest+'" aria-label="Concluir série '+(i+1)+'"></button></div>';
   }
   const rotCarga = maq ? 'Placas'
-    : can ? (e.un==='total' ? 'Base' : 'Halter')
+    : can ? ROT_CURTO[e.un||'total']
     : ROT_UN[e.un||'total'];
   const cab = '<div class="sh '+cols+'"><span></span><span>'+rotCarga+'</span>'+(can?'<span>Canel.</span>':'')+'<span>'+(e.tempo?'Segundos':'Reps')+'</span><span></span></div>';
   return '<div class="series">'+cab+linhas+'</div>';
@@ -1165,7 +1174,7 @@ ${CICLOS.map(c=>'<tr><td>'+c.nome+'</td><td>'+new Date(c.inicio+'T12:00:00').toL
 }
 
 /* ===================== BACKUP: EXPORTAR E IMPORTAR ===================== */
-const APP_VERSAO = 17;
+const APP_VERSAO = 18;
 
 function montarBackup(){
   return {
@@ -1274,7 +1283,7 @@ function seriesLivre(ex, idx){
       '<button class="ok" data-rest="'+(ex.d||60)+'" aria-label="Concluir série '+(i+1)+'"></button></div>';
   }
   return '<div class="series"><p class="ant">'+antTxt+'</p><div class="sh '+cols+'"><span></span><span>'+
-    ROT_UN[maq?'placas':ex.un]+'</span>'+(can?'<span>Canel.</span>':'')+'<span>Reps</span><span></span></div>'+linhas+'</div>';
+    (can?ROT_CURTO:ROT_UN)[maq?'placas':(ex.un||'total')]+'</span>'+(can?'<span>Canel.</span>':'')+'<span>Reps</span><span></span></div>'+linhas+'</div>';
 }
 
 function telaLivre(){
@@ -1703,7 +1712,7 @@ function descartarSessao(){
 const somaReps = arr => (arr||[]).filter(s=>s&&s.ok).reduce((a,s)=>a+(+s.reps||0),0);
 function encerrar(){
   const min=Math.max(1,Math.round(decorridoSeg()/60));
-  const rot=rotuloAtiva();
+  const rot=rotuloAtiva(), letraFim=ativa.letra, passFim=ativa.passagem||1;
   /* comparação com a última vez, feita antes de gravar a sessão atual */
   const melhoras=[]; let nSeries=0;
   Object.keys(ativa.series).forEach(k=>{
@@ -1733,7 +1742,8 @@ function encerrar(){
   soltarWakeLock(); pararDescanso();
   sel={letra:proximoDaFila()};
   irPara(0);
-  abrirFechamento({rot, min:minMusc, nSeries, melhoras, iv:temIv});
+  abrirFechamento({rot, min:minMusc, nSeries, melhoras, iv:temIv,
+    previsto:estimaTotal(letraFim, passFim), real:min});
 }
 /* com uma janela aberta, o fundo não rola: o iOS rola a página de trás se não travar */
 let travado=false, yTravado=0, travaRender=-1;
@@ -1767,7 +1777,13 @@ document.getElementById('dFecha').onclick=()=>mDica.classList.remove('on');
 mDica.onclick=e=>{ if(e.target===mDica) mDica.classList.remove('on'); };
 const mFim=document.getElementById('mFim');
 function abrirFechamento(r){
-  document.getElementById('fimSub').textContent = r.rot+' · '+durTexto(r.min)+' · '+r.nSeries+(r.nSeries===1?' série':' séries')+(r.iv?' · intervalado registrado':'');
+  document.getElementById('fimSub').textContent = r.rot+' · '+r.nSeries+(r.nSeries===1?' série':' séries')+(r.iv?' · intervalado registrado':'');
+  const d = r.previsto ? r.real - r.previsto : null;
+  document.getElementById('fimTempo').innerHTML = r.previsto
+    ? '<div><span>Previsto</span><b>'+durTexto(r.previsto)+'</b></div>'+
+      '<div><span>Realizado</span><b>'+durTexto(r.real)+'</b></div>'+
+      '<div class="'+(d>0?'acima':'abaixo')+'"><span>Diferença</span><b>'+(d>0?'+':d<0?'-':'')+durTexto(Math.abs(d))+'</b></div>'
+    : '<div><span>Duração</span><b>'+durTexto(r.real)+'</b></div>';
   document.getElementById('fimCorpo').innerHTML = r.melhoras.length
     ? '<p class="fimTit">Acima da última vez</p><ul class="fimLista">'+r.melhoras.map(m=>'<li>'+m+'</li>').join('')+'</ul>'
     : '<p>Nenhuma carga ou repetição acima da última vez nesta sessão. O sinal de cada exercício mostra o que buscar na próxima.</p>';

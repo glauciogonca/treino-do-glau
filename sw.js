@@ -1,6 +1,6 @@
 /* Treino do Glau: service worker
    Suba a versão sempre que alterar o index.html, para forçar atualização. */
-const VERSAO = 'treino-glau-v17';
+const VERSAO = 'treino-glau-v18';
 const ARQUIVOS = [
   './',
   './index.html',

@@ -1,6 +1,6 @@
 # Treino do Glau
 
-App de registro de treino. Funciona offline depois da primeira visita. Versão 17.
+App de registro de treino. Funciona offline depois da primeira visita. Versão 18.
 
 ## Publicar no GitHub Pages
 
@@ -24,7 +24,7 @@ Todos os caminhos são relativos, então funciona em subpasta sem ajuste.
 
 ## Atualizar o app depois de mudar algo
 
-O service worker guarda os arquivos em cache. Ao publicar uma versão nova, suba o `index.html` e o `sw.js` juntos. A linha de versão do `sw.js` já vem trocada (`treino-glau-v17`). Sem isso o celular pode continuar mostrando a versão antiga.
+O service worker guarda os arquivos em cache. Ao publicar uma versão nova, suba o `index.html` e o `sw.js` juntos. A linha de versão do `sw.js` já vem trocada (`treino-glau-v18`). Sem isso o celular pode continuar mostrando a versão antiga.
 
 ## Instalar no celular
 
@@ -66,18 +66,20 @@ Com a sessão iniciada, toque em **Montado** e o card recolhe.
 - **Descanso:** começa sozinho, tem **+30 s** e **Pular**, e toca um aviso sonoro no fim. Com o modo silencioso ligado, o iPhone pode não tocar.
 - **Tela acesa:** durante a sessão o app pede para a tela não apagar. No app instalado funciona a partir do iOS 18.4.
 - **Cronômetro no topo:** toque para pausar e toque de novo para retomar.
-- **Descartar e Encerrar:** na barra de baixo. Os dois pedem confirmação. Ao encerrar, uma tela mostra o que subiu em relação à última vez.
+- **Descartar e Encerrar:** na barra de baixo. Os dois pedem confirmação. Ao encerrar, uma tela mostra o tempo previsto, o realizado e a diferença, além do que subiu em relação à última vez.
 
 ## Qual carga registrar
 
 | Rótulo | O que digitar |
 |---|---|
-| **Halter** | O peso de **um** halter, sem a caneleira |
-| **Canel.** | O peso da caneleira, separado. O app soma os dois |
-| **kg por lado** | O peso usado no lado que está trabalhando |
+| **kg por mão** ou **Por mão** | O peso de **um** halter, sem a caneleira |
+| **kg por lado** ou **Por lado** | O peso usado no lado que está trabalhando |
 | **kg total** | O peso total na barra, incluindo a barra |
 | **Placas** | O número de placas grandes selecionadas na estação W2 |
 | **Base** | Peso corporal: deixe vazio e registre só a caneleira, se houver |
+| **Canel.** | O peso da caneleira, separado. O app soma os dois |
+
+A versão curta do rótulo aparece quando a coluna de caneleira divide o espaço.
 
 Na estação, o app converte placas em kg com placa menor de 4 kg e placas grandes de 6,8 kg.
 
