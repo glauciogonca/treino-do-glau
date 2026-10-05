@@ -153,7 +153,7 @@ button{font-family:inherit}
 .montagem summary::after{content:"ver";font-size:9.5px}
 .montagem[open] summary::after{content:"ocultar"}
 .montagem p{font-family:"JetBrains Mono",monospace;font-size:11.5px;color:var(--muted);margin:8px 0 2px;line-height:1.65}
-.lixo{background:none;border:0;color:var(--dim);font-size:19px;line-height:1;padding:4px 6px;cursor:pointer;flex:none;border-radius:6px}
+.lixo{background:none;border:0;color:var(--dim);font-size:22px;line-height:1;padding:4px 6px;cursor:pointer;flex:none;border-radius:6px}
 .lixo:hover{color:var(--rust);background:var(--rust-bg)}
 .descartar{flex:none;background:none;border:1px solid var(--line2);border-radius:9px;padding:11px 12px;color:var(--muted);font-size:13.5px;font-weight:600;cursor:pointer}
 .modal{position:fixed;inset:0;z-index:60;background:rgba(21,24,28,.45);display:none;align-items:flex-end;justify-content:center}
@@ -291,6 +291,31 @@ body.descansando .desc{bottom:0}
 .cardioBts .btLink{width:auto;padding:0 2px;flex:none}
 .dadosBts{display:flex;gap:9px}
 .btSec{flex:1;background:none;border:1px solid var(--line2);border-radius:11px;padding:12px 8px;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
+.seg.tres button b{font-size:14px}
+.rotCampo{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.modos{display:flex;flex-wrap:wrap;gap:6px}
+.modos button{background:var(--card2);border:1px solid transparent;border-radius:9px;padding:9px 12px;font-family:inherit;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer}
+.modos button[aria-pressed="true"]{background:var(--pine-bg);border-color:var(--pine-line);color:var(--pine);font-weight:700}
+
+/* v19 · folha de detalhes da sessão */
+.sSub{font-size:13px;color:var(--muted);margin:2px 0 0!important;text-transform:capitalize}
+.sChips{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:4px 0 16px}
+.sChips>div{background:var(--card2);border-radius:10px;padding:9px 8px;text-align:center}
+.sChips span{display:block;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.sChips b{display:block;font-family:"JetBrains Mono",monospace;font-size:14.5px;font-weight:700;margin-top:3px}
+.sEx{padding:11px 0;border-bottom:1px solid var(--line)}
+.sEx:last-child{border-bottom:0}
+.sExTop{display:flex;align-items:baseline;gap:8px}
+.sExTop b{flex:1;font-size:14.5px;font-weight:600}
+.sExTop i{font-style:normal;font-family:"JetBrains Mono",monospace;font-size:10.5px;font-weight:700;border-radius:6px;padding:2px 7px;white-space:nowrap}
+.sExTop i.sobe{background:var(--pine);color:#fff}
+.sExTop i.cai{background:var(--rust-bg);color:var(--rust)}
+.sExTop i.igual{background:var(--card2);color:var(--dim)}
+.sExTop i.novo{background:var(--gold-bg);color:var(--gold)}
+.sEx>span{display:block;font-family:"JetBrains Mono",monospace;font-size:12.5px;color:var(--muted);margin-top:4px}
+.sPulados{font-size:13px;color:var(--muted);background:var(--card2);border-radius:9px;padding:9px 11px;margin:14px 0 0}
+.sPulados b{color:var(--ink)}
+.btEditarSessao{width:100%;margin-top:14px;background:var(--card2);border:0;border-radius:11px;padding:13px;font-size:14.5px;font-weight:600;color:var(--ink);cursor:pointer;flex:none}
 .fTempo{display:flex;gap:8px;margin:0 0 18px}
 .fTempo>div{flex:1;background:var(--card2);border-radius:10px;padding:10px 8px;text-align:center}
 .fTempo span{display:block;font-family:"JetBrains Mono",monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
@@ -426,6 +451,14 @@ body.descansando .desc{bottom:0}
   <h4 id="mTit">Confirmar</h4><p id="mMsg"></p>
   <div class="bts"><button class="no" id="mNao">Cancelar</button><button class="si" id="mSim">Confirmar</button></div>
 </div></div>
+<div class="modal" id="mSessao"><div class="modal-in folha">
+  <div class="fTopo"><div><h4 id="sTit"></h4><p class="sSub" id="sSub"></p></div><button id="sFecha" aria-label="Fechar">✕</button></div>
+  <div class="fCorpo">
+    <div class="sChips" id="sChips"></div>
+    <div id="sCorpo"></div>
+  </div>
+  <button class="btEditarSessao" id="sEditar">Editar data, hora ou duração</button>
+</div></div>
 <div class="modal" id="editar"><div class="modal-in">
   <h4>Editar sessão</h4>
   <p id="eSub"></p>
@@ -442,9 +475,10 @@ body.descansando .desc{bottom:0}
 <div class="modal" id="mCardio"><div class="modal-in">
   <h4>Registrar cardio</h4>
   <p>Fora da sessão de musculação.</p>
-  <div class="seg semanaSel">
+  <div class="seg semanaSel tres">
     <button data-ctipo="W" aria-pressed="true"><b>Caminhada</b></button>
-    <button data-ctipo="I" aria-pressed="false"><b>Intervalado 4×4</b></button>
+    <button data-ctipo="I" aria-pressed="false"><b>Intervalado</b></button>
+    <button data-ctipo="O" aria-pressed="false"><b>Outro</b></button>
   </div>
   <div id="camposW">
     <div class="campos2">
@@ -459,6 +493,17 @@ body.descansando .desc{bottom:0}
       <div><label>Resistência</label><input type="number" inputmode="numeric" id="xRes" placeholder="nível"></div>
     </div>
     <p class="avisoImp" style="margin:12px 0 0">4 blocos de 4 minutos em esforço 8 a 9, com 3 minutos leves entre eles. A progressão acontece na resistência.</p>
+  </div>
+  <div id="camposO" style="display:none">
+    <label class="rotCampo">Modalidade</label>
+    <div class="modos" id="cModos"></div>
+    <div class="campos2" style="margin-top:10px">
+      <div><label>Minutos</label><input type="number" inputmode="numeric" id="oMin" placeholder="25"></div>
+      <div><label>Distância (km)</label><input type="number" inputmode="decimal" step="0.1" id="oKm" placeholder="opcional"></div>
+    </div>
+    <label class="rotCampo" style="margin-top:10px">Esforço</label>
+    <div class="modos" id="cEsf"></div>
+    <p class="avisoImp" style="margin:12px 0 0">Entra na conta de minutos de cardio da semana. Não conta como caminhada nem como intervalado, que têm metas próprias.</p>
   </div>
   <div class="campos2" style="margin-top:9px">
     <div><label>Data e hora</label><input type="datetime-local" id="cQuando"></div>
@@ -898,27 +943,30 @@ function dataReavaliacao(){
   d.setDate(d.getDate() + (CIC.semanas||8)*7);
   return d;
 }
-const ehCardio = h => h.letra==='W' || h.letra==='I';
+const MODOS = { bike:'Bike', esteira:'Esteira', corrida:'Corrida', eliptico:'Elíptico', escada:'Escada', outro:'Outro' };
+const ESFORCOS = { leve:'Leve', moderado:'Moderado', forte:'Forte' };
+const ehCardio = h => h.letra==='W' || h.letra==='I' || h.letra==='O';
 const rotuloSessao = h => {
   if(h.letra==='L') return 'Treino livre';
   if(h.letra==='W') return 'Caminhada';
   if(h.letra==='I') return 'Intervalado 4×4';
+  if(h.letra==='O') return (MODOS[h.modo]||'Cardio') + (h.esforco?' · '+ESFORCOS[h.esforco].toLowerCase():'');
   const p = (h.tipo==='pesado' ? 'Pesado' : h.tipo==='volume' ? 'Volume' : '');
   return NOMES[h.letra] + (p ? ' · ' + p : '');
 };
-const iconeSessao = h => ({L:'★',W:'▲',I:'◆'})[h.letra] || h.letra;
+const iconeSessao = h => ({L:'★',W:'▲',I:'◆',O:'●'})[h.letra] || h.letra;
 
 function linhaHist(h){
   const d=new Date(h.data);
   const cls = h.letra==='L'?'livre' : ehCardio(h)?'cardio' : 'treino';
   const extra = h.letra==='I' ? (h.blocos?h.blocos+'/4 blocos':'')
-              : h.letra==='W' ? (h.km?(+h.km).toFixed(1).replace('.',',')+' km':'')
+              : (h.letra==='W'||h.letra==='O') ? (h.km?(+h.km).toFixed(1).replace('.',',')+' km':'')
               : (h.volumeTotal?Math.round(h.volumeTotal).toLocaleString('pt-BR')+' kg':'');
   return '<div class="hist"><div class="sel '+cls+'">'+iconeSessao(h)+'</div>'+
     '<div class="t"><b>'+rotuloSessao(h)+'</b>'+
     '<span>'+d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' · '+durTexto(h.min||0)+(h.pulados&&h.pulados.length?' · '+h.pulados.length+' não feito'+(h.pulados.length>1?'s':''):'')+'</span></div>'+
     '<div class="n">'+extra+'</div>'+
-    '<button class="lixo" data-edit="'+h.data+'" aria-label="Editar sessão">&#8942;</button></div>';
+    '<button class="lixo" data-edit="'+h.data+'" aria-label="Ver detalhes da sessão">&#8250;</button></div>';
 }
 
 function telaInicio(){
@@ -942,7 +990,7 @@ function telaInicio(){
   const todas=hist.slice().sort((a,b)=>b.data-a.data);
   const lista=todas.slice(0,10).map(linhaHist).join('');
 
-  const cam=semana.filter(h=>h.letra==='W'), itv=semana.filter(h=>h.letra==='I');
+  const cam=semana.filter(h=>h.letra==='W'), itv=semana.filter(h=>h.letra==='I'), outros=semana.filter(h=>h.letra==='O');
   const minCardio=semana.filter(ehCardio).reduce((a,h)=>a+(h.min||0),0);
   const kmCam=cam.reduce((a,h)=>a+(+h.km||0),0);
   const pctCam=Math.min(100,Math.round(cam.length/META_CAMINHADAS*100));
@@ -966,6 +1014,7 @@ function telaInicio(){
         '<div class="top" style="margin-top:12px"><b>Intervalado '+itv.length+' / '+META_INTERVALADO+'</b><span>'+pctItv+'%</span></div>'+
         '<div class="metaBar"><i class="'+(pctItv>=100?'cheio':'')+'" style="width:'+pctItv+'%"></i></div>'+
         (kmCam?'<p class="metaKm">Caminhada: <b>'+kmCam.toFixed(1).replace('.',',')+' km</b></p>':'')+
+        (outros.length?'<p class="metaKm">Outros cardios: <b>'+outros.length+'</b> · '+durTexto(outros.reduce((a,h)=>a+(h.min||0),0))+'</p>':'')+
         '<button class="btCardio" id="btCardio">+ Registrar cardio</button>'+
       '</div></section>'+
     '<section class="sec"><h2>Programa</h2><div class="cartao cicloCard">'+
@@ -989,6 +1038,7 @@ function telaHistorico(){
   const doMes=hist.filter(h=>{ const d=new Date(h.data); return d.getFullYear()===ano && d.getMonth()===mes; }).sort((a,b)=>b.data-a.data);
   const nProg=doMes.filter(h=>['A','B','C'].indexOf(h.letra)>=0).length, nLiv=doMes.filter(h=>h.letra==='L').length;
   const nCam=doMes.filter(h=>h.letra==='W').length, nItv=doMes.filter(h=>h.letra==='I').length;
+  const nOut=doMes.filter(h=>h.letra==='O'), minOut=nOut.reduce((a,h)=>a+(h.min||0),0);
   const minTr=doMes.filter(h=>!ehCardio(h)).reduce((a,h)=>a+(h.min||0),0);
   const offset=(new Date(ano,mes,1).getDay()+6)%7, nd=new Date(ano,mes+1,0).getDate();
   const hojeStr=new Date().toDateString();
@@ -1004,9 +1054,11 @@ function telaHistorico(){
   const lista=(calDia ? doMes.filter(h=>new Date(h.data).toDateString()===calDia) : doMes);
   const tituloLista = calDia ? new Date(calDia).toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'2-digit'}) : 'Todas de '+MESES[mes];
   return '<div class="calNav"><button data-cal="-1" aria-label="Mês anterior">‹</button><b>'+MESES[mes][0].toUpperCase()+MESES[mes].slice(1)+' de '+ano+'</b><button data-cal="1" aria-label="Próximo mês">›</button></div>'+
-    '<p class="calRes">'+nProg+' sessões do programa'+(nLiv?' · '+nLiv+' livres':'')+' · '+durTexto(minTr)+' · '+nCam+' caminhadas · '+nItv+' intervalado'+(nItv===1?'':'s')+'</p>'+
+    '<p class="calRes">'+nProg+(nProg===1?' sessão':' sessões')+' do programa'+(nLiv?' · '+nLiv+' livre'+(nLiv===1?'':'s'):'')+' · '+durTexto(minTr)+
+      ' · '+nCam+' caminhada'+(nCam===1?'':'s')+' · '+nItv+' intervalado'+(nItv===1?'':'s')+
+      (nOut.length?' · '+nOut.length+' outro'+(nOut.length===1?'':'s')+' cardio ('+durTexto(minOut)+')':'')+'</p>'+
     '<div class="cal">'+cel+'</div>'+
-    '<p class="calLeg"><span class="lA">A</span> Empurrar <span class="lB">B</span> Puxar <span class="lC">C</span> Pernas <span class="lL">★</span> Livre <i class="pt"></i> cardio</p>'+
+    '<p class="calLeg"><span class="lA">A</span> Empurrar <span class="lB">B</span> Puxar <span class="lC">C</span> Pernas <span class="lL">★</span> Livre <i class="pt"></i> cardio no dia</p>'+
     '<section class="sec"><h2>'+tituloLista+(calDia?' <button class="calLimpa" data-dia="">ver o mês</button>':'')+'</h2><div class="cartao">'+
       (lista.length ? lista.map(linhaHist).join('') : '<p class="vazio">Nada registrado'+(calDia?' neste dia':' neste mês')+'.</p>')+
     '</div></section>'+
@@ -1174,7 +1226,7 @@ ${CICLOS.map(c=>'<tr><td>'+c.nome+'</td><td>'+new Date(c.inicio+'T12:00:00').toL
 }
 
 /* ===================== BACKUP: EXPORTAR E IMPORTAR ===================== */
-const APP_VERSAO = 18;
+const APP_VERSAO = 19;
 
 function montarBackup(){
   return {
@@ -1420,6 +1472,7 @@ function gerarResumo(offset){
   const LV  = todas.filter(h=>h.letra==='L');
   const CAM = todas.filter(h=>h.letra==='W');
   const ITV = todas.filter(h=>h.letra==='I');
+  const OUT = todas.filter(h=>h.letra==='O');
   const treinos = todas.filter(h=>!ehCardio(h));
   const fimReal = new Date(a.fim); fimReal.setDate(fimReal.getDate() - 1);
   const L = [];
@@ -1466,6 +1519,12 @@ function gerarResumo(offset){
   L.push('  Intervalado 4x4: ' + ITV.length + ' de ' + META_INTERVALADO);
   ITV.forEach(h => L.push('    ' + dtBR(h.data) + ' · ' + (h.blocos||'?') + '/4 blocos' +
     (h.res ? ' · resistência ' + h.res : '')));
+  if(OUT.length){
+    L.push('  Outros cardios: ' + OUT.length + ' · ' + durTexto(OUT.reduce((x,h)=>x+(h.min||0),0)));
+    OUT.forEach(h => L.push('    ' + dtBR(h.data) + ' · ' + (MODOS[h.modo]||'cardio') + ' · ' + durTexto(h.min||0) +
+      (h.km ? ' · ' + (+h.km).toFixed(1).replace('.',',') + ' km' : '') +
+      (h.esforco ? ' · ' + ESFORCOS[h.esforco].toLowerCase() : '')));
+  }
   L.push('');
 
   const mA = mapaCargas(todas), mB = mapaCargas(b.sessoes);
@@ -1796,6 +1855,102 @@ const modalEd=document.getElementById('editar');
 let edTs=null;
 function paraInput(ts){ const d=new Date(ts-d0(ts)); return d.toISOString().slice(0,16); }
 function d0(ts){ return new Date(ts).getTimezoneOffset()*60000; }
+/* ===================== DETALHES DA SESSÃO ===================== */
+function metaDe(k){
+  return META_EX[k] || { nome:k.split('|')[1]||k, un:'total', maq:false, can:false };
+}
+/* o registro deste exercício na sessão anterior mais recente antes de ts */
+function registroAnteriorA(ts, k){
+  const ord = histOrdenado().filter(h => h.data < ts);
+  for(let i=ord.length-1; i>=0; i--){
+    const s = ord[i].series && ord[i].series[k];
+    if(s && s.length && s.some(x=>x&&x.ok)) return s;
+  }
+  return null;
+}
+const mostraCarga = (v, meta) => v===null ? 'corpo' : meta.maq ? fmtKg(kgPlacas(v)) : fmtNum(v)+' kg';
+function textoSeries(arr, meta){
+  const f = (arr||[]).filter(s=>s&&s.ok);
+  if(!f.length) return '';
+  const vals = f.map(s=>valorSerie(s,meta));
+  const reps = f.map(s=>(+s.reps>0 ? +s.reps : '-'));
+  if(vals.every(v=>v===vals[0])) return mostraCarga(vals[0],meta) + ' · ' + reps.join(' · ');
+  return f.map((s,i)=>mostraCarga(vals[i],meta) + '×' + reps[i]).join(' · ');
+}
+/* ordem do programa primeiro, depois o que sobrar (livres, exercícios que saíram) */
+function ordemExercicios(h){
+  const keys = Object.keys(h.series||{}), ordem = [];
+  const poe = n => { const k = chaveEx(h.letra,n); if(keys.indexOf(k)>=0 && ordem.indexOf(k)<0) ordem.push(k); };
+  if(BLOCOS[h.letra]) BLOCOS[h.letra].forEach(b=>b.forEach(e=>poe(e.n)));
+  if(CORE_ROT[h.letra]) poe(CORE_ROT[h.letra].n);
+  keys.forEach(k=>{ if(ordem.indexOf(k)<0) ordem.push(k); });
+  return ordem;
+}
+const hm = ts => new Date(ts).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+
+let sessaoTs = null;
+function abrirSessao(ts){
+  const h = hist.find(x=>x.data===ts); if(!h) return;
+  sessaoTs = ts;
+  const d = new Date(ts);
+  document.getElementById('sTit').textContent = rotuloSessao(h);
+  document.getElementById('sSub').textContent =
+    d.toLocaleDateString('pt-BR',{weekday:'long', day:'2-digit', month:'2-digit', year:'numeric'}) +
+    (h.ciclo && h.ciclo!==CIC.id ? ' · Ciclo '+h.ciclo : '');
+
+  const chips = [];
+  if(ehCardio(h)){
+    chips.push(['Início', hm(ts)]);
+    chips.push(['Duração', durTexto(h.min||0)]);
+    if(h.km) chips.push(['Distância', (+h.km).toFixed(1).replace('.',',')+' km']);
+    if(h.letra==='I'){ chips.push(['Blocos', (h.blocos||'?')+' de 4']); if(h.res) chips.push(['Resistência', h.res]); }
+    if(h.letra==='O'){ if(h.modo) chips.push(['Modalidade', MODOS[h.modo]||h.modo]); if(h.esforco) chips.push(['Esforço', ESFORCOS[h.esforco]]); }
+    if(h.km && h.min && +h.km > 0){
+      const porVelocidade = h.letra==='O' && ['bike','eliptico','escada'].indexOf(h.modo)>=0;
+      chips.push(porVelocidade
+        ? ['Velocidade', (+h.km/(h.min/60)).toFixed(1).replace('.',',')+' km/h']
+        : ['Ritmo', (h.min/(+h.km)).toFixed(1).replace('.',',')+' min/km']);
+    }
+  } else {
+    const chaves = ordemExercicios(h);
+    let nSeries = 0;
+    chaves.forEach(k => nSeries += (h.series[k]||[]).filter(s=>s&&s.ok).length);
+    chips.push(['Início', hm(ts)]);
+    chips.push(['Fim', hm(ts + (h.min||0)*60000)]);
+    chips.push(['Duração', durTexto(h.min||0)]);
+    chips.push(['Séries', String(nSeries)]);
+    if(h.volumeTotal) chips.push(['Volume', Math.round(h.volumeTotal).toLocaleString('pt-BR')+' kg']);
+    if(nSeries) chips.push(['Por série', durTexto(Math.max(1,Math.round((h.min||0)/nSeries)))]);
+  }
+  document.getElementById('sChips').innerHTML = chips.map(c=>
+    '<div><span>'+c[0]+'</span><b>'+c[1]+'</b></div>').join('');
+
+  let corpo = '';
+  if(!ehCardio(h)){
+    const chaves = ordemExercicios(h);
+    const linhas = chaves.map(k=>{
+      const meta = metaDe(k);
+      const agora = melhorDaSerie(h.series[k], meta);
+      const txt = textoSeries(h.series[k], meta);
+      if(!txt) return '';
+      const antes = melhorDaSerie(registroAnteriorA(ts,k), meta);
+      let tag = '';
+      if(agora && antes){
+        if(agora.v > antes.v) tag = '<i class="sobe">↑ '+mostraCarga(antes.v,meta)+'</i>';
+        else if(agora.v < antes.v) tag = '<i class="cai">↓ '+mostraCarga(antes.v,meta)+'</i>';
+        else if(agora.reps > antes.reps) tag = '<i class="sobe">↑ '+(agora.reps-antes.reps)+' rep</i>';
+        else tag = '<i class="igual">=</i>';
+      } else if(agora) tag = '<i class="novo">1ª vez</i>';
+      return '<div class="sEx"><div class="sExTop"><b>'+meta.nome+'</b>'+tag+'</div><span>'+txt+'</span></div>';
+    }).filter(Boolean).join('');
+    corpo += linhas || '<p class="vazio">Nenhuma série registrada nesta sessão.</p>';
+    if(h.pulados && h.pulados.length)
+      corpo += '<p class="sPulados"><b>Não fez:</b> '+h.pulados.join(', ')+'</p>';
+  }
+  document.getElementById('sCorpo').innerHTML = corpo;
+  document.getElementById('mSessao').classList.add('on');
+}
+
 function abrirEdicao(ts){
   const s=hist.find(x=>x.data===ts); if(!s) return;
   edTs=ts;
@@ -1804,6 +1959,10 @@ function abrirEdicao(ts){
   document.getElementById('eMin').value=s.min||0;
   modalEd.classList.add('on');
 }
+const mSessao=document.getElementById('mSessao');
+document.getElementById('sFecha').onclick=()=>{ mSessao.classList.remove('on'); sessaoTs=null; };
+mSessao.onclick=e=>{ if(e.target===mSessao){ mSessao.classList.remove('on'); sessaoTs=null; } };
+document.getElementById('sEditar').onclick=()=>{ const t=sessaoTs; mSessao.classList.remove('on'); if(t) abrirEdicao(t); };
 document.getElementById('eCancelar').onclick=()=>{ modalEd.classList.remove('on'); edTs=null; };
 modalEd.onclick=e=>{ if(e.target===modalEd){ modalEd.classList.remove('on'); edTs=null; } };
 document.getElementById('eSalvar').onclick=()=>{
@@ -1824,7 +1983,7 @@ document.getElementById('eExcluir').onclick=()=>{
 
 main.addEventListener('click',ev=>{
   const ed=ev.target.closest('.hist');
-  if(ed){ const b=ed.querySelector('[data-edit]'); if(b) abrirEdicao(+b.dataset.edit); return; }
+  if(ed){ const b=ed.querySelector('[data-edit]'); if(b) abrirSessao(+b.dataset.edit); return; }
   const cal=ev.target.closest('[data-cal]');
   if(cal){ calMes=new Date(calMes.getFullYear(), calMes.getMonth()+(+cal.dataset.cal), 1); calDia=null; irPara(3); return; }
   const dia=ev.target.closest('[data-dia]');
@@ -2097,9 +2256,16 @@ document.getElementById('dMesclar').onclick=()=>aplicar('mesclar');
 const mCardio=document.getElementById('mCardio');
 let cardioTipo='W';
 function paraInputLocal(ts){ const d=new Date(ts - new Date(ts).getTimezoneOffset()*60000); return d.toISOString().slice(0,16); }
+let cardioModo='bike', cardioEsf='moderado';
+function pintaEscolhas(){
+  document.getElementById('cModos').innerHTML = Object.keys(MODOS).map(k=>
+    '<button data-modo="'+k+'" aria-pressed="'+(k===cardioModo)+'">'+MODOS[k]+'</button>').join('');
+  document.getElementById('cEsf').innerHTML = Object.keys(ESFORCOS).map(k=>
+    '<button data-esf="'+k+'" aria-pressed="'+(k===cardioEsf)+'">'+ESFORCOS[k]+'</button>').join('');
+}
 function abrirCardio(){
-  cardioTipo='W'; trocaCardio('W');
-  ['wMin','wKm','xBlocos','xRes'].forEach(i=>{ const e=document.getElementById(i); if(e) e.value=''; });
+  cardioTipo='W'; cardioModo='bike'; cardioEsf='moderado'; trocaCardio('W'); pintaEscolhas();
+  ['wMin','wKm','xBlocos','xRes','oMin','oKm'].forEach(i=>{ const e=document.getElementById(i); if(e) e.value=''; });
   document.getElementById('cQuando').value=paraInputLocal(Date.now());
   mCardio.classList.add('on');
 }
@@ -2108,10 +2274,15 @@ function trocaCardio(t){
   mCardio.querySelectorAll('[data-ctipo]').forEach(b=>b.setAttribute('aria-pressed', b.dataset.ctipo===t?'true':'false'));
   document.getElementById('camposW').style.display = t==='W'?'':'none';
   document.getElementById('camposI').style.display = t==='I'?'':'none';
+  document.getElementById('camposO').style.display = t==='O'?'':'none';
 }
 mCardio.addEventListener('click',e=>{
   const b=e.target.closest('[data-ctipo]');
   if(b){ trocaCardio(b.dataset.ctipo); return; }
+  const m=e.target.closest('[data-modo]');
+  if(m){ cardioModo=m.dataset.modo; pintaEscolhas(); return; }
+  const f=e.target.closest('[data-esf]');
+  if(f){ cardioEsf=f.dataset.esf; pintaEscolhas(); return; }
   if(e.target===mCardio) mCardio.classList.remove('on');
 });
 document.getElementById('cCancelar').onclick=()=>mCardio.classList.remove('on');
@@ -2123,11 +2294,16 @@ document.getElementById('cSalvar').onclick=()=>{
     const km=document.getElementById('wKm').value;
     if(!m && !km){ alert('Preencha ao menos os minutos da caminhada.'); return; }
     hist.push({ data:ts, letra:'W', ciclo:CIC.id, min:m||MIN_CAMINHADA, km:km||'' });
-  } else {
+  } else if(cardioTipo==='I'){
     const bl=document.getElementById('xBlocos').value;
     const rs=document.getElementById('xRes').value;
     if(bl==='' ){ alert('Informe quantos blocos você completou.'); return; }
     hist.push({ data:ts, letra:'I', ciclo:CIC.id, min:MIN_INTERVALADO, blocos:bl, res:rs });
+  } else {
+    const m=+document.getElementById('oMin').value||0;
+    const km=document.getElementById('oKm').value;
+    if(!m){ alert('Informe os minutos.'); return; }
+    hist.push({ data:ts, letra:'O', ciclo:CIC.id, min:m, km:km||'', modo:cardioModo, esforco:cardioEsf });
   }
   hist.sort((a,b)=>a.data-b.data);
   salvar(); mCardio.classList.remove('on'); irPara(0);

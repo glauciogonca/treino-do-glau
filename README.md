@@ -1,6 +1,6 @@
 # Treino do Glau
 
-App de registro de treino. Funciona offline depois da primeira visita. Versão 18.
+App de registro de treino. Funciona offline depois da primeira visita. Versão 19.
 
 ## Publicar no GitHub Pages
 
@@ -24,7 +24,7 @@ Todos os caminhos são relativos, então funciona em subpasta sem ajuste.
 
 ## Atualizar o app depois de mudar algo
 
-O service worker guarda os arquivos em cache. Ao publicar uma versão nova, suba o `index.html` e o `sw.js` juntos. A linha de versão do `sw.js` já vem trocada (`treino-glau-v18`). Sem isso o celular pode continuar mostrando a versão antiga.
+O service worker guarda os arquivos em cache. Ao publicar uma versão nova, suba o `index.html` e o `sw.js` juntos. A linha de versão do `sw.js` já vem trocada (`treino-glau-v19`). Sem isso o celular pode continuar mostrando a versão antiga.
 
 ## Instalar no celular
 
@@ -39,6 +39,7 @@ Teste sempre com o app instalado. Instalado, ele roda sem barra de navegador, e 
 |---|---|
 | **Início** | Próximo treino, números da semana, metas de cardio, programa, últimas 10 sessões, resumo e backup |
 | **Histórico** | Calendário mensal com todas as sessões. Abre pelo botão *Ver histórico completo* no Início. Toque num dia para ver só aquele dia |
+| **Detalhes da sessão** | Toque em qualquer linha do histórico, no Início ou no calendário |
 | **Treino** | A execução: montagem, exercícios, registro de séries e descanso |
 | **Guia** | Consulta: regras, progressão, montagem de cada treino, pesos, cardio, mobilidade em casa |
 
@@ -83,12 +84,26 @@ A versão curta do rótulo aparece quando a coluna de caneleira divide o espaço
 
 Na estação, o app converte placas em kg com placa menor de 4 kg e placas grandes de 6,8 kg.
 
+## Detalhes da sessão
+
+Tocar numa linha do histórico abre a sessão inteira, sem precisar lembrar de nada:
+
+- **Treino:** horário de início e de fim, duração, número de séries, volume total e tempo médio por série. Depois, exercício por exercício, com a carga e as repetições de cada série e uma etiqueta comparando com a última vez que você fez aquele exercício: *subiu*, *igual*, *caiu* ou *1ª vez*. Exercícios marcados como não feitos aparecem no fim.
+- **Cardio:** horário, duração, distância, modalidade, esforço e o ritmo calculado (min/km para caminhada e corrida, km/h para bike, elíptico e escada).
+
+O botão no rodapé da folha abre a edição de data, hora e duração, que também é onde fica o excluir.
+
 ## Cardio
 
-| O quê | Meta | Como registrar |
+Três tipos, registrados em **+ Registrar cardio** na tela de Início:
+
+| Tipo | Meta | O que registrar |
 |---|---|---|
-| Caminhada no deslocamento | 5 por semana, 20 a 25 min | **+ Registrar cardio** na tela de Início, com minutos e distância |
-| Intervalado 4×4 na bike | 1 por semana, após o Treino B | Dentro da primeira sessão B da semana, ou por **+ Registrar cardio** |
+| Caminhada | 5 por semana, 20 a 25 min | Minutos e distância |
+| Intervalado 4×4 | 1 por semana, após o Treino B | Blocos e resistência. Também pode ser registrado dentro da sessão B |
+| Outro cardio | sem meta | Modalidade (bike, esteira, corrida, elíptico, escada, outro), minutos, distância opcional e esforço |
+
+O **outro cardio** entra na conta de minutos de cardio da semana, aparece no calendário e no resumo semanal, mas não conta nas metas de caminhada nem de intervalado, que medem coisas diferentes.
 
 ## Editar o histórico
 
