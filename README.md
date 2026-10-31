@@ -1,6 +1,6 @@
 # Treino do Glau
 
-App de registro de treino. Funciona offline depois da primeira visita. Versão 19.
+App de registro de treino. Funciona offline depois da primeira visita. Versão 22.
 
 ## Publicar no GitHub Pages
 
@@ -24,7 +24,7 @@ Todos os caminhos são relativos, então funciona em subpasta sem ajuste.
 
 ## Atualizar o app depois de mudar algo
 
-O service worker guarda os arquivos em cache. Ao publicar uma versão nova, suba o `index.html` e o `sw.js` juntos. A linha de versão do `sw.js` já vem trocada (`treino-glau-v19`). Sem isso o celular pode continuar mostrando a versão antiga.
+O service worker guarda os arquivos em cache. Ao publicar uma versão nova, suba o `index.html` e o `sw.js` juntos. A linha de versão do `sw.js` já vem trocada (`treino-glau-v22`). Sem isso o celular pode continuar mostrando a versão antiga.
 
 ## Instalar no celular
 
@@ -67,7 +67,27 @@ Com a sessão iniciada, toque em **Montado** e o card recolhe.
 - **Descanso:** começa sozinho, tem **+30 s** e **Pular**, e toca um aviso sonoro no fim. Com o modo silencioso ligado, o iPhone pode não tocar.
 - **Tela acesa:** durante a sessão o app pede para a tela não apagar. No app instalado funciona a partir do iOS 18.4.
 - **Cronômetro no topo:** toque para pausar e toque de novo para retomar.
+- **Sessão mínima:** o link no card do Início abre uma versão curta do próximo treino, com os compostos principais, 2 séries cada, cerca de 16 minutos. Conta na fila e aparece no histórico marcada como mínima. É o piso para a semana que desandar, não o padrão.
 - **Descartar e Encerrar:** na barra de baixo. Os dois pedem confirmação. Ao encerrar, uma tela mostra o tempo previsto, o realizado e a diferença, além do que subiu em relação à última vez.
+
+## Descarga reativa
+
+O app olha as três últimas sessões do programa e avisa no Início quando nenhuma carga nem repetição subiu. Aí vale uma semana com metade das séries e a mesma carga. Não há descarga por calendário.
+
+## Ciclo 3, a partir de 01/11/2026
+
+| Saiu | Entrou | Motivo |
+|---|---|---|
+| Supino sentado na estação | Supino reto com halteres | O banco da estação não regula de altura, o empurrão ia na direção da cabeça |
+| Crucifixo inclinado com halteres | Voador na estação | Travado em 5 kg por mão, que é o halter fixo mais pesado: não dava para progredir |
+| Big 3 de McGill | Abdominal na polia | Adesão zero há semanas e sem dor nas costas; o novo exercício aceita carga |
+| Intervalado 4×4 fixo no B | Cardio curto de 12 min ao fim de A e B | O 4×4 não vinha sendo feito; o intervalado continua disponível no registro de cardio |
+
+Também mudaram: rosca Scott de volta como complemento da rosca inclinada, bíceps de 8 para 12 séries semanais, e a sessão mínima passou a 3 compostos com 3 séries, cerca de 30 minutos, disponível para A, B e C.
+
+## Cardio
+
+Um registro só, em **+ Registrar cardio** no Início: modalidade, formato (contínuo ou intervalado), minutos, distância opcional e esforço. Não há mais meta de caminhada nem de intervalado.
 
 ## Qual carga registrar
 
@@ -76,13 +96,13 @@ Com a sessão iniciada, toque em **Montado** e o card recolhe.
 | **kg por mão** ou **Por mão** | O peso de **um** halter, sem a caneleira |
 | **kg por lado** ou **Por lado** | O peso usado no lado que está trabalhando |
 | **kg total** | O peso total na barra, incluindo a barra |
-| **Placas** | O número de placas grandes selecionadas na estação W2 |
+| **Placas** | O número de placas grandes selecionadas na estação W2. Na extensora e na flexora há também o campo **Canel.**, para a caneleira presa à máquina |
 | **Base** | Peso corporal: deixe vazio e registre só a caneleira, se houver |
 | **Canel.** | O peso da caneleira, separado. O app soma os dois |
 
 A versão curta do rótulo aparece quando a coluna de caneleira divide o espaço.
 
-Na estação, o app converte placas em kg com placa menor de 4 kg e placas grandes de 6,8 kg.
+Na estação, o app converte placas em kg com placa menor de 4 kg e placas grandes de 6,8 kg. A comparação de cargas da estação é feita em quilos, não em número de placas, para que a caneleira conte na progressão.
 
 ## Detalhes da sessão
 
@@ -92,18 +112,6 @@ Tocar numa linha do histórico abre a sessão inteira, sem precisar lembrar de n
 - **Cardio:** horário, duração, distância, modalidade, esforço e o ritmo calculado (min/km para caminhada e corrida, km/h para bike, elíptico e escada).
 
 O botão no rodapé da folha abre a edição de data, hora e duração, que também é onde fica o excluir.
-
-## Cardio
-
-Três tipos, registrados em **+ Registrar cardio** na tela de Início:
-
-| Tipo | Meta | O que registrar |
-|---|---|---|
-| Caminhada | 5 por semana, 20 a 25 min | Minutos e distância |
-| Intervalado 4×4 | 1 por semana, após o Treino B | Blocos e resistência. Também pode ser registrado dentro da sessão B |
-| Outro cardio | sem meta | Modalidade (bike, esteira, corrida, elíptico, escada, outro), minutos, distância opcional e esforço |
-
-O **outro cardio** entra na conta de minutos de cardio da semana, aparece no calendário e no resumo semanal, mas não conta nas metas de caminhada nem de intervalado, que medem coisas diferentes.
 
 ## Editar o histórico
 
